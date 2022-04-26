@@ -1,0 +1,36 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "fsd/hof-name-prefix": "error",
+    "fsd/no-heavy-constructor": "error",
+    "fsd/jq-cache-dom-elements": "error",
+    "fsd/jq-use-js-prefix-in-selector": "error",
+    "fsd/no-function-declaration-in-event-listener": "error",
+    "fsd/split-conditionals": "error"
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "jquery": true,
+    "node": true,
+    "jest/globals": true
+  },
+  "globals": {
+    "$": "readonly",
+    "JQuery": "readonly"
+  },
+  "plugins": ["@typescript-eslint", "fsd", "jest"],
+  "extends": [
+    "eslint:recomended",
+    "plugin:fsd/all",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
+    }
+  }
+}
