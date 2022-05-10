@@ -1,12 +1,6 @@
-import './style.scss'
+import Slider from "./components/View/Slider/Slider";
+import {defaultState} from "./components/interfaces/interfaces";
 
-const bodyInner = document.querySelector('body')
-
-if (bodyInner) {
-  bodyInner.innerHTML = `
-  <div>Всем привет, я петя</div>
-  <div>Всем привет, я петя</div>
-  <div>Всем привет, я петя</div>
-  <div>Всем привет, я петя</div>
-`
+const init: object = {
+  slider: new Slider(defaultState, document.querySelector('#slider'))
 }

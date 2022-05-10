@@ -1,5 +1,6 @@
 import Observer from "../../../Observer/Observer";
 import { ISettings, Orientation } from "../../../interfaces/interfaces";
+import './Scale.scss'
 
 class Scale extends Observer {
   protected readonly state: ISettings
@@ -30,3 +31,5 @@ class Scale extends Observer {
     return scaleNode
   }
 }
+
+export default Scale

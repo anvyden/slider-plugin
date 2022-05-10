@@ -17,6 +17,18 @@ interface ISettings {
   color: Color,
 }
 
+type PageCoords = {
+  pageX: number,
+  pageY: number,
+}
+
+type ElementCoords = {
+  left: number,
+  bottom: number,
+  width: number,
+  height: number,
+}
+
 const defaultState: ISettings = {
   min: 0,
   max: 100,
@@ -36,5 +48,7 @@ export {
   OptionValue,
   Orientation,
   ISettings,
+  ElementCoords,
+  PageCoords,
   defaultState
 }
