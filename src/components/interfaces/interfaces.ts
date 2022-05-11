@@ -1,5 +1,5 @@
 type Orientation = 'vertical' | 'horizontal'
-type Color = 'green'
+type Color = 'green' | 'purple'
 type Option = keyof ISettings
 type OptionValue = number | boolean | Orientation | Color
 
@@ -18,8 +18,8 @@ interface ISettings {
 }
 
 type PageCoords = {
-  pageX: number,
-  pageY: number,
+  clientX: number,
+  clientY: number,
 }
 
 type ElementCoords = {
@@ -31,9 +31,9 @@ type ElementCoords = {
 
 const defaultState: ISettings = {
   min: 0,
-  max: 100,
-  step: 10,
-  from: 5,
+  max: 200,
+  step: 5,
+  from: 80,
   to: 80,
   orientation: 'horizontal',
   isRange: true,
@@ -47,6 +47,7 @@ export {
   Option,
   OptionValue,
   Orientation,
+  Color,
   ISettings,
   ElementCoords,
   PageCoords,

@@ -1,0 +1,14 @@
+.slider__fill {
+  position: absolute;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);
+
+  &--horizontal {
+    height: 8px;
+  }
+
+  &--vertical {
+    bottom: 0;
+    width: 8px;
+  }
+}

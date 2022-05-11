@@ -1,12 +1,21 @@
 .slider {
   &__knob {
     position: absolute;
-    top: 4px;
     width: 16px;
     height: 16px;
-    transform: translate(-50%, -50%);
     background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);
     border: 2px solid #FFFFFF;
     border-radius: 10px;
+    cursor: grab;
+
+    &--horizontal {
+      transform: translate(-50%, -50%);
+      top: 4px;
+    }
+
+    &--vertical {
+      transform: translate(-50%, 50%);
+      left: 4px;
+    }
   }
 }

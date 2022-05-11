@@ -3,6 +3,7 @@ import {ISettings, Orientation} from "../../interfaces/interfaces";
 import { changeFirstCharToLower } from "../../../utils/utils";
 import Knob from "../subView/Knob/Knob";
 import './Slider.scss'
+import Fill from "../subView/Fill/Fill";
 
 class Slider {
   protected readonly settings: ISettings
@@ -32,7 +33,7 @@ class Slider {
 
   private createComponents(): object {
     const components = {}
-    const elementsSlider = [Scale, Knob]
+    const elementsSlider = [Scale, Knob, Fill]
     elementsSlider.forEach(Element => {
       const element: object = new Element(this.settings)
       const elementName: string = changeFirstCharToLower(element.constructor.name)
@@ -43,7 +44,9 @@ class Slider {
   }
 
   private addElementsInScale() {
-    const knob = this.components['knob'].getKnob()
+    const knob: HTMLDivElement = this.components['knob'].getKnob()
+    const fill: HTMLDivElement = this.components['fill'].getFill()
+    this.scale.insertAdjacentElement("beforeend", fill)
     this.scale.insertAdjacentElement("beforeend", knob)
   }
 
