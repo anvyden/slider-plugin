@@ -1,15 +1,15 @@
-import {Color, ISettings, Orientation} from "../components/interfaces/interfaces";
+import { ISettings } from "../components/interfaces/interfaces";
 
 const changeFirstCharToLower = (str: string): string => str[0].toLowerCase() + str.slice(1)
 
-const checkOrientation = (orientation: Orientation): Orientation => orientation === 'vertical'
-  ? 'vertical'
-  : 'horizontal'
-
-const checkColor = (color: Color): Color => color === 'purple' ? 'purple' : 'green'
+// const validateOrientation = (orientation: Orientation): Orientation => orientation === 'vertical'
+//   ? 'vertical'
+//   : 'horizontal'
+//
+// const validateColor = (color: Color): Color => color === 'purple' ? 'purple' : 'green'
 
 const convertStateValueToPercent = (state: ISettings, value: number): number => {
-  let { max, min, from, to, step } = state
+  let { max, min, step } = state
 
   const countOfSteps = (max - min) / step
   const stepInPercent = 100 / countOfSteps
@@ -22,4 +22,4 @@ const convertStateValueToPercent = (state: ISettings, value: number): number => 
   return percent
 }
 
-export { changeFirstCharToLower, checkOrientation, checkColor, convertStateValueToPercent }
+export { changeFirstCharToLower, convertStateValueToPercent }

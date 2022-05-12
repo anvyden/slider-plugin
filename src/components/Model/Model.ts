@@ -1,15 +1,22 @@
 import { ISettings, Option, OptionValue, defaultState } from "../interfaces/interfaces";
+import Validation from "./Validation";
+import Observer from "../Observer/Observer";
+import {modelEvents} from "../events/events";
 
-class Model {
+class Model extends Observer {
   private state: ISettings = defaultState
+  private validation: Validation
 
-  constructor(settings: ISettings) {
-    this.setState(settings)
+  constructor(state: ISettings) {
+    super()
+    this.validation = new Validation()
+    this.setState(state)
   }
 
   public setState(state: ISettings): void {
-    const newState = { ...this.state, ...state }
-    this.state = { ...newState } // Нужно добавить валидацию параметров слайдера.
+    const newState = { ...this.state, ...this.validation.checkState(state) }
+    this.state = { ...newState }
+    // this.emit(modelEvents.STATE_CHANGED, this.state)
   }
 
   public getState(): ISettings {
@@ -21,7 +28,7 @@ class Model {
     // Нужна валидация
     this.state = { ...this.state, ...newOptionValue }
   }
-
+6.67
   public getValue(option: Option): OptionValue {
     return this.state[option]
   }

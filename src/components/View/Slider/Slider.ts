@@ -17,6 +17,10 @@ class Slider {
     this.init()
   }
 
+  public getComponents(): object {
+    return this.components
+  }
+
   private init(): void {
     const { orientation } = this.settings
     const slider = this.createSlider(orientation)

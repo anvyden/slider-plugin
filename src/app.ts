@@ -1,7 +1,7 @@
-import Slider from "./components/View/Slider/Slider";
 import {defaultState} from "./components/interfaces/interfaces";
 import './app.scss'
+import Presenter from "./components/Presenter/Presenter";
 
 const init: object = {
-  slider: new Slider(defaultState, document.querySelector('#slider'))
+  presenter: new Presenter(defaultState, document.querySelector('#slider'))
 }

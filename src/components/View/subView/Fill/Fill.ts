@@ -1,6 +1,6 @@
 import {Color, ISettings, Orientation} from "../../../interfaces/interfaces";
 import './Fill.scss'
-import {checkColor, checkOrientation, convertStateValueToPercent} from "../../../../utils/utils";
+import {convertStateValueToPercent} from "../../../../utils/utils";
 
 class Fill {
   private settings: ISettings
@@ -17,18 +17,14 @@ class Fill {
 
   public update(state: ISettings): void {
     const { orientation, isRange, from, to } = state
-    const isVertical = orientation === 'vertical'
-    const directionFill = isVertical ? 'height' : 'width'
-
+    const directionFill = orientation === 'vertical' ? 'height' : 'width'
     this.fill.style[directionFill] = convertStateValueToPercent(state, from) + '%'
   }
 
   private init(): void {
     const { orientation, color } = this.settings
-    const colorFill = checkColor(color)
-    const orientationFill = checkOrientation(orientation)
-    const directionFill = orientationFill === 'horizontal' ? 'width' : 'height'
-    this.fill = this.createFill(orientationFill, directionFill , colorFill)
+    const directionFill = orientation === 'horizontal' ? 'width' : 'height'
+    this.fill = this.createFill(orientation, directionFill , color)
   }
 
   private createFill(orientation: Orientation, direction: string ,color: Color): HTMLDivElement {

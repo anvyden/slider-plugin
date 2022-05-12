@@ -1,7 +1,7 @@
 import Observer from "../../../Observer/Observer";
 import {Color, ElementCoords, ISettings, Orientation, PageCoords} from "../../../interfaces/interfaces";
 import './Knob.scss'
-import {checkColor, checkOrientation} from "../../../../utils/utils";
+import {convertStateValueToPercent} from "../../../../utils/utils";
 
 class Knob extends Observer {
   private settings: ISettings
@@ -22,10 +22,8 @@ class Knob extends Observer {
 
   private init(): void {
     const { orientation, color } = this.settings
-    const colorKnob = checkColor(color)
-    const orientationScale = checkOrientation(orientation)
-    const knobDirection = orientationScale === 'horizontal' ? 'left' : 'bottom'
-    this.knob = this.createKnob(orientation, knobDirection, colorKnob)
+    const knobDirection = orientation === 'vertical' ? 'bottom' : 'left'
+    this.knob = this.createKnob(orientation, knobDirection, color)
     this.knob.addEventListener('pointerdown', this.handleKnobPointerDown.bind(this))
   }
 
@@ -33,9 +31,8 @@ class Knob extends Observer {
     const knob = document.createElement('div')
     knob.classList.add('js-slider__knob', 'slider__knob', `slider__knob--${orientation}`, `slider__knob--${color}`)
 
-    const { max, min, from } = this.settings
-    this.position = ((min + from) / max ) * 100
-    knob.style[direction] = `${this.position}%`
+    const { from } = this.settings
+    knob.style[direction] = convertStateValueToPercent(this.settings, from) + '%'
 
     return knob
   }
@@ -82,7 +79,7 @@ class Knob extends Observer {
     this.position = value > 100 ? 100 : value
     return this.position
 
-    //TODO
+    // TODO
     // Для того, чтобы бегунок не уезжал, надо добавить валидацию, в handleKnobPointerMove
     // в котором надо вызывать event, где он будет обновлять модель и оттуда получать
     // новое валидное значение

@@ -31,9 +31,9 @@ type ElementCoords = {
 
 const defaultState: ISettings = {
   min: 0,
-  max: 200,
+  max: 10,
   step: 5,
-  from: 80,
+  from: 6,
   to: 80,
   orientation: 'horizontal',
   isRange: true,

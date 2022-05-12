@@ -1,3 +1,9 @@
+import {ISettings} from "../interfaces/interfaces";
+
+/* TODO
+    Надо сделать проверку на типы, поскольку в emit я буду передавать не только state,
+    а может и одно значение. Мои типы оказались неправильными.
+*/
 type ChangesType<T> = { [key: string]: T }
 
 abstract class Observer {
@@ -6,14 +12,16 @@ abstract class Observer {
   public subscribe(event: string, callback: Function): void {
     const eventObservers: Function[] = this.observers[event] || []
     this.observers[event] = [...eventObservers, callback]
+    // console.log(this.observers)
   }
 
   // public unsubscribe(event: string): void {
   //   this.observers[event].length = 0
   // }
 
-  public emit<T>(event: string, changes: ChangesType<T>): void {
+  public emit(event: string, changes: ISettings): void {
     this.observers[event].forEach((observer) => observer(changes))
+    console.log(this.observers[event])
   }
 }
 
