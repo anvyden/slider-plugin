@@ -19,8 +19,8 @@ abstract class Observer {
   //   this.observers[event].length = 0
   // }
 
-  public emit(event: string, changes: ISettings): void {
-    this.observers[event].forEach((observer) => observer(changes))
+  public emit(event: string, changes: ISettings | number): void {
+    this.observers[event]?.forEach((observer) => observer(changes))
     console.log(this.observers[event])
   }
 }

@@ -17,7 +17,6 @@ class Validation {
 
     this.checkMaxMin(max, min)
     this.step = this.checkStep(this.max, this.min, step)
-    this.from = this.checkFrom(from)
 
     const validState: ISettings = {
       ...state,
@@ -56,7 +55,8 @@ class Validation {
 
   public checkFrom(from: number): number {
     const roundFrom = Math.round(from)
-
+    if (roundFrom < this.min) return this.min
+    if (roundFrom > this.max) return this.max
     return roundFrom
   }
 

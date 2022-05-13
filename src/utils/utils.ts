@@ -9,7 +9,7 @@ const changeFirstCharToLower = (str: string): string => str[0].toLowerCase() + s
 // const validateColor = (color: Color): Color => color === 'purple' ? 'purple' : 'green'
 
 const convertStateValueToPercent = (state: ISettings, value: number): number => {
-  let { max, min, step } = state
+  const { max, min, step } = state
 
   const countOfSteps = (max - min) / step
   const stepInPercent = 100 / countOfSteps
@@ -22,4 +22,16 @@ const convertStateValueToPercent = (state: ISettings, value: number): number => 
   return percent
 }
 
-export { changeFirstCharToLower, convertStateValueToPercent }
+const convertPercentValueToNumber = (state: ISettings, value: number): number => {
+  const { max, min, step } = state
+
+  const countOfSteps = (max - min) / step
+  const stepInPercent = 100 / countOfSteps
+
+  const valueWithSteps = (value / stepInPercent) * step
+  const valueInNumber = valueWithSteps + min
+
+  return valueInNumber
+}
+
+export { changeFirstCharToLower, convertStateValueToPercent, convertPercentValueToNumber }

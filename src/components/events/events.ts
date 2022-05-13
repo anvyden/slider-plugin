@@ -3,4 +3,8 @@ enum modelEvents {
   VALUE_CHANGED = 'VALUE_CHANGED'
 }
 
-export {modelEvents}
+enum viewEvents {
+  VALUE_FROM_CHANGED = 'VALUE_FROM_CHANGED'
+}
+
+export {modelEvents, viewEvents}
