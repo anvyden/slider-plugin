@@ -22,14 +22,16 @@ const convertStateValueToPercent = (state: ISettings, value: number): number => 
   return percent
 }
 
-const convertPercentValueToNumber = (state: ISettings, value: number): number => {
+const convertPercentValueToNumber = (state: ISettings, valueInPercent: number): number => {
   const { max, min, step } = state
 
   const countOfSteps = (max - min) / step
   const stepInPercent = 100 / countOfSteps
 
-  const valueWithSteps = (value / stepInPercent) * step
+  const valueWithSteps = Math.round(valueInPercent / stepInPercent) * step
   const valueInNumber = valueWithSteps + min
+
+  console.log(valueInPercent, valueWithSteps, valueInNumber)
 
   return valueInNumber
 }

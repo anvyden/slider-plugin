@@ -1,3 +1,7 @@
+import Knob from "../View/subView/Knob/Knob";
+import Scale from "../View/subView/Scale/Scale";
+import Fill from "../View/subView/Fill/Fill";
+
 type Orientation = 'vertical' | 'horizontal'
 type Color = 'green' | 'purple'
 type Option = keyof ISettings
@@ -29,13 +33,19 @@ type ElementCoords = {
   height: number,
 }
 
+type SliderComponents = {
+  scale: Scale,
+  knob: Knob,
+  fill: Fill,
+}
+
 const defaultState: ISettings = {
   min: 0,
-  max: 10,
-  step: 1,
-  from: 6,
-  to: 8,
-  orientation: 'horizontal',
+  max: 100,
+  step: 5,
+  from: 25,
+  to: 40,
+  orientation: 'vertical',
   isRange: true,
   hasFill: true,
   hasLabels: false,
@@ -51,5 +61,6 @@ export {
   ISettings,
   ElementCoords,
   PageCoords,
+  SliderComponents,
   defaultState
 }

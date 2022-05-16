@@ -17,6 +17,10 @@ class Scale extends Observer {
     return this.scale
   }
 
+  public update(): HTMLDivElement {
+    return this.scale
+  }
+
   private init(): void {
     const { orientation } = this.state
     const orientationClass = orientation ? orientation : 'horizontal'

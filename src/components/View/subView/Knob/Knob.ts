@@ -2,8 +2,7 @@ import Observer from "../../../Observer/Observer";
 import {Color, ElementCoords, ISettings, Orientation, PageCoords} from "../../../interfaces/interfaces";
 import './Knob.scss'
 import {convertPercentValueToNumber, convertStateValueToPercent} from "../../../../utils/utils";
-import {viewEvents} from "../../../events/events";
-import View from "../../View";
+import {KnobEvents} from "../../../events/events";
 
 class Knob extends Observer {
   private settings: ISettings
@@ -50,17 +49,7 @@ class Knob extends Observer {
     const handleKnobPointerMove = (event: PointerEvent): void => {
       const knobPosition = this.calculatePositionKnob(event)
       const knobPositionInNumber = convertPercentValueToNumber(this.settings, knobPosition)
-      this.emit(viewEvents.VALUE_FROM_CHANGED, knobPositionInNumber)
-      //TODO
-      // Надо будет тут убрать метод и просто сделать метод update, где буду обновлять
-      // позицию. (метод сделал)
-
-      // this.knob.style.left = knobPosition + '%'
-      //
-      // Я не вижу events потому, что тут emit я вызываю у knob, а он у меня у view.
-      // то есть мне надо как-то прокинуть этот emit до view: Можно сделать отдельные
-      // events для knob, на которые подписать сам knob, который будет вызывать emit
-      // который будет прокидывать вызов emit у view.
+      this.emit(KnobEvents.KNOB_VALUE_CHANGED, Number((knobPositionInNumber).toFixed(3)))
     }
 
     const handleKnobPointerUp = (): void => {
@@ -80,18 +69,6 @@ class Knob extends Observer {
 
     const { left, bottom, width, height } = scale ? this.getElementCoords(scale) : null
     const { clientX, clientY } = this.getPageCoords(event)
-
-    // if (orientation === 'horizontal') {
-    //   const value = ((clientX - left) / width ) * 100
-    //   this.position = value < 0 ? 0 : value
-    //   this.position = value > 100 ? 100 : value
-    //   return this.position
-    // }
-    //
-    // const value = ((bottom - clientY) / height ) * 100
-    // this.position = value < 0 ? 0 : value
-    // this.position = value > 100 ? 100 : value
-    // return this.position
 
     // TODO
     // Для того, чтобы бегунок не уезжал, надо добавить валидацию, в handleKnobPointerMove
@@ -117,17 +94,17 @@ class Knob extends Observer {
 
   private getElementCoords(elem: Element): ElementCoords {
     const {
-      width: widthElement,
-      height: heightElement,
-      bottom: elementPosBottom,
-      left: elementPosLeft
+      width,
+      height,
+      bottom,
+      left
     } = elem.getBoundingClientRect()
 
     return {
-      left: elementPosLeft,
-      bottom: elementPosBottom,
-      width: widthElement,
-      height: heightElement,
+      left,
+      bottom,
+      width,
+      height,
     }
   }
 }

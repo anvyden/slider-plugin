@@ -1,9 +1,10 @@
 import Scale from "../subView/Scale/Scale";
-import {ISettings, Orientation} from "../../interfaces/interfaces";
+import {ISettings, Orientation, SliderComponents} from "../../interfaces/interfaces";
 import { changeFirstCharToLower } from "../../../utils/utils";
 import Knob from "../subView/Knob/Knob";
 import './Slider.scss'
 import Fill from "../subView/Fill/Fill";
+import Labels from "../subView/Labels/Labels";
 
 class Slider {
   protected readonly settings: ISettings
@@ -35,23 +36,25 @@ class Slider {
     this.root.insertAdjacentElement('beforeend', slider)
   }
 
-  private createComponents(): object {
+  private createComponents(): SliderComponents {
     const components = {}
-    const elementsSlider = [Scale, Knob, Fill]
+    const elementsSlider = [Scale, Knob, Fill, Labels]
     elementsSlider.forEach(Element => {
       const element: object = new Element(this.settings)
       const elementName: string = changeFirstCharToLower(element.constructor.name)
       components[elementName] = element
     })
 
-    return components
+    return <SliderComponents>components
   }
 
   private addElementsInScale() {
     const knob: HTMLDivElement = this.components['knob'].getKnob()
     const fill: HTMLDivElement = this.components['fill'].getFill()
+    const labels: HTMLDivElement[] = this.components['labels'].getLabels()
     this.scale.insertAdjacentElement("beforeend", fill)
     this.scale.insertAdjacentElement("beforeend", knob)
+    labels.map(label => this.scale.insertAdjacentElement("beforeend", label))
   }
 
   private createSlider(orientation: Orientation): HTMLDivElement {

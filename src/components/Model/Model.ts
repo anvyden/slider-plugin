@@ -26,7 +26,6 @@ class Model extends Observer {
 
   public setValue(option: Option, value: OptionValue): void {
     const newState = this.checkStateValue(option, value)
-    // Нужна валидация
     this.state = { ...this.state, ...this.validation.checkState(newState) }
     this.emit(modelEvents.VALUE_CHANGED, this.state)
   }
@@ -47,6 +46,7 @@ class Model extends Observer {
 
   public setValueFromPercent(option: Option, value: number): void {
     const valueInNumber = convertPercentValueToNumber(this.state, value)
+    // console.log(valueInNumber)
     this.setValue(option, valueInNumber)
   }
 
