@@ -31,8 +31,6 @@ const convertPercentValueToNumber = (state: ISettings, valueInPercent: number): 
   const valueWithSteps = Math.round(valueInPercent / stepInPercent) * step
   const valueInNumber = valueWithSteps + min
 
-  console.log(valueInPercent, valueWithSteps, valueInNumber)
-
   return valueInNumber
 }
 

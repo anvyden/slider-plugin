@@ -46,7 +46,6 @@ class Model extends Observer {
 
   public setValueFromPercent(option: Option, value: number): void {
     const valueInNumber = convertPercentValueToNumber(this.state, value)
-    // console.log(valueInNumber)
     this.setValue(option, valueInNumber)
   }
 

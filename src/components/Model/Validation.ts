@@ -27,8 +27,6 @@ class Validation {
       from: this.from,
     }
 
-    // console.log(validState)
-
     return validState
   }
 
@@ -57,7 +55,7 @@ class Validation {
   }
 
   public checkFrom(from: number): number {
-    const roundFrom = Math.round(from)
+    const roundFrom = from
     if (roundFrom < this.min) return this.min
     if (roundFrom > this.max) return this.max
     return roundFrom

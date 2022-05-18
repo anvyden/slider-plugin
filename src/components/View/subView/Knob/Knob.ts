@@ -1,18 +1,16 @@
 import Observer from "../../../Observer/Observer";
 import {Color, ElementCoords, ISettings, Orientation, PageCoords} from "../../../interfaces/interfaces";
 import './Knob.scss'
-import {convertPercentValueToNumber, convertStateValueToPercent} from "../../../../utils/utils";
+import {convertStateValueToPercent} from "../../../../utils/utils";
 import {KnobEvents} from "../../../events/events";
 
 class Knob extends Observer {
   private settings: ISettings
   private knob!: HTMLDivElement
-  // private position: number
 
   constructor(settings: ISettings) {
     super()
     this.settings = settings
-    // this.position = 0
     this.init()
   }
 
@@ -48,8 +46,7 @@ class Knob extends Observer {
 
     const handleKnobPointerMove = (event: PointerEvent): void => {
       const knobPosition = this.calculatePositionKnob(event)
-      const knobPositionInNumber = convertPercentValueToNumber(this.settings, knobPosition)
-      this.emit(KnobEvents.KNOB_VALUE_CHANGED, Number((knobPositionInNumber).toFixed(3)))
+      this.emit(KnobEvents.KNOB_VALUE_CHANGED, Number((knobPosition).toFixed(3)))
     }
 
     const handleKnobPointerUp = (): void => {

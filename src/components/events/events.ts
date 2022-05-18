@@ -11,4 +11,8 @@ enum KnobEvents {
   KNOB_VALUE_CHANGED = 'KNOB_VALUE_CHANGED'
 }
 
-export {modelEvents, viewEvents, KnobEvents}
+enum LabelsEvents {
+  LABEL_CLICK = 'LABEL_CLICK'
+}
+
+export {modelEvents, viewEvents, KnobEvents, LabelsEvents}
