@@ -51,10 +51,10 @@ class Slider {
   private addElementsInScale() {
     const knob: HTMLDivElement = this.components['knob'].getKnob()
     const fill: HTMLDivElement = this.components['fill'].getFill()
-    const labels: HTMLDivElement[] = this.components['labels'].getLabels()
+    const labels: HTMLDivElement = this.components['labels'].getLabels()
     this.scale.insertAdjacentElement("beforeend", fill)
     this.scale.insertAdjacentElement("beforeend", knob)
-    labels.map(label => this.scale.insertAdjacentElement("beforeend", label))
+    this.scale.insertAdjacentElement('beforeend', labels)
   }
 
   private createSlider(orientation: Orientation): HTMLDivElement {

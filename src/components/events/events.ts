@@ -4,15 +4,29 @@ enum modelEvents {
 }
 
 enum viewEvents {
-  VALUE_FROM_CHANGED = 'VALUE_FROM_CHANGED'
+  VALUE_FROM_CHANGED = 'VALUE_FROM_CHANGED',
+  VALUE_FROM_INCREMENT = 'VALUE_FROM_INCREMENT',
+  VALUE_FROM_DECREMENT = 'VALUE_FROM_DECREMENT'
 }
 
 enum KnobEvents {
-  KNOB_VALUE_CHANGED = 'KNOB_VALUE_CHANGED'
+  KNOB_VALUE_CHANGED = 'KNOB_VALUE_CHANGED',
+  KNOB_VALUE_INCREMENT = 'KNOB_VALUE_INCREMENT',
+  KNOB_VALUE_DECREMENT = 'KNOB_VALUE_DECREMENT'
 }
 
 enum LabelsEvents {
-  LABEL_CLICK = 'LABEL_CLICK'
+  LABEL_VALUE_CHANGED = 'LABEL_VALUE_CHANGED'
 }
 
-export {modelEvents, viewEvents, KnobEvents, LabelsEvents}
+enum ScaleEvents {
+  SCALE_VALUE_CHANGED = 'SCALE_VALUE_CHANGED'
+}
+
+export {
+  modelEvents,
+  viewEvents,
+  KnobEvents,
+  LabelsEvents,
+  ScaleEvents
+}

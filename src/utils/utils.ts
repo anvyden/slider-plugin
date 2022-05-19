@@ -1,4 +1,4 @@
-import { ISettings } from "../components/interfaces/interfaces";
+import {ElementCoords, ISettings, PageCoords} from "../components/interfaces/interfaces";
 
 const changeFirstCharToLower = (str: string): string => str[0].toLowerCase() + str.slice(1)
 
@@ -34,4 +34,50 @@ const convertPercentValueToNumber = (state: ISettings, valueInPercent: number): 
   return valueInNumber
 }
 
-export { changeFirstCharToLower, convertStateValueToPercent, convertPercentValueToNumber }
+const getPosition = (event: PointerEvent, state: ISettings): number => {
+  const { orientation } = state
+  const scale = document.querySelector('.js-slider__scale')
+
+  const { left, bottom, width, height } = scale ? getElementCoords(scale) : null
+  const { clientX, clientY } = getPageCoords(event)
+
+  if (orientation === 'horizontal') {
+    return ((clientX - left) / width ) * 100
+  }
+
+  return ((bottom - clientY) / height ) * 100
+}
+
+const getPageCoords = (event: PointerEvent): PageCoords => {
+  const { clientX, clientY } = event
+
+  return {
+    clientX,
+    clientY
+  }
+}
+
+const getElementCoords = (elem: Element): ElementCoords => {
+  const {
+    width,
+    height,
+    bottom,
+    left
+  } = elem.getBoundingClientRect()
+
+  return {
+    left,
+    bottom,
+    width,
+    height,
+  }
+}
+
+export {
+  changeFirstCharToLower,
+  convertStateValueToPercent,
+  convertPercentValueToNumber,
+  getPosition,
+  getPageCoords,
+  getElementCoords
+}

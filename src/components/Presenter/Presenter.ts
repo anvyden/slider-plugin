@@ -1,5 +1,5 @@
 import Model from "../Model/Model";
-import {ISettings} from "../interfaces/interfaces";
+import {ISettings, OptionFromKnobValues} from "../interfaces/interfaces";
 import {modelEvents, viewEvents} from "../events/events";
 import View from "../View/View";
 
@@ -20,10 +20,6 @@ class Presenter {
       this.view.init(state)
     })
 
-    /* TODO я добавил обновление по изменению значения, но я не реализовать у всех
-    *   subView метод update. Также я не сделал метод изменения одного значения
-    *   у самой модели */
-
     this.model.subscribe(modelEvents.VALUE_CHANGED, (state: ISettings) => {
       this.view.update(state)
     })
@@ -32,6 +28,14 @@ class Presenter {
   private bindViewEvents(): void {
     this.view.subscribe(viewEvents.VALUE_FROM_CHANGED, (value: number) => {
       this.model.setValueFromPercent('from', value)
+    })
+
+    this.view.subscribe(viewEvents.VALUE_FROM_INCREMENT, (value: OptionFromKnobValues) => {
+      this.model.increment(value)
+    })
+
+    this.view.subscribe(viewEvents.VALUE_FROM_DECREMENT, (value: OptionFromKnobValues) => {
+      this.model.decrement(value)
     })
   }
 

@@ -1,10 +1,10 @@
 import Observer from "../Observer/Observer";
-import {ISettings} from "../interfaces/interfaces";
+import {ISettings, OptionFromKnobValues} from "../interfaces/interfaces";
 import Slider from "./Slider/Slider";
-import {KnobEvents, LabelsEvents, viewEvents} from "../events/events";
+import {KnobEvents, LabelsEvents, ScaleEvents, viewEvents} from "../events/events";
 
 class View extends Observer {
-  private root: HTMLElement
+  protected readonly root: HTMLElement
   private sliderComponents!: object
 
   constructor(state: ISettings, root: HTMLElement) {
@@ -17,8 +17,7 @@ class View extends Observer {
     const slider = new Slider(state, this.root)
 
     this.sliderComponents = slider.getComponents()
-    this.bindKnobEvents()
-    this.bindLabelsEvents()
+    this.bindEvents()
   }
 
   public update(state: ISettings) {
@@ -28,16 +27,39 @@ class View extends Observer {
     })
   }
 
-  private bindKnobEvents(): void {
-    const { knob } = this.sliderComponents
-    knob.subscribe(KnobEvents.KNOB_VALUE_CHANGED, (value: number) => {
+  private bindEvents(): void {
+    this.bindKnobEvents()
+    this.bindLabelsEvents()
+    this.bindScaleEvents()
+  }
+
+  private bindScaleEvents(): void {
+    const { scale } = this.sliderComponents
+    scale.subscribe(ScaleEvents.SCALE_VALUE_CHANGED, (value: number) => {
       this.emit(viewEvents.VALUE_FROM_CHANGED, value)
     })
   }
 
+  private bindKnobEvents(): void {
+    const { knob } = this.sliderComponents
+
+    knob.subscribe(KnobEvents.KNOB_VALUE_CHANGED, (value: number) => {
+      this.emit(viewEvents.VALUE_FROM_CHANGED, value)
+    })
+
+    knob.subscribe(KnobEvents.KNOB_VALUE_INCREMENT, (value: OptionFromKnobValues) => {
+      this.emit(viewEvents.VALUE_FROM_INCREMENT, value)
+    })
+
+    knob.subscribe(KnobEvents.KNOB_VALUE_DECREMENT, (value: OptionFromKnobValues) => {
+      this.emit(viewEvents.VALUE_FROM_DECREMENT, value)
+    })
+
+  }
+
   private bindLabelsEvents(): void {
     const { labels } = this.sliderComponents
-    labels.subscribe(LabelsEvents.LABEL_CLICK, (value: number) => {
+    labels.subscribe(LabelsEvents.LABEL_VALUE_CHANGED, (value: number) => {
       this.emit(viewEvents.VALUE_FROM_CHANGED, value)
     })
   }

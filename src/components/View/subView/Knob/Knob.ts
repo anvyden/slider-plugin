@@ -1,11 +1,11 @@
 import Observer from "../../../Observer/Observer";
-import {Color, ElementCoords, ISettings, Orientation, PageCoords} from "../../../interfaces/interfaces";
+import {Color, ISettings, Orientation} from "../../../interfaces/interfaces";
 import './Knob.scss'
-import {convertStateValueToPercent} from "../../../../utils/utils";
+import {convertStateValueToPercent, getPosition} from "../../../../utils/utils";
 import {KnobEvents} from "../../../events/events";
 
 class Knob extends Observer {
-  private settings: ISettings
+  protected readonly settings: ISettings
   private knob!: HTMLDivElement
 
   constructor(settings: ISettings) {
@@ -29,11 +29,14 @@ class Knob extends Observer {
     const knobDirection = orientation === 'vertical' ? 'bottom' : 'left'
     this.knob = this.createKnob(orientation, knobDirection, color)
     this.knob.addEventListener('pointerdown', this.handleKnobPointerDown.bind(this))
+    this.knob.addEventListener('keydown', this.handleKnobKeyDown.bind(this))
   }
 
   private createKnob(orientation: Orientation, direction: string, color: Color): HTMLDivElement {
     const knob = document.createElement('div')
     knob.classList.add('js-slider__knob', 'slider__knob', `slider__knob--${orientation}`, `slider__knob--${color}`)
+    knob.setAttribute('data-id', 'knob')
+    knob.setAttribute('tabindex', '0')
 
     const { from } = this.settings
     knob.style[direction] = convertStateValueToPercent(this.settings, from) + '%'
@@ -45,7 +48,7 @@ class Knob extends Observer {
     event.preventDefault()
 
     const handleKnobPointerMove = (event: PointerEvent): void => {
-      const knobPosition = this.calculatePositionKnob(event)
+      const knobPosition = getPosition(event, this.settings)
       this.emit(KnobEvents.KNOB_VALUE_CHANGED, Number((knobPosition).toFixed(3)))
     }
 
@@ -60,48 +63,15 @@ class Knob extends Observer {
     this.knob.ondragstart = (): boolean => false
   }
 
-  private calculatePositionKnob(event: PointerEvent): number {
-    const { orientation } = this.settings
-    const scale = document.querySelector('.js-slider__scale')
+  private handleKnobKeyDown = (event: KeyboardEvent): void => {
+    const { code } = event
 
-    const { left, bottom, width, height } = scale ? this.getElementCoords(scale) : null
-    const { clientX, clientY } = this.getPageCoords(event)
-
-    // TODO
-    // Для того, чтобы бегунок не уезжал, надо добавить валидацию, в handleKnobPointerMove
-    // в котором надо вызывать event, где он будет обновлять модель и оттуда получать
-    // новое валидное значение
-    // И все эти методы можно перенести в utils
-    //
-    if (orientation === 'horizontal') {
-      return ((clientX - left) / width ) * 100
+    if (code === 'ArrowRight' || code === 'ArrowUp') {
+      this.emit(KnobEvents.KNOB_VALUE_INCREMENT, 'from')
     }
 
-    return ((bottom - clientY) / height ) * 100
-  }
-
-  private getPageCoords(event: PointerEvent): PageCoords {
-    const { clientX, clientY } = event
-
-    return {
-      clientX,
-      clientY
-    }
-  }
-
-  private getElementCoords(elem: Element): ElementCoords {
-    const {
-      width,
-      height,
-      bottom,
-      left
-    } = elem.getBoundingClientRect()
-
-    return {
-      left,
-      bottom,
-      width,
-      height,
+    if (code === 'ArrowLeft' || code === 'ArrowDown') {
+      this.emit(KnobEvents.KNOB_VALUE_DECREMENT, 'from')
     }
   }
 }

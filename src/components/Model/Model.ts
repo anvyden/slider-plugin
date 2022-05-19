@@ -1,4 +1,4 @@
-import { ISettings, Option, OptionValue, defaultState } from "../interfaces/interfaces";
+import {ISettings, Option, OptionValue, defaultState, OptionFromKnobValues} from "../interfaces/interfaces";
 import Validation from "./Validation";
 import Observer from "../Observer/Observer";
 import {modelEvents} from "../events/events";
@@ -34,14 +34,18 @@ class Model extends Observer {
     return this.state[option]
   }
 
-  public increment(option: number): void {
-    const newOptionValue: number = this.state[option] + this.state.step
-    // Нужна валидация нового значения, чтоб оно не выходило за границы допустимых
+  public increment(option: OptionFromKnobValues): void {
+    const newOptionValue = this.state[option] + this.state.step
+    const newState = this.checkStateValue(option, newOptionValue)
+    this.state = { ...this.state, ...this.validation.checkState(newState) }
+    this.emit(modelEvents.VALUE_CHANGED, this.state)
   }
 
-  public decrement(option: number): void {
-    const newOptionValue: number = this.state[option] - this.state.step
-    // Нужна валидация нового значения, чтоб оно не выходило за границы допустимых
+  public decrement(option: OptionFromKnobValues): void {
+    const newOptionValue = this.state[option] - this.state.step
+    const newState = this.checkStateValue(option, newOptionValue)
+    this.state = { ...this.state, ...this.validation.checkState(newState) }
+    this.emit(modelEvents.VALUE_CHANGED, this.state)
   }
 
   public setValueFromPercent(option: Option, value: number): void {

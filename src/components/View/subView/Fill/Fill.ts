@@ -3,7 +3,7 @@ import './Fill.scss'
 import {convertStateValueToPercent} from "../../../../utils/utils";
 
 class Fill {
-  private settings: ISettings
+  protected readonly settings: ISettings
   private fill!: HTMLDivElement
 
   constructor(settings: ISettings) {
@@ -27,7 +27,7 @@ class Fill {
     this.fill = this.createFill(orientation, directionFill , color)
   }
 
-  private createFill(orientation: Orientation, direction: string ,color: Color): HTMLDivElement {
+  private createFill(orientation: Orientation, direction: string, color: Color): HTMLDivElement {
     const { from } = this.settings
     const fill = document.createElement('div')
     fill.classList.add('slider__fill', `slider__fill--${orientation}`, `slider__fill--${color}`)

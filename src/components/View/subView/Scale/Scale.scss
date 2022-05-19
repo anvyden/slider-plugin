@@ -4,6 +4,7 @@
     border: 1px solid rgba(31, 32, 65, 0.25);
     border-radius: 3px;
     background: #e6e6e6;
+    cursor: pointer;
 
     &--horizontal {
       width: 100%;
@@ -14,7 +15,7 @@
 
     &--vertical {
       height: 100%;
-      min-height: 100px;
+      min-height: 266px;
       max-height: 80%;
       width: 8px;
     }
