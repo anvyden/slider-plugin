@@ -53,12 +53,28 @@ class Model extends Observer {
     this.setValue(option, valueInNumber)
   }
 
+  public getOptionByNearValue(percentValue: number): Option {
+    const { isRange, from, to } = this.state
+    const valueInNumber = convertPercentValueToNumber(this.state, percentValue)
+
+    if (isRange) {
+      const half = (to - from) / 2
+      const nearValue = valueInNumber - from
+      return nearValue >= half ? 'to' : 'from'
+    }
+
+    return 'from'
+  }
+
   private checkStateValue <Option extends keyof ISettings>(option: Option, value: ISettings[Option]): ISettings{
     const cloneState = { ...this.state }
     const optionTypeIsNumber = typeof value === 'number'
 
     const optionNameIsFrom = option === 'from' && optionTypeIsNumber
+    const optionNameIsTo = option === 'to' && optionTypeIsNumber
+
     if (optionNameIsFrom) cloneState.from = this.validation.checkFrom(value)
+    if (optionNameIsTo) cloneState.to = this.validation.checkTo(value)
 
     return cloneState
   }

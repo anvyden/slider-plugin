@@ -1,4 +1,4 @@
-import {ISettings, Option, OptionFromKnobValues} from "../interfaces/interfaces";
+import {ISettings, OptionFromKnobValues} from "../interfaces/interfaces";
 
 /* TODO
     Надо сделать проверку на типы, поскольку в emit я буду передавать не только state,

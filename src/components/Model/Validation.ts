@@ -5,6 +5,7 @@ class Validation {
   private max!: number
   private step!: number
   private from!: number
+  private to!: number
 
   public checkState(state: ISettings): ISettings {
     const {
@@ -18,6 +19,7 @@ class Validation {
     this.checkMaxMin(max, min)
     this.step = this.checkStep(this.max, this.min, step)
     this.from = this.checkFrom(from)
+    this.to = this.checkTo(to)
 
     const validState: ISettings = {
       ...state,
@@ -25,6 +27,7 @@ class Validation {
       min: this.min,
       step: this.step,
       from: this.from,
+      to: this.to,
     }
 
     return validState
@@ -59,6 +62,13 @@ class Validation {
     if (roundFrom < this.min) return this.min
     if (roundFrom > this.max) return this.max
     return roundFrom
+  }
+
+  public checkTo(to: number): number {
+    const roundTo = Math.round(to)
+    if (roundTo < this.min) return this.min
+    if (roundTo > this.max) return this.max
+    return roundTo
   }
 
 }

@@ -26,8 +26,17 @@ class Presenter {
   }
 
   private bindViewEvents(): void {
+    this.view.subscribe(viewEvents.VALUE_CHANGED, (value: number) => {
+      const option = this.model.getOptionByNearValue(value)
+      this.model.setValueFromPercent(option, value)
+    })
+
     this.view.subscribe(viewEvents.VALUE_FROM_CHANGED, (value: number) => {
       this.model.setValueFromPercent('from', value)
+    })
+
+    this.view.subscribe(viewEvents.VALUE_TO_CHANGED, (value: number) => {
+      this.model.setValueFromPercent('to', value)
     })
 
     this.view.subscribe(viewEvents.VALUE_FROM_INCREMENT, (value: OptionFromKnobValues) => {

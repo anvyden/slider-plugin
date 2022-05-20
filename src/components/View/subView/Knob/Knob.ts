@@ -4,13 +4,18 @@ import './Knob.scss'
 import {convertStateValueToPercent, getPosition} from "../../../../utils/utils";
 import {KnobEvents} from "../../../events/events";
 
+type knobTarget = KnobEvents.KNOB_VALUE_FROM_CHANGED | KnobEvents.KNOB_VALUE_TO_CHANGED
+
 class Knob extends Observer {
   protected readonly settings: ISettings
+  protected readonly dataId?: string
+  private knobTarget!: knobTarget
   private knob!: HTMLDivElement
 
-  constructor(settings: ISettings) {
+  constructor(settings: ISettings, dataId?: string) {
     super()
     this.settings = settings
+    this.dataId = dataId
     this.init()
   }
 
@@ -19,27 +24,39 @@ class Knob extends Observer {
   }
 
   public update(state: ISettings): void {
-    const { orientation, from } = state
-    const knobDirection = orientation === 'vertical' ? 'bottom' : 'left'
-    this.knob.style[knobDirection] = `${convertStateValueToPercent(state, from)}%`
+    const { orientation, from, to } = state
+    const direction = orientation === 'vertical' ? 'bottom' : 'left'
+
+    this.knob.getAttribute('data-id') === 'knob-second'
+      ? this.knob.style[direction] = convertStateValueToPercent(this.settings, to) + '%'
+      : this.knob.style[direction] = convertStateValueToPercent(this.settings, from) + '%'
   }
 
   private init(): void {
-    const { orientation, color } = this.settings
-    const knobDirection = orientation === 'vertical' ? 'bottom' : 'left'
-    this.knob = this.createKnob(orientation, knobDirection, color)
+    const { orientation, color, from, to } = this.settings
+    const direction = orientation === 'vertical' ? 'bottom' : 'left'
+    this.knob = this.createKnob(orientation, color)
+
+    this.knob.getAttribute('data-id') === 'knob-second'
+      ? this.knob.style[direction] = convertStateValueToPercent(this.settings, to) + '%'
+      : this.knob.style[direction] = convertStateValueToPercent(this.settings, from) + '%'
+
+    this.knob.addEventListener('pointerdown', this.checkKnobTarget.bind(this))
     this.knob.addEventListener('pointerdown', this.handleKnobPointerDown.bind(this))
+    this.knob.addEventListener('keydown', this.checkKnobTarget.bind(this))
     this.knob.addEventListener('keydown', this.handleKnobKeyDown.bind(this))
   }
 
-  private createKnob(orientation: Orientation, direction: string, color: Color): HTMLDivElement {
+  private createKnob(orientation: Orientation, color: Color): HTMLDivElement {
+    const { isRange } = this.settings
+
+    const knobFirstId = isRange ? 'knob-first' : 'knob'
+    const knobId = this.dataId ? this.dataId : knobFirstId
+
     const knob = document.createElement('div')
     knob.classList.add('js-slider__knob', 'slider__knob', `slider__knob--${orientation}`, `slider__knob--${color}`)
-    knob.setAttribute('data-id', 'knob')
+    knob.setAttribute('data-id', knobId)
     knob.setAttribute('tabindex', '0')
-
-    const { from } = this.settings
-    knob.style[direction] = convertStateValueToPercent(this.settings, from) + '%'
 
     return knob
   }
@@ -49,7 +66,7 @@ class Knob extends Observer {
 
     const handleKnobPointerMove = (event: PointerEvent): void => {
       const knobPosition = getPosition(event, this.settings)
-      this.emit(KnobEvents.KNOB_VALUE_CHANGED, Number((knobPosition).toFixed(3)))
+      this.emit(this.knobTarget, Number((knobPosition).toFixed(3)))
     }
 
     const handleKnobPointerUp = (): void => {
@@ -72,6 +89,18 @@ class Knob extends Observer {
 
     if (code === 'ArrowLeft' || code === 'ArrowDown') {
       this.emit(KnobEvents.KNOB_VALUE_DECREMENT, 'from')
+    }
+  }
+
+  private checkKnobTarget(event: PointerEvent | KeyboardEvent): void {
+    if (event.target instanceof HTMLElement) {
+      const { target } = event
+
+      const isFirstKnob = target.getAttribute('data-id') === 'knob-first'
+
+      this.knobTarget = isFirstKnob
+        ? KnobEvents.KNOB_VALUE_FROM_CHANGED
+        : KnobEvents.KNOB_VALUE_TO_CHANGED
     }
   }
 }

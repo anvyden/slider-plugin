@@ -34,6 +34,7 @@ class Scale extends Observer {
   }
 
   private handleScalePointerDown(event: PointerEvent): void {
+    event.preventDefault()
     const positionClick = getPosition(event, this.state)
     this.emit(ScaleEvents.SCALE_VALUE_CHANGED, Number((positionClick).toFixed(3)))
   }

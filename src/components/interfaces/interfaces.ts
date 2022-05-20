@@ -43,7 +43,7 @@ type SliderComponents = {
 }
 
 const defaultState: ISettings = {
-  min: 0,
+  min: -50,
   max: 100,
   step: 10,
   from: 20,

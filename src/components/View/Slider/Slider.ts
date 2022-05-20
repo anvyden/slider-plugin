@@ -37,7 +37,8 @@ class Slider {
   }
 
   private createComponents(): SliderComponents {
-    const components = {}
+    const { isRange } = this.settings
+    let components = {}
     const elementsSlider = [Scale, Knob, Fill, Labels]
     elementsSlider.forEach(Element => {
       const element: object = new Element(this.settings)
@@ -45,16 +46,25 @@ class Slider {
       components[elementName] = element
     })
 
+    if (isRange) components = { ...components, ...{ knobSecond: new Knob(this.settings, 'knob-second') } }
     return <SliderComponents>components
   }
 
   private addElementsInScale() {
+    const { isRange } = this.settings
     const knob: HTMLDivElement = this.components['knob'].getKnob()
     const fill: HTMLDivElement = this.components['fill'].getFill()
     const labels: HTMLDivElement = this.components['labels'].getLabels()
     this.scale.insertAdjacentElement("beforeend", fill)
     this.scale.insertAdjacentElement("beforeend", knob)
+
+    if (isRange) {
+      const knobSecond: HTMLDivElement = this.components['knobSecond'].getKnob()
+      this.scale.insertAdjacentElement('beforeend', knobSecond)
+    }
+
     this.scale.insertAdjacentElement('beforeend', labels)
+
   }
 
   private createSlider(orientation: Orientation): HTMLDivElement {

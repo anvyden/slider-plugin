@@ -4,11 +4,13 @@ import Slider from "./Slider/Slider";
 import {KnobEvents, LabelsEvents, ScaleEvents, viewEvents} from "../events/events";
 
 class View extends Observer {
+  protected readonly state: ISettings
   protected readonly root: HTMLElement
   private sliderComponents!: object
 
   constructor(state: ISettings, root: HTMLElement) {
     super()
+    this.state = state
     this.root = root
     this.init(state)
   }
@@ -36,14 +38,16 @@ class View extends Observer {
   private bindScaleEvents(): void {
     const { scale } = this.sliderComponents
     scale.subscribe(ScaleEvents.SCALE_VALUE_CHANGED, (value: number) => {
-      this.emit(viewEvents.VALUE_FROM_CHANGED, value)
+      this.emit(viewEvents.VALUE_CHANGED, value)
     })
   }
 
   private bindKnobEvents(): void {
-    const { knob } = this.sliderComponents
+    const { isRange } = this.state
+    const { knob, knobSecond } = this.sliderComponents
 
-    knob.subscribe(KnobEvents.KNOB_VALUE_CHANGED, (value: number) => {
+    knob.subscribe(KnobEvents.KNOB_VALUE_FROM_CHANGED, (value: number) => {
+      console.log(value)
       this.emit(viewEvents.VALUE_FROM_CHANGED, value)
     })
 
@@ -54,6 +58,21 @@ class View extends Observer {
     knob.subscribe(KnobEvents.KNOB_VALUE_DECREMENT, (value: OptionFromKnobValues) => {
       this.emit(viewEvents.VALUE_FROM_DECREMENT, value)
     })
+
+    if (isRange) {
+      knobSecond.subscribe(KnobEvents.KNOB_VALUE_TO_CHANGED, (value: number) => {
+        console.log(value)
+        this.emit(viewEvents.VALUE_TO_CHANGED, value)
+      })
+
+      knobSecond.subscribe(KnobEvents.KNOB_VALUE_INCREMENT, (value: OptionFromKnobValues) => {
+        this.emit(viewEvents.VALUE_FROM_INCREMENT, value)
+      })
+
+      knobSecond.subscribe(KnobEvents.KNOB_VALUE_DECREMENT, (value: OptionFromKnobValues) => {
+        this.emit(viewEvents.VALUE_FROM_DECREMENT, value)
+      })
+    }
 
   }
 
