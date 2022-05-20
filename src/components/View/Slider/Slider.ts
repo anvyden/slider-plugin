@@ -22,6 +22,9 @@ class Slider {
     return this.components
   }
 
+  /* TODO сделать добавление элементов, когда функции hasFill, hasLabels, hasTooltips
+  *   имеют значение true */
+
   private init(): void {
     const { orientation } = this.settings
     const slider = this.createSlider(orientation)

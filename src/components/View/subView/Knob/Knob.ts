@@ -96,7 +96,7 @@ class Knob extends Observer {
     if (event.target instanceof HTMLElement) {
       const { target } = event
 
-      const isFirstKnob = target.getAttribute('data-id') === 'knob-first'
+      const isFirstKnob = target.getAttribute('data-id') === 'knob-first' || 'knob'
 
       this.knobTarget = isFirstKnob
         ? KnobEvents.KNOB_VALUE_FROM_CHANGED

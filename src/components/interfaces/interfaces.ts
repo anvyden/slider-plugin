@@ -44,12 +44,12 @@ type SliderComponents = {
 
 const defaultState: ISettings = {
   min: -50,
-  max: 100,
+  max: 0,
   step: 10,
-  from: 20,
-  to: 40,
+  from: -20,
+  to: -10,
   orientation: 'horizontal',
-  isRange: true,
+  isRange: false,
   hasFill: true,
   hasLabels: false,
   hasTooltips: false,

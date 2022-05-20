@@ -86,6 +86,9 @@ class Labels extends Observer {
     return label
   }
 
+  /* TODO надо сделать чтоб по клику на label перемещался ближайший knob,
+  *   как это сделано при клике на scale. */
+
   private handleLabelsPointerDown(event: PointerEvent): void {
     const { target } = event
     if (target instanceof HTMLElement) {
