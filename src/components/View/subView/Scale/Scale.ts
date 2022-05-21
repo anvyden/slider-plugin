@@ -29,14 +29,28 @@ class Scale extends Observer {
   private createScale(orientation: Orientation): HTMLDivElement {
     const scaleNode = document.createElement('div')
     scaleNode.classList.add('js-slider__scale', 'slider__scale', `slider__scale--${orientation}`)
+    scaleNode.setAttribute('data-id', 'scale')
 
     return scaleNode
   }
 
+  /* TODO некорректно работает клик по scale при не соответствии step с min - max range. Как и у
+  *   labels. Это из-за расчет через функцию convertPercentValueToNumber.  */
+
   private handleScalePointerDown(event: PointerEvent): void {
-    event.preventDefault()
-    const positionClick = getPosition(event, this.state)
-    this.emit(ScaleEvents.SCALE_VALUE_CHANGED, Number((positionClick).toFixed(3)))
+    if (this.isScale(event)) {
+      const positionClick = getPosition(event, this.state)
+      this.emit(ScaleEvents.SCALE_VALUE_CHANGED, Number((positionClick).toFixed(3)))
+    }
+  }
+
+  private isScale(event: PointerEvent): boolean {
+    const { target } = event
+    if (target instanceof HTMLElement) {
+      const isScale = target.dataset.id === 'scale' || target.dataset.id === 'fill'
+      return isScale
+    }
+    return false
   }
 }
 

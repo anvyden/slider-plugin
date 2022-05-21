@@ -23,6 +23,12 @@ interface ISettings {
   color: Color,
 }
 
+type stateValuesForConvert = {
+  max: number,
+  min: number,
+  step: number
+}
+
 type PageCoords = {
   clientX: number,
   clientY: number,
@@ -46,10 +52,10 @@ const defaultState: ISettings = {
   min: -50,
   max: 0,
   step: 10,
-  from: -20,
-  to: -10,
+  from: -44,
+  to: -26,
   orientation: 'horizontal',
-  isRange: false,
+  isRange: true,
   hasFill: true,
   hasLabels: false,
   hasTooltips: false,
@@ -66,5 +72,6 @@ export {
   ElementCoords,
   PageCoords,
   SliderComponents,
+  stateValuesForConvert,
   defaultState
 }

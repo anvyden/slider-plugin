@@ -57,13 +57,16 @@ class Labels extends Observer {
 
     const items = []
 
+    /* TODO Проблема с количеством лейблов в том, что если я задаю количество лейблов
+        больше нужного количества шагов, то они не появляются */
+
     for (let i = 0; i < countOfLabels; i++) {
       const countOfSteps = (max - min) / step
       const stepsForLabel = Math.round((countOfSteps / (countOfLabels - 1)) * i)
       const positionInNumber = (stepsForLabel * step) + min
-      const positionInPercent = convertStateValueToPercent(this.state, positionInNumber)
-
-      const item = this.createLabel(orientation, positionInNumber, positionInPercent)
+      const correctPositionInNumber = positionInNumber > max ? max : positionInNumber
+      const positionInPercent = Number(convertStateValueToPercent(this.state, correctPositionInNumber).toFixed(3))
+      const item = this.createLabel(orientation, correctPositionInNumber, positionInPercent)
       items.push(item)
     }
 
@@ -86,14 +89,11 @@ class Labels extends Observer {
     return label
   }
 
-  /* TODO надо сделать чтоб по клику на label перемещался ближайший knob,
-  *   как это сделано при клике на scale. */
-
   private handleLabelsPointerDown(event: PointerEvent): void {
     const { target } = event
     if (target instanceof HTMLElement) {
-      const targetValue = Number(target.dataset.value)
-      this.emit(LabelsEvents.LABEL_VALUE_CHANGED, targetValue)
+      const targetValuePercent = Number(target.dataset.value)
+      this.emit(LabelsEvents.LABEL_VALUE_CHANGED, targetValuePercent)
     }
   }
 }

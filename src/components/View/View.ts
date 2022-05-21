@@ -37,8 +37,8 @@ class View extends Observer {
 
   private bindScaleEvents(): void {
     const { scale } = this.sliderComponents
-    scale.subscribe(ScaleEvents.SCALE_VALUE_CHANGED, (value: number) => {
-      this.emit(viewEvents.VALUE_CHANGED, value)
+    scale.subscribe(ScaleEvents.SCALE_VALUE_CHANGED, (percentValue: number) => {
+      this.emit(viewEvents.VALUE_CHANGED, percentValue)
     })
   }
 
@@ -47,7 +47,6 @@ class View extends Observer {
     const { knob, knobSecond } = this.sliderComponents
 
     knob.subscribe(KnobEvents.KNOB_VALUE_FROM_CHANGED, (value: number) => {
-      console.log(value)
       this.emit(viewEvents.VALUE_FROM_CHANGED, value)
     })
 
@@ -61,7 +60,6 @@ class View extends Observer {
 
     if (isRange) {
       knobSecond.subscribe(KnobEvents.KNOB_VALUE_TO_CHANGED, (value: number) => {
-        console.log(value)
         this.emit(viewEvents.VALUE_TO_CHANGED, value)
       })
 
@@ -78,8 +76,8 @@ class View extends Observer {
 
   private bindLabelsEvents(): void {
     const { labels } = this.sliderComponents
-    labels.subscribe(LabelsEvents.LABEL_VALUE_CHANGED, (value: number) => {
-      this.emit(viewEvents.VALUE_FROM_CHANGED, value)
+    labels.subscribe(LabelsEvents.LABEL_VALUE_CHANGED, (percentValue: number) => {
+      this.emit(viewEvents.VALUE_CHANGED, percentValue)
     })
   }
 }

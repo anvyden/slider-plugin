@@ -27,7 +27,7 @@ class Knob extends Observer {
     const { orientation, from, to } = state
     const direction = orientation === 'vertical' ? 'bottom' : 'left'
 
-    this.knob.getAttribute('data-id') === 'knob-second'
+    this.knob.dataset.id === 'knob-second'
       ? this.knob.style[direction] = convertStateValueToPercent(this.settings, to) + '%'
       : this.knob.style[direction] = convertStateValueToPercent(this.settings, from) + '%'
   }
@@ -37,7 +37,7 @@ class Knob extends Observer {
     const direction = orientation === 'vertical' ? 'bottom' : 'left'
     this.knob = this.createKnob(orientation, color)
 
-    this.knob.getAttribute('data-id') === 'knob-second'
+    this.knob.dataset.id === 'knob-second'
       ? this.knob.style[direction] = convertStateValueToPercent(this.settings, to) + '%'
       : this.knob.style[direction] = convertStateValueToPercent(this.settings, from) + '%'
 
@@ -96,7 +96,8 @@ class Knob extends Observer {
     if (event.target instanceof HTMLElement) {
       const { target } = event
 
-      const isFirstKnob = target.getAttribute('data-id') === 'knob-first' || 'knob'
+      const isFirstKnob = target.dataset.id === 'knob-first'
+        || target.dataset.id === 'knob'
 
       this.knobTarget = isFirstKnob
         ? KnobEvents.KNOB_VALUE_FROM_CHANGED

@@ -1,4 +1,4 @@
-import {ElementCoords, ISettings, PageCoords} from "../components/interfaces/interfaces";
+import {ElementCoords, ISettings, PageCoords, stateValuesForConvert} from "../components/interfaces/interfaces";
 
 const changeFirstCharToLower = (str: string): string => str[0].toLowerCase() + str.slice(1)
 
@@ -15,7 +15,7 @@ const getStepInPercent = (max: number, min: number, step: number): number => {
   return stepInPercent
 }
 
-const convertStateValueToPercent = (state: ISettings, value: number): number => {
+const convertStateValueToPercent = (state: ISettings | stateValuesForConvert, value: number): number => {
   const { max, min, step } = state
   const stepInPercent = getStepInPercent(max, min, step)
 
@@ -27,7 +27,7 @@ const convertStateValueToPercent = (state: ISettings, value: number): number => 
   return percent
 }
 
-const convertPercentValueToNumber = (state: ISettings, valueInPercent: number): number => {
+const convertPercentValueToNumber = (state: ISettings | stateValuesForConvert, valueInPercent: number): number => {
   const { max, min, step } = state
   const stepInPercent = getStepInPercent(max, min, step)
 

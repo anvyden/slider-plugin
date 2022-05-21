@@ -33,6 +33,7 @@ class Fill {
   private createFill(orientation: Orientation, color: Color): HTMLDivElement {
     const fill = document.createElement('div')
     fill.classList.add('slider__fill', `slider__fill--${orientation}`, `slider__fill--${color}`)
+    fill.setAttribute('data-id', 'fill')
 
     return fill
   }
