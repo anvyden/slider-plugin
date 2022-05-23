@@ -64,6 +64,7 @@ class Knob extends Observer {
   private handleKnobPointerDown(event: PointerEvent): void {
     event.preventDefault()
 
+
     const handleKnobPointerMove = (event: PointerEvent): void => {
       const knobPosition = getPosition(event, this.settings)
       this.emit(this.knobTarget, Number((knobPosition).toFixed(3)))
@@ -82,13 +83,14 @@ class Knob extends Observer {
 
   private handleKnobKeyDown = (event: KeyboardEvent): void => {
     const { code } = event
+    const option = this.knobTarget === KnobEvents.KNOB_VALUE_TO_CHANGED ? 'to' : 'from'
 
     if (code === 'ArrowRight' || code === 'ArrowUp') {
-      this.emit(KnobEvents.KNOB_VALUE_INCREMENT, 'from')
+      this.emit(KnobEvents.KNOB_VALUE_INCREMENT, option)
     }
 
     if (code === 'ArrowLeft' || code === 'ArrowDown') {
-      this.emit(KnobEvents.KNOB_VALUE_DECREMENT, 'from')
+      this.emit(KnobEvents.KNOB_VALUE_DECREMENT, option)
     }
   }
 

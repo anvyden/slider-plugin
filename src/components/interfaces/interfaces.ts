@@ -57,7 +57,7 @@ const defaultState: ISettings = {
   orientation: 'horizontal',
   isRange: true,
   hasFill: true,
-  hasLabels: false,
+  hasLabels: true,
   hasTooltips: false,
   color: 'green',
 }

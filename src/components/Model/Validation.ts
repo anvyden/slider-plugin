@@ -70,12 +70,6 @@ class Validation {
     this.min = validMin
   }
 
-  /* TODO надо провалидировать значения from and to, чтоб to не мог заезжать за from
-  *   и from не мог заезжать за to. И соответственно в этой ситуации надо менять
-  *   z-index у каждого knob, чтоб можно было тащить его, когда они накладываются
-  *   друг на друга. */
-
-
   public convertValueToStep(value: number): number {
     let validValue = convertStateValueToPercent({
       max: this.max,

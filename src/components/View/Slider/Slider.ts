@@ -22,9 +22,6 @@ class Slider {
     return this.components
   }
 
-  /* TODO сделать добавление элементов, когда функции hasFill, hasLabels, hasTooltips
-  *   имеют значение true */
-
   private init(): void {
     const { orientation } = this.settings
     const slider = this.createSlider(orientation)
@@ -54,11 +51,12 @@ class Slider {
   }
 
   private addElementsInScale() {
-    const { isRange } = this.settings
+    const { isRange, hasFill, hasLabels, hasTooltips } = this.settings
+
     const knob: HTMLDivElement = this.components['knob'].getKnob()
     const fill: HTMLDivElement = this.components['fill'].getFill()
     const labels: HTMLDivElement = this.components['labels'].getLabels()
-    this.scale.insertAdjacentElement("beforeend", fill)
+
     this.scale.insertAdjacentElement("beforeend", knob)
 
     if (isRange) {
@@ -66,7 +64,8 @@ class Slider {
       this.scale.insertAdjacentElement('beforeend', knobSecond)
     }
 
-    this.scale.insertAdjacentElement('beforeend', labels)
+    if (hasFill) this.scale.insertAdjacentElement("afterbegin", fill)
+    if (hasLabels) this.scale.insertAdjacentElement('beforeend', labels)
 
   }
 

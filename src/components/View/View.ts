@@ -45,8 +45,12 @@ class View extends Observer {
   private bindKnobEvents(): void {
     const { isRange } = this.state
     const { knob, knobSecond } = this.sliderComponents
+    const knobNode = knob.getKnob()
+    const knobSecondNode = knobSecond.getKnob()
 
     knob.subscribe(KnobEvents.KNOB_VALUE_FROM_CHANGED, (value: number) => {
+      knobNode.style.zIndex = 1
+      knobSecondNode.style.zIndex = 0
       this.emit(viewEvents.VALUE_FROM_CHANGED, value)
     })
 
@@ -60,6 +64,8 @@ class View extends Observer {
 
     if (isRange) {
       knobSecond.subscribe(KnobEvents.KNOB_VALUE_TO_CHANGED, (value: number) => {
+        knobSecondNode.style.zIndex = 1
+        knobNode.style.zIndex = 0
         this.emit(viewEvents.VALUE_TO_CHANGED, value)
       })
 
