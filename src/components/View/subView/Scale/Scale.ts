@@ -1,8 +1,8 @@
-import Observer from "../../../Observer/Observer";
 import { ISettings, Orientation } from "../../../interfaces/interfaces";
-import './Scale.scss'
-import {getPosition} from "../../../../utils/utils";
-import {ScaleEvents} from "../../../events/events";
+import { getPosition } from "../../../../utils/utils";
+import { ScaleEvents } from "../../../Observer/events";
+import Observer from "../../../Observer/Observer";
+import './scale.scss'
 
 class Scale extends Observer {
   protected readonly state: ISettings

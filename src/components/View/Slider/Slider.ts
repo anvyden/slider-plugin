@@ -1,10 +1,10 @@
-import Scale from "../subView/Scale/Scale";
-import {ISettings, Orientation, SliderComponents} from "../../interfaces/interfaces";
+import { ISettings, Orientation, SliderComponents } from "../../interfaces/interfaces";
 import { changeFirstCharToLower } from "../../../utils/utils";
+import Scale from "../subView/Scale/Scale";
 import Knob from "../subView/Knob/Knob";
-import './Slider.scss'
 import Fill from "../subView/Fill/Fill";
 import Labels from "../subView/Labels/Labels";
+import './slider.scss'
 
 class Slider {
   protected readonly settings: ISettings
@@ -71,7 +71,7 @@ class Slider {
 
   private createSlider(orientation: Orientation): HTMLDivElement {
     const slider = document.createElement('div')
-    slider.classList.add('js-slider', 'slider', `slider__${orientation}`)
+    slider.classList.add('js-slider', 'slider', `slider--${orientation}`)
 
     return slider
   }

@@ -1,5 +1,6 @@
-import { ISettings, defaultState } from "../interfaces/interfaces";
-import {convertPercentValueToNumber, convertStateValueToPercent} from "../../utils/utils";
+import { ISettings } from "../interfaces/interfaces";
+import { convertPercentValueToNumber, convertStateValueToPercent } from "../../utils/utils";
+import { defaultState } from "../../defaultState";
 
 class Validation {
   private min!: number

@@ -1,7 +1,7 @@
+import { ISettings, OptionFromKnobValues } from "../interfaces/interfaces";
+import { KnobEvents, LabelsEvents, ScaleEvents, ViewEvents } from "../Observer/events";
 import Observer from "../Observer/Observer";
-import {ISettings, OptionFromKnobValues} from "../interfaces/interfaces";
 import Slider from "./Slider/Slider";
-import {KnobEvents, LabelsEvents, ScaleEvents, viewEvents} from "../events/events";
 
 class View extends Observer {
   protected readonly state: ISettings
@@ -38,7 +38,7 @@ class View extends Observer {
   private bindScaleEvents(): void {
     const { scale } = this.sliderComponents
     scale.subscribe(ScaleEvents.SCALE_VALUE_CHANGED, (percentValue: number) => {
-      this.emit(viewEvents.VALUE_CHANGED, percentValue)
+      this.emit(ViewEvents.VALUE_CHANGED, percentValue)
     })
   }
 
@@ -51,30 +51,30 @@ class View extends Observer {
     knob.subscribe(KnobEvents.KNOB_VALUE_FROM_CHANGED, (value: number) => {
       knobNode.style.zIndex = 1
       knobSecondNode.style.zIndex = 0
-      this.emit(viewEvents.VALUE_FROM_CHANGED, value)
+      this.emit(ViewEvents.VALUE_FROM_CHANGED, value)
     })
 
     knob.subscribe(KnobEvents.KNOB_VALUE_INCREMENT, (value: OptionFromKnobValues) => {
-      this.emit(viewEvents.VALUE_FROM_INCREMENT, value)
+      this.emit(ViewEvents.VALUE_FROM_INCREMENT, value)
     })
 
     knob.subscribe(KnobEvents.KNOB_VALUE_DECREMENT, (value: OptionFromKnobValues) => {
-      this.emit(viewEvents.VALUE_FROM_DECREMENT, value)
+      this.emit(ViewEvents.VALUE_FROM_DECREMENT, value)
     })
 
     if (isRange) {
       knobSecond.subscribe(KnobEvents.KNOB_VALUE_TO_CHANGED, (value: number) => {
         knobSecondNode.style.zIndex = 1
         knobNode.style.zIndex = 0
-        this.emit(viewEvents.VALUE_TO_CHANGED, value)
+        this.emit(ViewEvents.VALUE_TO_CHANGED, value)
       })
 
       knobSecond.subscribe(KnobEvents.KNOB_VALUE_INCREMENT, (value: OptionFromKnobValues) => {
-        this.emit(viewEvents.VALUE_FROM_INCREMENT, value)
+        this.emit(ViewEvents.VALUE_FROM_INCREMENT, value)
       })
 
       knobSecond.subscribe(KnobEvents.KNOB_VALUE_DECREMENT, (value: OptionFromKnobValues) => {
-        this.emit(viewEvents.VALUE_FROM_DECREMENT, value)
+        this.emit(ViewEvents.VALUE_FROM_DECREMENT, value)
       })
     }
 
@@ -83,7 +83,7 @@ class View extends Observer {
   private bindLabelsEvents(): void {
     const { labels } = this.sliderComponents
     labels.subscribe(LabelsEvents.LABEL_VALUE_CHANGED, (percentValue: number) => {
-      this.emit(viewEvents.VALUE_CHANGED, percentValue)
+      this.emit(ViewEvents.VALUE_CHANGED, percentValue)
     })
   }
 }

@@ -2,12 +2,6 @@ import {ElementCoords, ISettings, PageCoords, stateValuesForConvert} from "../co
 
 const changeFirstCharToLower = (str: string): string => str[0].toLowerCase() + str.slice(1)
 
-// const validateOrientation = (orientation: Orientation): Orientation => orientation === 'vertical'
-//   ? 'vertical'
-//   : 'horizontal'
-//
-// const validateColor = (color: Color): Color => color === 'purple' ? 'purple' : 'green'
-
 const getStepInPercent = (max: number, min: number, step: number): number => {
   const countOfSteps = (max - min) / step
   const stepInPercent = 100 / countOfSteps

@@ -1,0 +1,21 @@
+.slider__fill {
+  position: absolute;
+  border-radius: 3px;
+
+  &--horizontal {
+    height: 6px;
+  }
+
+  &--vertical {
+    bottom: 0;
+    width: 6px;
+  }
+
+  &--green {
+    background: linear-gradient(180deg, #06a27b 0, #06a27b 50%, #06a27b 100%);
+  }
+
+  &--purple {
+    background: #7a00ff;
+  }
+}

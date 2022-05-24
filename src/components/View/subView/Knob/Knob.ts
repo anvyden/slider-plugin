@@ -1,8 +1,8 @@
+import { Color, ISettings, Orientation } from "../../../interfaces/interfaces";
+import { convertStateValueToPercent, getPosition } from "../../../../utils/utils";
+import { KnobEvents } from "../../../Observer/events";
 import Observer from "../../../Observer/Observer";
-import {Color, ISettings, Orientation} from "../../../interfaces/interfaces";
-import './Knob.scss'
-import {convertStateValueToPercent, getPosition} from "../../../../utils/utils";
-import {KnobEvents} from "../../../events/events";
+import './knob.scss'
 
 type knobTarget = KnobEvents.KNOB_VALUE_FROM_CHANGED | KnobEvents.KNOB_VALUE_TO_CHANGED
 

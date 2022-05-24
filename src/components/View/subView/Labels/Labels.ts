@@ -1,8 +1,8 @@
-import {ISettings, Orientation} from "../../../interfaces/interfaces";
-import {convertStateValueToPercent} from "../../../../utils/utils";
-import './Labels.scss'
+import { ISettings, Orientation } from "../../../interfaces/interfaces";
+import { convertStateValueToPercent } from "../../../../utils/utils";
+import { LabelsEvents } from "../../../Observer/events";
 import Observer from "../../../Observer/Observer";
-import {LabelsEvents} from "../../../events/events";
+import './labels.scss'
 
 class Labels extends Observer {
   protected readonly state: ISettings

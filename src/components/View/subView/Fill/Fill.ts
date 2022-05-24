@@ -1,6 +1,6 @@
-import {Color, ISettings, Orientation} from "../../../interfaces/interfaces";
-import './Fill.scss'
-import {convertStateValueToPercent, getStepInPercent} from "../../../../utils/utils";
+import { Color, ISettings, Orientation } from "../../../interfaces/interfaces";
+import { convertStateValueToPercent, getStepInPercent } from "../../../../utils/utils";
+import './fill.scss'
 
 class Fill {
   protected readonly settings: ISettings

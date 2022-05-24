@@ -7,10 +7,10 @@
     "dev": "cross-env NODE_ENV=development webpack --mode development",
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "start": "cross-env NODE_ENV=development webpack serve --mode development",
-    "lint": "eslint source",
-    "lint:fix": "eslint source --fix",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "deploy": "npm run build && gh-pages -d dist",
-    "stylelint": "stylelint \"source/**/*.scss\""
+    "stylelint": "stylelint \"src/**/*.scss\""
   },
   "browserslist": "> 0.25%, not dead",
   "keywords": [

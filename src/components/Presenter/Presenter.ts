@@ -1,6 +1,6 @@
+import { ISettings, OptionFromKnobValues } from "../interfaces/interfaces";
+import { ModelEvents, ViewEvents } from "../Observer/events";
 import Model from "../Model/Model";
-import {ISettings, OptionFromKnobValues} from "../interfaces/interfaces";
-import {modelEvents, viewEvents} from "../events/events";
 import View from "../View/View";
 
 class Presenter {
@@ -16,34 +16,34 @@ class Presenter {
   }
 
   private bindModelEvents(): void {
-    this.model.subscribe(modelEvents.STATE_CHANGED, (state: ISettings) => {
+    this.model.subscribe(ModelEvents.STATE_CHANGED, (state: ISettings) => {
       this.view.init(state)
     })
 
-    this.model.subscribe(modelEvents.VALUE_CHANGED, (state: ISettings) => {
+    this.model.subscribe(ModelEvents.VALUE_CHANGED, (state: ISettings) => {
       this.view.update(state)
     })
   }
 
   private bindViewEvents(): void {
-    this.view.subscribe(viewEvents.VALUE_CHANGED, (percentValue: number) => {
+    this.view.subscribe(ViewEvents.VALUE_CHANGED, (percentValue: number) => {
       const option = this.model.getOptionByNearValue(percentValue)
       this.model.setValueFromPercent(option, percentValue)
     })
 
-    this.view.subscribe(viewEvents.VALUE_FROM_CHANGED, (value: number) => {
+    this.view.subscribe(ViewEvents.VALUE_FROM_CHANGED, (value: number) => {
       this.model.setValueFromPercent('from', value)
     })
 
-    this.view.subscribe(viewEvents.VALUE_TO_CHANGED, (value: number) => {
+    this.view.subscribe(ViewEvents.VALUE_TO_CHANGED, (value: number) => {
       this.model.setValueFromPercent('to', value)
     })
 
-    this.view.subscribe(viewEvents.VALUE_FROM_INCREMENT, (value: OptionFromKnobValues) => {
+    this.view.subscribe(ViewEvents.VALUE_FROM_INCREMENT, (value: OptionFromKnobValues) => {
       this.model.increment(value)
     })
 
-    this.view.subscribe(viewEvents.VALUE_FROM_DECREMENT, (value: OptionFromKnobValues) => {
+    this.view.subscribe(ViewEvents.VALUE_FROM_DECREMENT, (value: OptionFromKnobValues) => {
       this.model.decrement(value)
     })
   }

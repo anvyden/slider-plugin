@@ -1,8 +1,9 @@
-import {ISettings, Option, OptionValue, defaultState, OptionFromKnobValues} from "../interfaces/interfaces";
+import { ISettings, Option, OptionValue, OptionFromKnobValues } from "../interfaces/interfaces";
+import { convertPercentValueToNumber } from "../../utils/utils";
+import { ModelEvents } from "../Observer/events";
+import { defaultState } from "../../defaultState";
 import Validation from "./Validation";
 import Observer from "../Observer/Observer";
-import {modelEvents} from "../events/events";
-import {convertPercentValueToNumber} from "../../utils/utils";
 
 class Model extends Observer {
   private state: ISettings = defaultState
@@ -17,7 +18,7 @@ class Model extends Observer {
   public setState(state: ISettings): void {
     const newState = { ...this.state, ...this.validation.checkState(state) }
     this.state = { ...newState }
-    this.emit(modelEvents.STATE_CHANGED, this.state)
+    this.emit(ModelEvents.STATE_CHANGED, this.state)
   }
 
   public getState(): ISettings {
@@ -27,7 +28,7 @@ class Model extends Observer {
   public setValue(option: Option, value: OptionValue): void {
     const newState = this.checkStateValue(option, value)
     this.state = { ...this.state, ...this.validation.checkState(newState) }
-    this.emit(modelEvents.VALUE_CHANGED, this.state)
+    this.emit(ModelEvents.VALUE_CHANGED, this.state)
   }
 
   public getValue(option: Option): OptionValue {
@@ -38,14 +39,14 @@ class Model extends Observer {
     const newOptionValue = this.state[option] + this.state.step
     const newState = this.checkStateValue(option, newOptionValue)
     this.state = { ...this.state, ...this.validation.checkState(newState) }
-    this.emit(modelEvents.VALUE_CHANGED, this.state)
+    this.emit(ModelEvents.VALUE_CHANGED, this.state)
   }
 
   public decrement(option: OptionFromKnobValues): void {
     const newOptionValue = this.state[option] - this.state.step
     const newState = this.checkStateValue(option, newOptionValue)
     this.state = { ...this.state, ...this.validation.checkState(newState) }
-    this.emit(modelEvents.VALUE_CHANGED, this.state)
+    this.emit(ModelEvents.VALUE_CHANGED, this.state)
   }
 
   public setValueFromPercent(option: Option, value: number): void {

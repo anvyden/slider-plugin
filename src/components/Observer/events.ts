@@ -1,9 +1,9 @@
-enum modelEvents {
+enum ModelEvents {
   STATE_CHANGED = 'STATE_CHANGED',
   VALUE_CHANGED = 'VALUE_CHANGED'
 }
 
-enum viewEvents {
+enum ViewEvents {
   VALUE_CHANGED = 'VALUE_CHANGED',
   VALUE_FROM_CHANGED = 'VALUE_FROM_CHANGED',
   VALUE_TO_CHANGED = 'VALUE_TO_CHANGED',
@@ -27,8 +27,8 @@ enum ScaleEvents {
 }
 
 export {
-  modelEvents,
-  viewEvents,
+  ModelEvents,
+  ViewEvents,
   KnobEvents,
   LabelsEvents,
   ScaleEvents
