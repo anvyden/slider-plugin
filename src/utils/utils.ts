@@ -35,7 +35,7 @@ const getPosition = (event: PointerEvent, state: ISettings): number => {
   const { orientation } = state
   const scale = document.querySelector('.js-slider__scale')
 
-  const { left, bottom, width, height } = scale ? getElementCoords(scale) : null
+  const { left, bottom, width, height } = getElementCoords(<HTMLDivElement>scale)
   const { clientX, clientY } = getPageCoords(event)
 
   if (orientation === 'horizontal') {

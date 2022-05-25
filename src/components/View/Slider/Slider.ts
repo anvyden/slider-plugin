@@ -4,13 +4,14 @@ import Scale from "../subView/Scale/Scale";
 import Knob from "../subView/Knob/Knob";
 import Fill from "../subView/Fill/Fill";
 import Labels from "../subView/Labels/Labels";
+import Tooltip from "../subView/Tooltip/Tooltip";
 import './slider.scss'
 
 class Slider {
   protected readonly settings: ISettings
   private root: HTMLElement
   private scale!: HTMLDivElement
-  private components!: Object
+  private components!: SliderComponents
 
   constructor(settings: ISettings, root: HTMLElement) {
     this.root = root
@@ -18,7 +19,7 @@ class Slider {
     this.init()
   }
 
-  public getComponents(): object {
+  public getComponents(): SliderComponents {
     return this.components
   }
 
@@ -39,7 +40,7 @@ class Slider {
   private createComponents(): SliderComponents {
     const { isRange } = this.settings
     let components = {}
-    const elementsSlider = [Scale, Knob, Fill, Labels]
+    const elementsSlider = [Scale, Knob, Fill, Labels, Tooltip]
     elementsSlider.forEach(Element => {
       const element: object = new Element(this.settings)
       const elementName: string = changeFirstCharToLower(element.constructor.name)
@@ -51,7 +52,7 @@ class Slider {
   }
 
   private addElementsInScale() {
-    const { isRange, hasFill, hasLabels, hasTooltips } = this.settings
+    const { isRange, hasFill, hasLabels } = this.settings
 
     const knob: HTMLDivElement = this.components['knob'].getKnob()
     const fill: HTMLDivElement = this.components['fill'].getFill()

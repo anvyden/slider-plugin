@@ -1,4 +1,4 @@
-import { ISettings, OptionFromKnobValues } from "../interfaces/interfaces";
+import {ISettings, OptionFromKnobValues, SliderComponents} from "../interfaces/interfaces";
 import { KnobEvents, LabelsEvents, ScaleEvents, ViewEvents } from "../Observer/events";
 import Observer from "../Observer/Observer";
 import Slider from "./Slider/Slider";
@@ -6,7 +6,7 @@ import Slider from "./Slider/Slider";
 class View extends Observer {
   protected readonly state: ISettings
   protected readonly root: HTMLElement
-  private sliderComponents!: object
+  private sliderComponents!: SliderComponents
 
   constructor(state: ISettings, root: HTMLElement) {
     super()
@@ -23,10 +23,13 @@ class View extends Observer {
   }
 
   public update(state: ISettings) {
-    const sliderComponents = Object.values(this.sliderComponents)
-    sliderComponents.forEach(component => {
-      if (component.update) component.update(state)
-    })
+    this.sliderComponents.knob.update(state)
+    this.sliderComponents.knobSecond.update(state)
+    this.sliderComponents.fill.update(state)
+    // const sliderComponents = Object.values(this.sliderComponents)
+    // sliderComponents.forEach(component => {
+    //   if (component.update) component.update(state)
+    // })
   }
 
   private bindEvents(): void {
@@ -49,8 +52,8 @@ class View extends Observer {
     const knobSecondNode = knobSecond.getKnob()
 
     knob.subscribe(KnobEvents.KNOB_VALUE_FROM_CHANGED, (value: number) => {
-      knobNode.style.zIndex = 1
-      knobSecondNode.style.zIndex = 0
+      knobNode.style.zIndex = '1'
+      knobSecondNode.style.zIndex = '0'
       this.emit(ViewEvents.VALUE_FROM_CHANGED, value)
     })
 
@@ -64,8 +67,8 @@ class View extends Observer {
 
     if (isRange) {
       knobSecond.subscribe(KnobEvents.KNOB_VALUE_TO_CHANGED, (value: number) => {
-        knobSecondNode.style.zIndex = 1
-        knobNode.style.zIndex = 0
+        knobSecondNode.style.zIndex = '1'
+        knobNode.style.zIndex = '0'
         this.emit(ViewEvents.VALUE_TO_CHANGED, value)
       })
 

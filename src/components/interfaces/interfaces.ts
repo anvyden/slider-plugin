@@ -45,7 +45,8 @@ type SliderComponents = {
   scale: Scale,
   knob: Knob,
   fill: Fill,
-  labels: Labels
+  labels: Labels,
+  knobSecond: Knob,
 }
 
 export {

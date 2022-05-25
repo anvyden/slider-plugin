@@ -72,29 +72,10 @@ const cssLoaders = extra => {
   return loaders
 }
 
-const babelOptions = preset => {
-  const opts = {
-    presets: [
-      ['@babel/preset-env', { targets: { node: 'current' } }],
-    ],
-    plugins: [
-      '@babel/plugin-proposal-class-properties'
-    ],
-    cacheDirectory: true,
-  }
-
-  if (preset) {
-    opts.presets.push(preset)
-  }
-
-  return opts
-}
-
 const jsLoaders = () => {
   const loaders = [
     {
-      loader: 'babel-loader',
-      options: babelOptions()
+      loader: 'babel-loader'
     },
   ]
 
@@ -195,10 +176,7 @@ module.exports = {
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: babelOptions('@babel/preset-typescript')
-        }
+        use: 'ts-loader',
       }
     ]
   }
