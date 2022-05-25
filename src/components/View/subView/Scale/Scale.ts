@@ -20,7 +20,7 @@ class Scale extends Observer {
 
   private init(): void {
     const { orientation } = this.state
-    const orientationClass = orientation ? orientation : 'horizontal'
+    const orientationClass = orientation === 'vertical' ? orientation : 'horizontal'
 
     this.scale = this.createScale(orientationClass)
     this.scale.addEventListener('pointerdown', this.handleScalePointerDown.bind(this))
@@ -44,13 +44,12 @@ class Scale extends Observer {
     }
   }
 
-  private isScale(event: PointerEvent): boolean {
+  private isScale(event: PointerEvent): boolean | unknown {
     const { target } = event
     if (target instanceof HTMLElement) {
       const isScale = target.dataset.id === 'scale' || target.dataset.id === 'fill'
       return isScale
     }
-    return false
   }
 }
 
