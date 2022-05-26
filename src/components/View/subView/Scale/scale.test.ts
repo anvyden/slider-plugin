@@ -4,10 +4,10 @@
 
 import Scale from "./Scale";
 import {defaultState} from "../../../../defaultState";
-import jsdom from 'jsdom'
+// import jsdom from 'jsdom'
 
-const {JSDOM} = jsdom
-const dom = new JSDOM('<html><body></body></html>')
+// const {JSDOM} = jsdom
+// const dom = new JSDOM('<html><body></body></html>')
 
 describe('Scale:', () => {
   let scale: Scale

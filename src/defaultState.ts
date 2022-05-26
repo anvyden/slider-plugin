@@ -5,7 +5,7 @@ const defaultState: ISettings = {
   max: 0,
   step: 10,
   from: -44,
-  to: -26,
+  to: -22,
   orientation: 'horizontal',
   isRange: true,
   hasFill: true,
