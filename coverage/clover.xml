@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1653586653022" clover="3.2.0">
-  <project timestamp="1653586653022" name="All files">
-    <metrics statements="331" coveredstatements="159" conditionals="118" coveredconditionals="30" methods="84" coveredmethods="38" elements="533" coveredelements="227" complexity="0" loc="331" ncloc="331" packages="11" files="12" classes="12"/>
+<coverage generated="1653636660234" clover="3.2.0">
+  <project timestamp="1653636660234" name="All files">
+    <metrics statements="331" coveredstatements="164" conditionals="118" coveredconditionals="34" methods="84" coveredmethods="39" elements="533" coveredelements="237" complexity="0" loc="331" ncloc="331" packages="11" files="12" classes="12"/>
     <package name="src">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="defaultState.ts" path="C:\Users\anvyd\Desktop\code\slider-plugin\src\defaultState.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="3" count="3" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Model">
@@ -116,7 +116,7 @@
       <metrics statements="4" coveredstatements="2" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="1"/>
       <file name="Observer.ts" path="C:\Users\anvyd\Desktop\code\slider-plugin\src\components\Observer\Observer.ts">
         <metrics statements="4" coveredstatements="2" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="1"/>
-        <line num="11" count="20" type="stmt"/>
+        <line num="11" count="19" type="stmt"/>
         <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="15" count="0" type="stmt"/>
         <line num="19" count="2" type="stmt"/>
@@ -169,9 +169,9 @@
       </file>
     </package>
     <package name="src.components.View.Slider">
-      <metrics statements="33" coveredstatements="33" conditionals="8" coveredconditionals="6" methods="7" coveredmethods="7"/>
+      <metrics statements="33" coveredstatements="33" conditionals="8" coveredconditionals="8" methods="7" coveredmethods="7"/>
       <file name="Slider.ts" path="C:\Users\anvyd\Desktop\code\slider-plugin\src\components\View\Slider\Slider.ts">
-        <metrics statements="33" coveredstatements="33" conditionals="8" coveredconditionals="6" methods="7" coveredmethods="7"/>
+        <metrics statements="33" coveredstatements="33" conditionals="8" coveredconditionals="8" methods="7" coveredmethods="7"/>
         <line num="17" count="4" type="stmt"/>
         <line num="18" count="4" type="stmt"/>
         <line num="19" count="4" type="stmt"/>
@@ -198,10 +198,10 @@
         <line num="59" count="4" type="stmt"/>
         <line num="61" count="4" type="stmt"/>
         <line num="63" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="64" count="3" type="stmt"/>
-        <line num="65" count="3" type="stmt"/>
-        <line num="68" count="4" type="cond" truecount="1" falsecount="1"/>
-        <line num="69" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="68" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="69" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="74" count="4" type="stmt"/>
         <line num="75" count="4" type="stmt"/>
         <line num="77" count="4" type="stmt"/>
@@ -228,46 +228,46 @@
         <line num="36" count="4" type="stmt"/>
         <line num="38" count="4" type="stmt"/>
         <line num="48" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="49" count="3" type="stmt"/>
-        <line num="50" count="3" type="stmt"/>
-        <line num="51" count="3" type="stmt"/>
-        <line num="53" count="1" type="stmt"/>
-        <line num="58" count="3" type="stmt"/>
-        <line num="59" count="3" type="stmt"/>
-        <line num="61" count="3" type="stmt"/>
-        <line num="63" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="64" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="66" count="3" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="53" count="3" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="63" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="64" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="66" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.components.View.subView.Knob">
       <metrics statements="45" coveredstatements="22" conditionals="28" coveredconditionals="7" methods="11" coveredmethods="4"/>
       <file name="Knob.ts" path="C:\Users\anvyd\Desktop\code\slider-plugin\src\components\View\subView\Knob\Knob.ts">
         <metrics statements="45" coveredstatements="22" conditionals="28" coveredconditionals="7" methods="11" coveredmethods="4"/>
-        <line num="16" count="7" type="stmt"/>
-        <line num="17" count="7" type="stmt"/>
-        <line num="18" count="7" type="stmt"/>
-        <line num="19" count="7" type="stmt"/>
-        <line num="23" count="7" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
+        <line num="23" count="5" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
         <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="36" count="7" type="stmt"/>
-        <line num="37" count="7" type="cond" truecount="1" falsecount="1"/>
-        <line num="38" count="7" type="stmt"/>
-        <line num="40" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="44" count="7" type="stmt"/>
-        <line num="45" count="7" type="stmt"/>
-        <line num="46" count="7" type="stmt"/>
-        <line num="47" count="7" type="stmt"/>
-        <line num="51" count="7" type="stmt"/>
-        <line num="53" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="54" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="56" count="7" type="stmt"/>
-        <line num="57" count="7" type="stmt"/>
-        <line num="58" count="7" type="stmt"/>
-        <line num="59" count="7" type="stmt"/>
-        <line num="61" count="7" type="stmt"/>
+        <line num="36" count="5" type="stmt"/>
+        <line num="37" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="38" count="5" type="stmt"/>
+        <line num="40" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="44" count="5" type="stmt"/>
+        <line num="45" count="5" type="stmt"/>
+        <line num="46" count="5" type="stmt"/>
+        <line num="47" count="5" type="stmt"/>
+        <line num="51" count="5" type="stmt"/>
+        <line num="53" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="54" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="56" count="5" type="stmt"/>
+        <line num="57" count="5" type="stmt"/>
+        <line num="58" count="5" type="stmt"/>
+        <line num="59" count="5" type="stmt"/>
+        <line num="61" count="5" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
         <line num="68" count="0" type="stmt"/>
         <line num="69" count="0" type="stmt"/>
@@ -278,7 +278,7 @@
         <line num="78" count="0" type="stmt"/>
         <line num="79" count="0" type="stmt"/>
         <line num="81" count="0" type="stmt"/>
-        <line num="84" count="7" type="stmt"/>
+        <line num="84" count="5" type="stmt"/>
         <line num="85" count="0" type="stmt"/>
         <line num="86" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="88" count="0" type="cond" truecount="0" falsecount="4"/>
@@ -336,18 +336,18 @@
       <metrics statements="19" coveredstatements="19" conditionals="8" coveredconditionals="5" methods="6" coveredmethods="6"/>
       <file name="Scale.ts" path="C:\Users\anvyd\Desktop\code\slider-plugin\src\components\View\subView\Scale\Scale.ts">
         <metrics statements="19" coveredstatements="19" conditionals="8" coveredconditionals="5" methods="6" coveredmethods="6"/>
-        <line num="12" count="9" type="stmt"/>
-        <line num="13" count="9" type="stmt"/>
-        <line num="14" count="9" type="stmt"/>
-        <line num="18" count="7" type="stmt"/>
-        <line num="22" count="9" type="stmt"/>
-        <line num="23" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="25" count="9" type="stmt"/>
-        <line num="26" count="9" type="stmt"/>
-        <line num="30" count="9" type="stmt"/>
-        <line num="31" count="9" type="stmt"/>
-        <line num="32" count="9" type="stmt"/>
-        <line num="34" count="9" type="stmt"/>
+        <line num="12" count="10" type="stmt"/>
+        <line num="13" count="10" type="stmt"/>
+        <line num="14" count="10" type="stmt"/>
+        <line num="18" count="8" type="stmt"/>
+        <line num="22" count="10" type="stmt"/>
+        <line num="23" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="10" type="stmt"/>
+        <line num="26" count="10" type="stmt"/>
+        <line num="30" count="10" type="stmt"/>
+        <line num="31" count="10" type="stmt"/>
+        <line num="32" count="10" type="stmt"/>
+        <line num="34" count="10" type="stmt"/>
         <line num="41" count="2" type="cond" truecount="1" falsecount="1"/>
         <line num="42" count="2" type="stmt"/>
         <line num="43" count="2" type="stmt"/>
@@ -365,28 +365,28 @@
       </file>
     </package>
     <package name="src.utils">
-      <metrics statements="32" coveredstatements="27" conditionals="6" coveredconditionals="4" methods="7" coveredmethods="6"/>
+      <metrics statements="32" coveredstatements="32" conditionals="6" coveredconditionals="6" methods="7" coveredmethods="7"/>
       <file name="utils.ts" path="C:\Users\anvyd\Desktop\code\slider-plugin\src\utils\utils.ts">
-        <metrics statements="32" coveredstatements="27" conditionals="6" coveredconditionals="4" methods="7" coveredmethods="6"/>
-        <line num="3" count="20" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="13" count="35" type="stmt"/>
-        <line num="14" count="35" type="stmt"/>
-        <line num="16" count="35" type="stmt"/>
-        <line num="18" count="35" type="cond" truecount="1" falsecount="1"/>
-        <line num="19" count="35" type="cond" truecount="1" falsecount="1"/>
-        <line num="21" count="35" type="stmt"/>
-        <line num="24" count="2" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="34" count="2" type="stmt"/>
+        <metrics statements="32" coveredstatements="32" conditionals="6" coveredconditionals="6" methods="7" coveredmethods="7"/>
+        <line num="3" count="21" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="36" type="stmt"/>
+        <line num="14" count="36" type="stmt"/>
+        <line num="16" count="36" type="stmt"/>
+        <line num="18" count="36" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="36" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="36" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
         <line num="35" count="2" type="stmt"/>
         <line num="36" count="2" type="stmt"/>
         <line num="38" count="2" type="stmt"/>
@@ -394,12 +394,12 @@
         <line num="41" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="42" count="1" type="stmt"/>
         <line num="45" count="1" type="stmt"/>
-        <line num="48" count="2" type="stmt"/>
-        <line num="49" count="2" type="stmt"/>
-        <line num="51" count="2" type="stmt"/>
-        <line num="57" count="2" type="stmt"/>
-        <line num="63" count="2" type="stmt"/>
-        <line num="65" count="2" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="49" count="4" type="stmt"/>
+        <line num="51" count="4" type="stmt"/>
+        <line num="57" count="3" type="stmt"/>
+        <line num="63" count="6" type="stmt"/>
+        <line num="65" count="6" type="stmt"/>
       </file>
     </package>
   </project>

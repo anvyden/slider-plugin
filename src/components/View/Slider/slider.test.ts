@@ -9,20 +9,26 @@ import {ISettings} from "../../interfaces/interfaces";
 describe('Slider:', () => {
   let slider: Slider
   let root: HTMLElement
-  let cloneState: ISettings
+  let state: ISettings
 
   beforeEach(() => {
-    cloneState = JSON.parse(JSON.stringify(defaultState))
+    state = {
+      ...JSON.parse(JSON.stringify(defaultState)),
+      isRange: false,
+      hasFill: false,
+      hasTooltips: false,
+      hasLabels: false,
+    }
     root = document.createElement('div')
   })
 
   test('should be instance of Slider', () => {
-    slider = new Slider(cloneState, root)
+    slider = new Slider(state, root)
     expect(slider).toBeInstanceOf(Slider)
   })
 
   test('should have components for creating simple slider', () => {
-    slider = new Slider(cloneState, root)
+    slider = new Slider(state, root)
     const components = slider.getComponents()
     expect(components).toHaveProperty('scale')
     expect(components).toHaveProperty('fill')
@@ -33,7 +39,7 @@ describe('Slider:', () => {
 
   test('should have additional components for creating range slider', () => {
     const newState = {
-      ...cloneState,
+      ...state,
       isRange: true
     }
     const rangeSlider = new Slider(newState, root)
@@ -41,13 +47,12 @@ describe('Slider:', () => {
     expect(components).toHaveProperty('knobSecond')
   })
 
-  test('should should embed components into DOM', () => {
+  test('should embed components into DOM', () => {
     const newState = {
-      ...cloneState,
+      ...state,
       hasLabels: true,
       hasFill: true,
       hasTooltips: true,
-      isRange: false
     }
     slider = new Slider(newState, root)
     expect(root.querySelectorAll('.slider__fill').length).toBe(1)

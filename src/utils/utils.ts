@@ -1,4 +1,4 @@
-import {ElementCoords, ISettings, PageCoords, stateValuesForConvert} from "../components/interfaces/interfaces";
+import { ElementCoords, ISettings, PageCoords, stateValuesForConvert } from "../components/interfaces/interfaces";
 
 const changeFirstCharToLower = (str: string): string => str[0].toLowerCase() + str.slice(1)
 
