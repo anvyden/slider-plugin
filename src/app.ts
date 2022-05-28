@@ -1,35 +1,47 @@
 import { defaultState } from './defaultState';
 import Presenter from './components/Presenter/Presenter';
 import './app.scss';
-import {ISettings} from "./components/interfaces/interfaces";
+import {ISettings, Option, OptionValue} from "./components/interfaces/interfaces";
 
-// const root = document.querySelector('#slider')
+const methods = {
 
-// @ts-ignore
-// const init: object = {
-//   presenter: new Presenter(defaultState, <HTMLElement>root),
-// };
+  init(this: JQuery, options: Partial<ISettings>) {
+    return this.each(function(this: HTMLElement): void {
+      const newOptions = {...JSON.parse(JSON.stringify(defaultState)), ...options}
+      $(this).data('sliderPlugin', new Presenter(newOptions, this))
+    })
+  },
 
-function init(this: JQuery, options: ISettings) {
-  return this.each(function(this: HTMLElement) {
-    const newOptions = {...JSON.parse(JSON.stringify(defaultState)), ...options}
-    $(this).data('sliderPlugin', new Presenter(newOptions, this))
-  })
+  setValue(this: JQuery, name: Option, value: OptionValue): void {
+    const sliderPlugin = $(this).data('sliderPlugin')
+    sliderPlugin.model.setValue(name, value)
+  }
+
 }
 
-$.fn.sliderPlugin = function(...args: ISettings[]){
-  const firstArg = args[0]
-  // const argsIsOptions = typeof firstArg === 'object' || !firstArg
+$.fn.sliderPlugin = function <T>(...args: T[]) {
+  const method = args[0]
+  const params = args.slice(1)
 
-  const options = firstArg || {}
-  return init.call(this, options)
+  const isMethod = typeof method === 'string'
 
+  if (isMethod) {
+    return methods[<string>method].apply(this, params)
+  }
+
+  if (typeof method === 'object' || !method) {
+    const options = method || {}
+    return methods.init.call(this, options)
+  }
+
+  $.error(`метод с именем ${method} не существует для sliderPlugin`)
 }
 
 declare global {
   interface JQuery {
     sliderPlugin(): void,
-    sliderPlugin(options: ISettings): void,
+    sliderPlugin(options: Partial<ISettings>): void,
+    sliderPlugin(method: 'setValue', option: Option, value: OptionValue): void
   }
 }
 
