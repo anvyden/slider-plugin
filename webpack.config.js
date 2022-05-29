@@ -96,11 +96,11 @@ const plugins = () => {
         collapseWhitespace: isProd
       }
     }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      JQuery: 'jquery',
-      'window.JQuery': 'jquery',
-    }),
+    // new webpack.ProvidePlugin({
+    //   $: 'jquery',
+    //   JQuery: 'jquery',
+    //   'window.JQuery': 'jquery',
+    // }),
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}css/${filename('css')}`
     }),
@@ -116,7 +116,7 @@ const plugins = () => {
 }
 
 module.exports = {
-  entry: [`${PATHS.src}/app.ts`],
+  entry: [`${PATHS.src}/index.ts`],
   output: {
     filename: `${PATHS.assets}js/[name].js`,
     path: PATHS.dist,

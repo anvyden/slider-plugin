@@ -10,6 +10,9 @@ class Validation {
   private to!: number
 
   public checkState(state: ISettings): ISettings {
+    //TODO нужно бы сделать валидацию стейта, чтоб не было свойств кроме ISettings
+    // при прокидывании через jquery
+
     const {
       max,
       min,

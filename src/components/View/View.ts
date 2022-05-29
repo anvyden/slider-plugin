@@ -16,6 +16,7 @@ class View extends Observer {
   }
 
   public init(state: ISettings): void {
+    this.root.innerHTML = ''
     const slider = new Slider(state, this.root)
 
     this.sliderComponents = slider.getComponents()
