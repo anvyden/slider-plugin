@@ -2,7 +2,7 @@ import {
   ISettings,
   Option,
   OptionValue,
-  OptionFromKnobValues,
+  OptionFromThumbValues,
 } from "../interfaces/interfaces";
 import { convertPercentValueToNumber } from "../../utils/utils";
 import { ModelEvents } from "../Observer/events";
@@ -21,8 +21,8 @@ class Model extends Observer {
   }
 
   public setState(state: ISettings): void {
-    const newState = { ...this.state, ...this.validation.checkState(state) }
-    this.state = { ...newState }
+    const prevState = { ...this.state }
+    this.state = { ...prevState, ...this.validation.checkState(state) }
     this.emit(ModelEvents.STATE_CHANGED, this.state)
   }
 
@@ -45,22 +45,22 @@ class Model extends Observer {
     return this.state[option]
   }
 
-  public increment(option: OptionFromKnobValues): void {
+  public increment(option: OptionFromThumbValues): void {
     const newOptionValue = this.state[option] + this.state.step
     const newState = this.checkStateValue(option, newOptionValue)
     this.state = { ...this.state, ...this.validation.checkState(newState) }
     this.emit(ModelEvents.VALUE_CHANGED, this.state)
   }
 
-  public decrement(option: OptionFromKnobValues): void {
+  public decrement(option: OptionFromThumbValues): void {
     const newOptionValue = this.state[option] - this.state.step
     const newState = this.checkStateValue(option, newOptionValue)
     this.state = { ...this.state, ...this.validation.checkState(newState) }
     this.emit(ModelEvents.VALUE_CHANGED, this.state)
   }
 
-  public setValueFromPercent(option: Option, value: number): void {
-    const valueInNumber = convertPercentValueToNumber(this.state, value)
+  public setValueFromPercent(option: Option, percentValue: number): void {
+    const valueInNumber = convertPercentValueToNumber(this.state, percentValue)
     this.setValue(option, valueInNumber)
   }
 
@@ -78,7 +78,8 @@ class Model extends Observer {
   }
 
   private checkStateValue <Option extends keyof ISettings>(option: Option, value: ISettings[Option]): ISettings{
-    const cloneState = { ...this.state }
+    const prevState = { ...this.state }
+    const newState = { ...prevState }
 
     const optionTypeIsNumber = typeof value === 'number'
     const optionTypeIsBoolean = typeof value === 'boolean'
@@ -96,7 +97,7 @@ class Model extends Observer {
       ) && optionTypeIsNumber
 
     const optionNameHasTypeBoolean = (
-      option === 'hasFill' ||
+      option === 'hasProgressBar' ||
       option === 'hasLabels' ||
       option === 'hasTooltips' ||
       option === 'isRange'
@@ -105,15 +106,15 @@ class Model extends Observer {
     const optionNameHasTypeColor = option === 'color' && optionTypeIsColor
     const optionNameHasTypeOrientation = option === 'orientation' && optionTypeIsOrientation
 
-    if (optionNameIsFromWithRange) cloneState.from = this.validation.checkFromRangeValue(value)
-    if (optionNameIsTo) cloneState.to = this.validation.checkToRangeValue(value)
-    if (optionNameIsFrom) cloneState.from = this.validation.checkFrom(value)
-    if (optionNameHasTypeNumber) cloneState[option] = value
-    if (optionNameHasTypeBoolean) cloneState[option] = value
-    if (optionNameHasTypeColor) cloneState[option] = value
-    if (optionNameHasTypeOrientation) cloneState[option] = value
+    if (optionNameIsFromWithRange) newState.from = this.validation.checkFromRangeValue(value)
+    if (optionNameIsTo) newState.to = this.validation.checkToRangeValue(value)
+    if (optionNameIsFrom) newState.from = this.validation.checkFrom(value)
+    if (optionNameHasTypeNumber) newState[option] = value
+    if (optionNameHasTypeBoolean) newState[option] = value
+    if (optionNameHasTypeColor) newState[option] = value
+    if (optionNameHasTypeOrientation) newState[option] = value
 
-    return cloneState
+    return newState
   }
 }
 

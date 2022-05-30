@@ -1,4 +1,4 @@
-import { ISettings, OptionFromKnobValues } from "../interfaces/interfaces";
+import { ISettings, OptionFromThumbValues } from "../interfaces/interfaces";
 import { ModelEvents, ViewEvents } from "../Observer/events";
 import Model from "../Model/Model";
 import View from "../View/View";
@@ -39,11 +39,11 @@ class Presenter {
       this.model.setValueFromPercent('to', value)
     })
 
-    this.view.subscribe(ViewEvents.VALUE_FROM_INCREMENT, (value: OptionFromKnobValues) => {
+    this.view.subscribe(ViewEvents.VALUE_FROM_INCREMENT, (value: OptionFromThumbValues) => {
       this.model.increment(value)
     })
 
-    this.view.subscribe(ViewEvents.VALUE_FROM_DECREMENT, (value: OptionFromKnobValues) => {
+    this.view.subscribe(ViewEvents.VALUE_FROM_DECREMENT, (value: OptionFromThumbValues) => {
       this.model.decrement(value)
     })
   }

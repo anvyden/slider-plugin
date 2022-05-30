@@ -1,21 +1,21 @@
 import { ISettings, Orientation, SliderComponents } from "../../interfaces/interfaces";
 import { changeFirstCharToLower } from "../../../utils/utils";
 import Scale from "../subView/Scale/Scale";
-import Knob from "../subView/Knob/Knob";
-import Fill from "../subView/Fill/Fill";
+import Thumb from "../subView/Thumb/Thumb";
+import ProgressBar from "../subView/ProgressBar/ProgressBar";
 import Labels from "../subView/Labels/Labels";
 import Tooltip from "../subView/Tooltip/Tooltip";
 import './slider.scss'
 
 class Slider {
-  protected readonly settings: ISettings
+  protected readonly state: ISettings
   private root: HTMLElement
   private scale!: HTMLDivElement
   private components!: SliderComponents
 
-  constructor(settings: ISettings, root: HTMLElement) {
+  constructor(state: ISettings, root: HTMLElement) {
     this.root = root
-    this.settings = settings
+    this.state = state
     this.init()
   }
 
@@ -24,50 +24,57 @@ class Slider {
   }
 
   private init(): void {
-    const { orientation } = this.settings
+    const { orientation } = this.state
     const slider = this.createSlider(orientation)
 
     this.components = this.createComponents()
-    this.scale = this.components['scale'].getScale()
 
+    this.scale = this.components['scale'].getScale()
     slider.insertAdjacentElement('beforeend', this.scale)
 
     this.addElementsInScale()
-
     this.root.insertAdjacentElement('beforeend', slider)
   }
 
   private createComponents(): SliderComponents {
-    const { isRange } = this.settings
+    const { isRange } = this.state
     let components = {}
-    const elementsSlider = [Scale, Knob, Fill, Labels, Tooltip]
+    const elementsSlider = [Scale, Thumb, ProgressBar, Labels, Tooltip]
+
     elementsSlider.forEach(Element => {
-      const element: object = new Element(this.settings)
+      const element = new Element(this.state)
       const elementName: string = changeFirstCharToLower(element.constructor.name)
       components[elementName] = element
     })
+    //TODO можно все элементе инициализировать, но не вставлять. Так можно избежать
+    // многих проверок на isRange например, но тогда будут работать методы update
+    // и другие, когда эти элементы не нужны.
+    if (isRange) {
+      components = {
+        ...components,
+        thumbSecond: new Thumb(this.state, 'thumb-second')
+      }
+    }
 
-    if (isRange) components = { ...components, ...{ knobSecond: new Knob(this.settings, 'knob-second') } }
     return <SliderComponents>components
   }
 
   private addElementsInScale() {
-    const { isRange, hasFill, hasLabels } = this.settings
+    const { isRange, hasProgressBar, hasLabels } = this.state
 
-    const knob: HTMLDivElement = this.components['knob'].getKnob()
-    const fill: HTMLDivElement = this.components['fill'].getFill()
-    const labels: HTMLDivElement = this.components['labels'].getLabels()
+    const thumb = this.components['thumb'].getThumb()
+    const progressBar = this.components['progressBar'].getProgressBar()
+    const labels = this.components['labels'].getLabels()
 
-    this.scale.insertAdjacentElement("beforeend", knob)
+    this.scale.insertAdjacentElement("beforeend", thumb)
 
     if (isRange) {
-      const knobSecond: HTMLDivElement = this.components['knobSecond'].getKnob()
-      this.scale.insertAdjacentElement('beforeend', knobSecond)
+      const thumbSecond = this.components['thumbSecond'].getThumb()
+      this.scale.insertAdjacentElement('beforeend', thumbSecond)
     }
 
-    if (hasFill) this.scale.insertAdjacentElement("afterbegin", fill)
+    if (hasProgressBar) this.scale.insertAdjacentElement("afterbegin", progressBar)
     if (hasLabels) this.scale.insertAdjacentElement('beforeend', labels)
-
   }
 
   private createSlider(orientation: Orientation): HTMLDivElement {

@@ -1,5 +1,5 @@
-import {ISettings, OptionFromKnobValues, SliderComponents} from "../interfaces/interfaces";
-import { KnobEvents, LabelsEvents, ScaleEvents, ViewEvents } from "../Observer/events";
+import { ISettings, OptionFromThumbValues, SliderComponents } from "../interfaces/interfaces";
+import { ThumbEvents, LabelsEvents, ScaleEvents, ViewEvents } from "../Observer/events";
 import Observer from "../Observer/Observer";
 import Slider from "./Slider/Slider";
 
@@ -23,10 +23,15 @@ class View extends Observer {
     this.bindEvents()
   }
 
+  //TODO update
+
   public update(state: ISettings) {
-    this.sliderComponents.knob.update(state)
-    this.sliderComponents.knobSecond.update(state)
-    this.sliderComponents.fill.update(state)
+    const { isRange } = state
+    this.sliderComponents.thumb.update(state)
+    this.sliderComponents.progressBar.update(state)
+    if (isRange) {
+      this.sliderComponents.thumbSecond.update(state)
+    }
     // const sliderComponents = Object.values(this.sliderComponents)
     // sliderComponents.forEach(component => {
     //   if (component.update) component.update(state)
@@ -34,7 +39,7 @@ class View extends Observer {
   }
 
   private bindEvents(): void {
-    this.bindKnobEvents()
+    this.bindThumbEvents()
     this.bindLabelsEvents()
     this.bindScaleEvents()
   }
@@ -46,38 +51,41 @@ class View extends Observer {
     })
   }
 
-  private bindKnobEvents(): void {
+  private bindThumbEvents(): void {
     const { isRange } = this.state
-    const { knob, knobSecond } = this.sliderComponents
-    const knobNode = knob.getKnob()
-    const knobSecondNode = knobSecond.getKnob()
+    const { thumb, thumbSecond } = this.sliderComponents
+    const thumbNode = thumb.getThumb()
 
-    knob.subscribe(KnobEvents.KNOB_VALUE_FROM_CHANGED, (value: number) => {
-      knobNode.style.zIndex = '1'
-      knobSecondNode.style.zIndex = '0'
+    thumb.subscribe(ThumbEvents.THUMB_VALUE_FROM_CHANGED, (value: number) => {
+      if (isRange) {
+        const thumbSecondNode = thumbSecond.getThumb()
+        thumbNode.style.zIndex = '1'
+        thumbSecondNode.style.zIndex = '0'
+      }
       this.emit(ViewEvents.VALUE_FROM_CHANGED, value)
     })
 
-    knob.subscribe(KnobEvents.KNOB_VALUE_INCREMENT, (value: OptionFromKnobValues) => {
+    thumb.subscribe(ThumbEvents.THUMB_VALUE_INCREMENT, (value: OptionFromThumbValues) => {
       this.emit(ViewEvents.VALUE_FROM_INCREMENT, value)
     })
 
-    knob.subscribe(KnobEvents.KNOB_VALUE_DECREMENT, (value: OptionFromKnobValues) => {
+    thumb.subscribe(ThumbEvents.THUMB_VALUE_DECREMENT, (value: OptionFromThumbValues) => {
       this.emit(ViewEvents.VALUE_FROM_DECREMENT, value)
     })
 
     if (isRange) {
-      knobSecond.subscribe(KnobEvents.KNOB_VALUE_TO_CHANGED, (value: number) => {
-        knobSecondNode.style.zIndex = '1'
-        knobNode.style.zIndex = '0'
+      thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_TO_CHANGED, (value: number) => {
+        const thumbSecondNode = thumbSecond.getThumb()
+        thumbSecondNode.style.zIndex = '1'
+        thumbNode.style.zIndex = '0'
         this.emit(ViewEvents.VALUE_TO_CHANGED, value)
       })
 
-      knobSecond.subscribe(KnobEvents.KNOB_VALUE_INCREMENT, (value: OptionFromKnobValues) => {
+      thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_INCREMENT, (value: OptionFromThumbValues) => {
         this.emit(ViewEvents.VALUE_FROM_INCREMENT, value)
       })
 
-      knobSecond.subscribe(KnobEvents.KNOB_VALUE_DECREMENT, (value: OptionFromKnobValues) => {
+      thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_DECREMENT, (value: OptionFromThumbValues) => {
         this.emit(ViewEvents.VALUE_FROM_DECREMENT, value)
       })
     }

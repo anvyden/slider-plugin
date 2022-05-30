@@ -8,7 +8,7 @@ const defaultState: ISettings = {
   to: -22,
   orientation: 'horizontal',
   isRange: true,
-  hasFill: true,
+  hasProgressBar: true,
   hasLabels: true,
   hasTooltips: false,
   color: 'green',

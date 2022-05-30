@@ -1,4 +1,4 @@
-import {ISettings, OptionFromKnobValues} from "../interfaces/interfaces";
+import { ISettings, OptionFromThumbValues } from "../interfaces/interfaces";
 
 /* TODO
     Надо сделать проверку на типы, поскольку в emit я буду передавать не только state,
@@ -15,8 +15,8 @@ abstract class Observer {
     this.observers[event] = [...eventObservers, callback]
   }
 
-  public emit(event: string, changes: ISettings | number | OptionFromKnobValues): void {
-    this.observers[event]?.forEach((observer) => observer(changes))
+  public emit(event: string, value: ISettings | number | OptionFromThumbValues): void {
+    this.observers[event]?.forEach((observer) => observer(value))
   }
 }
 

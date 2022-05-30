@@ -27,11 +27,11 @@ class Scale extends Observer {
   }
 
   private createScale(orientation: Orientation): HTMLDivElement {
-    const scaleNode = document.createElement('div')
-    scaleNode.classList.add('js-slider__scale', 'slider__scale', `slider__scale--${orientation}`)
-    scaleNode.setAttribute('data-id', 'scale')
+    const scale = document.createElement('div')
+    scale.classList.add('js-slider__scale', 'slider__scale', `slider__scale--${orientation}`)
+    scale.setAttribute('data-id', 'scale')
 
-    return scaleNode
+    return scale
   }
 
   /* TODO некорректно работает клик по scale при не соответствии step с min - max range. Как и у
@@ -47,7 +47,7 @@ class Scale extends Observer {
   private isScale(event: PointerEvent): boolean | unknown {
     const { target } = event
     if (target instanceof HTMLElement) {
-      const isScale = target.dataset.id === 'scale' || target.dataset.id === 'fill'
+      const isScale = target.dataset.id === 'scale' || target.dataset.id === 'progressBar'
       return isScale
     }
   }

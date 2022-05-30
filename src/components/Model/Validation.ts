@@ -29,7 +29,7 @@ class Validation {
     this.to = to
 
     this.checkMaxMin(this.max, this.min)
-    this.step = this.checkStep(this.max, this.min, step)
+    this.step = this.checkStep(this.max, this.min, this.step)
 
     if (isRange) {
       this.checkMaxMinRange(this.from, this.to)
@@ -51,8 +51,8 @@ class Validation {
   }
 
   public checkStep(max: number, min: number, step: number): number {
-    const difference: number = max - min
-    const roundStep: number = Math.round(step)
+    const difference = max - min
+    const roundStep = Math.round(step)
 
     if (roundStep <= 0) return defaultState.step
     if (roundStep > difference) return difference
@@ -75,17 +75,17 @@ class Validation {
   }
 
   public convertValueToStep(value: number): number {
-    let validValue = convertStateValueToPercent({
+    const validPercentValue = convertStateValueToPercent({
       max: this.max,
       min: this.min,
       step: this.step
     }, value)
 
-    validValue = convertPercentValueToNumber({
+    const validValue = convertPercentValueToNumber({
       max: this.max,
       min: this.min,
       step: this.step
-    }, validValue)
+    }, validPercentValue)
 
     return validValue
   }
@@ -126,13 +126,6 @@ class Validation {
     if (validFrom < this.min) return this.min
     if (validFrom > this.max) return this.max
     return validFrom
-  }
-
-  public checkTo(to: number): number {
-    const roundTo = Math.round(to)
-    if (roundTo < this.min) return this.min
-    if (roundTo > this.max) return this.max
-    return roundTo
   }
 
 }

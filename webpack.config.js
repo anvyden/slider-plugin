@@ -96,11 +96,6 @@ const plugins = () => {
         collapseWhitespace: isProd
       }
     }),
-    // new webpack.ProvidePlugin({
-    //   $: 'jquery',
-    //   JQuery: 'jquery',
-    //   'window.JQuery': 'jquery',
-    // }),
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}css/${filename('css')}`
     }),

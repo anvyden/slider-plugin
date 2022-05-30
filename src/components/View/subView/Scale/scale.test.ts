@@ -19,7 +19,7 @@ describe('Scale:', () => {
     state = {
       ...JSON.parse(JSON.stringify(defaultState)),
       isRange: false,
-      hasFill: false,
+      hasProgressBar: false,
       hasTooltips: false,
       hasLabels: false,
     }
@@ -79,12 +79,12 @@ describe('Scale:', () => {
   //     body.appendChild(root)
   //     slider = new Slider(state, root)
   //     const scale = slider.getComponents().scale
-  //     const knob = slider.getComponents().knob
+  //     const thumb = slider.getComponents().thumb
   //     const spyEmit = jest.spyOn(scale, 'emit')
   //
   //     if (event.target instanceof HTMLElement) {
-  //       const knobNode = knob.getKnob()
-  //       knobNode.dispatchEvent(event)
+  //       const thumbNode = thumb.getThumb()
+  //       thumbNode.dispatchEvent(event)
   //       expect(spyEmit).toHaveBeenCalledTimes(0)
   //     }
   //   }

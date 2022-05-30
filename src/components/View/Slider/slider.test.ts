@@ -15,7 +15,7 @@ describe('Slider:', () => {
     state = {
       ...JSON.parse(JSON.stringify(defaultState)),
       isRange: false,
-      hasFill: false,
+      hasProgressBar: false,
       hasTooltips: false,
       hasLabels: false,
     }
@@ -31,9 +31,9 @@ describe('Slider:', () => {
     slider = new Slider(state, root)
     const components = slider.getComponents()
     expect(components).toHaveProperty('scale')
-    expect(components).toHaveProperty('fill')
+    expect(components).toHaveProperty('progressBar')
     expect(components).toHaveProperty('labels')
-    expect(components).toHaveProperty('knob')
+    expect(components).toHaveProperty('thumb')
     expect(components).toHaveProperty('tooltip')
   })
 
@@ -44,18 +44,18 @@ describe('Slider:', () => {
     }
     const rangeSlider = new Slider(newState, root)
     const components = rangeSlider.getComponents()
-    expect(components).toHaveProperty('knobSecond')
+    expect(components).toHaveProperty('thumbSecond')
   })
 
   test('should embed components into DOM', () => {
     const newState = {
       ...state,
       hasLabels: true,
-      hasFill: true,
+      hasProgressBar: true,
       hasTooltips: true,
     }
     slider = new Slider(newState, root)
-    expect(root.querySelectorAll('.slider__fill').length).toBe(1)
+    expect(root.querySelectorAll('.slider__progress-bar').length).toBe(1)
     expect(root.querySelectorAll('.slider__labels').length).toBe(1)
   })
 

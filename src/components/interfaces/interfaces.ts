@@ -1,13 +1,13 @@
-import Knob from "../View/subView/Knob/Knob";
+import Thumb from "../View/subView/Thumb/Thumb";
 import Scale from "../View/subView/Scale/Scale";
-import Fill from "../View/subView/Fill/Fill";
+import ProgressBar from "../View/subView/ProgressBar/ProgressBar";
 import Labels from "../View/subView/Labels/Labels";
 
 type Orientation = 'vertical' | 'horizontal'
 type Color = 'green' | 'purple'
 type Option = keyof ISettings
 type OptionValue = number | boolean | Orientation | Color
-type OptionFromKnobValues = 'from' | 'to'
+type OptionFromThumbValues = 'from' | 'to'
 
 interface ISettings {
   min: number,
@@ -17,13 +17,13 @@ interface ISettings {
   to: number,
   orientation: Orientation,
   isRange: boolean,
-  hasFill: boolean,
+  hasProgressBar: boolean,
   hasLabels: boolean,
   hasTooltips: boolean,
   color: Color,
 }
 
-type stateValuesForConvert = {
+type StateValuesForConvert = {
   max: number,
   min: number,
   step: number
@@ -43,21 +43,21 @@ type ElementCoords = {
 
 type SliderComponents = {
   scale: Scale,
-  knob: Knob,
-  fill: Fill,
+  thumb: Thumb,
+  progressBar: ProgressBar,
   labels: Labels,
-  knobSecond: Knob,
+  thumbSecond: Thumb,
 }
 
 export {
   Option,
   OptionValue,
-  OptionFromKnobValues,
+  OptionFromThumbValues,
   Orientation,
   Color,
   ISettings,
   ElementCoords,
   PageCoords,
   SliderComponents,
-  stateValuesForConvert
+  StateValuesForConvert
 }
