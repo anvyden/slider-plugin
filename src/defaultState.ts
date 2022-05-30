@@ -7,7 +7,7 @@ const defaultState: ISettings = {
   from: -44,
   to: -22,
   orientation: 'horizontal',
-  isRange: true,
+  isRange: false,
   hasProgressBar: true,
   hasLabels: true,
   hasTooltips: false,
