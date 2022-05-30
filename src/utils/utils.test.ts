@@ -3,7 +3,6 @@
  */
 
 import {
-  changeFirstCharToLower,
   convertPercentValueToNumber,
   convertStateValueToPercent,
   getElementCoords,
@@ -19,15 +18,6 @@ const state = {
   min: 0,
   step: 10,
 }
-
-describe('Utils: changeFirstCharToLower', () => {
-
-  test('should return string with lower first char', () => {
-    const scale = 'Scale'
-    expect(changeFirstCharToLower(scale)).toBe('scale')
-  })
-
-})
 
 describe('Utils: getStepInPercent', () => {
 
@@ -67,10 +57,12 @@ describe('Utils: positionFunctions', () => {
   let state: ISettings
   let scale: Scale
   let event: PointerEvent
+  let root: HTMLElement
 
   beforeEach(() => {
+    root = document.createElement('div')
     state = JSON.parse(JSON.stringify(defaultState))
-    scale = new Scale(state)
+    scale = new Scale(state, root)
     event = <PointerEvent>new Event('pointerdown')
   })
 
@@ -83,7 +75,6 @@ describe('Utils: positionFunctions', () => {
   })
 
   test('getPageCoords should return event page coordinates', () => {
-    const root = document.createElement('div')
     root.dispatchEvent(event)
     expect(getPageCoords(event)).toHaveProperty('clientX')
     expect(getPageCoords(event)).toHaveProperty('clientY')

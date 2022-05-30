@@ -64,7 +64,7 @@ class Model extends Observer {
     this.setValue(option, valueInNumber)
   }
 
-  public getOptionByNearValue(percentValue: number): Option {
+  public getOptionByNearValue(percentValue: number): OptionFromThumbValues {
     const { isRange, from, to } = this.state
 
     if (isRange) {

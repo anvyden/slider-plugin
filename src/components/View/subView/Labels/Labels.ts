@@ -31,7 +31,7 @@ class Labels extends Observer {
     step: number
   ): HTMLDivElement {
 
-    /* TODO Реализовать из state количество labels (countOfLabels).
+    /*TODO: Реализовать из state количество labels (countOfLabels).
     *   Конечно же добавить проверку сначала на наличие labels вообще в state
     *   То есть (state = { labels: { addLabels: true, countOfLabels: 5 } }) */
 

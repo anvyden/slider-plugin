@@ -1,7 +1,5 @@
 import { ElementCoords, ISettings, PageCoords, StateValuesForConvert } from "../components/interfaces/interfaces";
 
-const changeFirstCharToLower = (str: string): string => str[0].toLowerCase() + str.slice(1)
-
 const getStepInPercent = (max: number, min: number, step: number): number => {
   const countOfSteps = (max - min) / step
   const stepInPercent = 100 / countOfSteps
@@ -31,9 +29,9 @@ const convertPercentValueToNumber = (state: ISettings | StateValuesForConvert, v
   return valueInNumber
 }
 
-const getPosition = (event: PointerEvent, state: ISettings): number => {
+const getPosition = (event: PointerEvent, state: ISettings, root: HTMLElement): number => {
   const { orientation } = state
-  const scale = document.querySelector('.js-slider__scale')
+  const scale = root.querySelector('.js-slider__scale')
 
   const { left, bottom, width, height } = getElementCoords(<HTMLDivElement>scale)
   const { clientX, clientY } = getPageCoords(event)
@@ -71,7 +69,6 @@ const getElementCoords = (elem: Element): ElementCoords => {
 }
 
 export {
-  changeFirstCharToLower,
   convertStateValueToPercent,
   convertPercentValueToNumber,
   getStepInPercent,

@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>33/33</span>
+                <span class='fraction'>34/34</span>
             </div>
         
             
@@ -144,7 +144,14 @@
 <a name='L79'></a><a href='#L79'>79</a>
 <a name='L80'></a><a href='#L80'>80</a>
 <a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -174,26 +181,34 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -213,7 +228,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -228,21 +242,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ISettings, Orientation, SliderComponents } from "../../interfaces/interfaces";
 import { changeFirstCharToLower } from "../../../utils/utils";
 import Scale from "../subView/Scale/Scale";
-import Knob from "../subView/Knob/Knob";
-import Fill from "../subView/Fill/Fill";
+import Thumb from "../subView/Thumb/Thumb";
+import ProgressBar from "../subView/ProgressBar/ProgressBar";
 import Labels from "../subView/Labels/Labels";
 import Tooltip from "../subView/Tooltip/Tooltip";
 import './slider.scss'
 &nbsp;
 class Slider {
-  protected readonly settings: ISettings
+  protected readonly state: ISettings
   private root: HTMLElement
   private scale!: HTMLDivElement
   private components!: SliderComponents
 &nbsp;
-  constructor(settings: ISettings, root: HTMLElement) {
+  constructor(state: ISettings, root: HTMLElement) {
     this.root = root
-    this.settings = settings
+    this.state = state
     this.init()
   }
 &nbsp;
@@ -251,50 +265,57 @@ class Slider {
   }
 &nbsp;
   private init(): void {
-    const { orientation } = this.settings
+    const { orientation } = this.state
     const slider = this.createSlider(orientation)
 &nbsp;
     this.components = this.createComponents()
-    this.scale = this.components['scale'].getScale()
 &nbsp;
+    this.scale = this.components['scale'].getScale()
     slider.insertAdjacentElement('beforeend', this.scale)
 &nbsp;
     this.addElementsInScale()
-&nbsp;
     this.root.insertAdjacentElement('beforeend', slider)
   }
 &nbsp;
   private createComponents(): SliderComponents {
-    const { isRange } = this.settings
+    const { isRange } = this.state
     let components = {}
-    const elementsSlider = [Scale, Knob, Fill, Labels, Tooltip]
+    const elementsSlider = [Scale, Thumb, ProgressBar, Labels, Tooltip]
+&nbsp;
     elementsSlider.forEach(Element =&gt; {
-      const element: object = new Element(this.settings)
+      const element = new Element(this.state)
       const elementName: string = changeFirstCharToLower(element.constructor.name)
       components[elementName] = element
     })
+    //TODO можно все элементе инициализировать, но не вставлять. Так можно избежать
+    // многих проверок на isRange например, но тогда будут работать методы update
+    // и другие, когда эти элементы не нужны.
+    if (isRange) {
+      components = {
+        ...components,
+        thumbSecond: new Thumb(this.state, 'thumb-second')
+      }
+    }
 &nbsp;
-    if (isRange) components = { ...components, ...{ knobSecond: new Knob(this.settings, 'knob-second') } }
     return &lt;SliderComponents&gt;components
   }
 &nbsp;
   private addElementsInScale() {
-    const { isRange, hasFill, hasLabels } = this.settings
+    const { isRange, hasProgressBar, hasLabels } = this.state
 &nbsp;
-    const knob: HTMLDivElement = this.components['knob'].getKnob()
-    const fill: HTMLDivElement = this.components['fill'].getFill()
-    const labels: HTMLDivElement = this.components['labels'].getLabels()
+    const thumb = this.components['thumb'].getThumb()
+    const progressBar = this.components['progressBar'].getProgressBar()
+    const labels = this.components['labels'].getLabels()
 &nbsp;
-    this.scale.insertAdjacentElement("beforeend", knob)
+    this.scale.insertAdjacentElement("beforeend", thumb)
 &nbsp;
     if (isRange) {
-      const knobSecond: HTMLDivElement = this.components['knobSecond'].getKnob()
-      this.scale.insertAdjacentElement('beforeend', knobSecond)
+      const thumbSecond = this.components['thumbSecond'].getThumb()
+      this.scale.insertAdjacentElement('beforeend', thumbSecond)
     }
 &nbsp;
-    if (hasFill) this.scale.insertAdjacentElement("afterbegin", fill)
+    if (hasProgressBar) this.scale.insertAdjacentElement("afterbegin", progressBar)
     if (hasLabels) this.scale.insertAdjacentElement('beforeend', labels)
-&nbsp;
   }
 &nbsp;
   private createSlider(orientation: Orientation): HTMLDivElement {
@@ -313,7 +334,7 @@ export default Slider
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Fri May 27 2022 14:31:00 GMT+0700 (Красноярск, стандартное время)
+                at Mon May 30 2022 23:03:12 GMT+0700 (Красноярск, стандартное время)
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

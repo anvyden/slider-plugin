@@ -2,6 +2,7 @@ import Thumb from "../View/subView/Thumb/Thumb";
 import Scale from "../View/subView/Scale/Scale";
 import ProgressBar from "../View/subView/ProgressBar/ProgressBar";
 import Labels from "../View/subView/Labels/Labels";
+import tooltip from "../View/subView/Tooltip/Tooltip";
 
 type Orientation = 'vertical' | 'horizontal'
 type Color = 'green' | 'purple'
@@ -46,7 +47,8 @@ type SliderComponents = {
   thumb: Thumb,
   progressBar: ProgressBar,
   labels: Labels,
-  thumbSecond: Thumb,
+  tooltip: tooltip
+  thumbSecond?: Thumb,
 }
 
 export {

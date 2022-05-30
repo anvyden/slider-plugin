@@ -6,11 +6,13 @@ import './scale.scss'
 
 class Scale extends Observer {
   protected readonly state: ISettings
+  protected readonly root: HTMLElement
   private scale!: HTMLDivElement
 
-  constructor(state: ISettings) {
+  constructor(state: ISettings, root: HTMLElement) {
     super()
     this.state = state
+    this.root = root
     this.init()
   }
 
@@ -39,7 +41,7 @@ class Scale extends Observer {
 
   private handleScalePointerDown(event: PointerEvent): void {
     if (this.isScale(event)) {
-      const positionClick = getPosition(event, this.state)
+      const positionClick = getPosition(event, this.state, this.root)
       this.emit(ScaleEvents.SCALE_VALUE_CHANGED, Number((positionClick).toFixed(3)))
     }
   }

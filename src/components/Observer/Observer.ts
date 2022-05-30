@@ -1,12 +1,5 @@
 import { ISettings, OptionFromThumbValues } from "../interfaces/interfaces";
 
-/* TODO
-    Надо сделать проверку на типы, поскольку в emit я буду передавать не только state,
-    а может и одно значение. Мои типы оказались неправильными.
-*/
-
-// type ChangesType<T> = { [key: string]: T }
-
 abstract class Observer {
   private observers: { [key: string]: Function[] } = {}
 

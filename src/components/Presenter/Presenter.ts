@@ -29,6 +29,7 @@ class Presenter {
     this.view.subscribe(ViewEvents.VALUE_CHANGED, (percentValue: number) => {
       const option = this.model.getOptionByNearValue(percentValue)
       this.model.setValueFromPercent(option, percentValue)
+      this.view.setTargetThumb(option)
     })
 
     this.view.subscribe(ViewEvents.VALUE_FROM_CHANGED, (value: number) => {

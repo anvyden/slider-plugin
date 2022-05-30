@@ -2,6 +2,7 @@ import { ISettings, OptionFromThumbValues, SliderComponents } from "../interface
 import { ThumbEvents, LabelsEvents, ScaleEvents, ViewEvents } from "../Observer/events";
 import Observer from "../Observer/Observer";
 import Slider from "./Slider/Slider";
+import Thumb from "./subView/Thumb/Thumb";
 
 class View extends Observer {
   protected readonly state: ISettings
@@ -23,19 +24,24 @@ class View extends Observer {
     this.bindEvents()
   }
 
-  //TODO update
-
   public update(state: ISettings) {
-    const { isRange } = state
-    this.sliderComponents.thumb.update(state)
-    this.sliderComponents.progressBar.update(state)
-    if (isRange) {
-      this.sliderComponents.thumbSecond.update(state)
+    const sliderComponents = [
+      this.sliderComponents.thumb,
+      this.sliderComponents.progressBar,
+      this.sliderComponents.thumbSecond
+    ]
+
+    sliderComponents.forEach(component => {
+      if (component) component.update(state)
+    })
+  }
+
+  public setTargetThumb(option: OptionFromThumbValues): void {
+    if (option === 'from') {
+      this.sliderComponents.thumb.dragThumbAfterScaleClick(option)
+    } else if (this.sliderComponents.thumbSecond) {
+      this.sliderComponents.thumbSecond.dragThumbAfterScaleClick(option)
     }
-    // const sliderComponents = Object.values(this.sliderComponents)
-    // sliderComponents.forEach(component => {
-    //   if (component.update) component.update(state)
-    // })
   }
 
   private bindEvents(): void {
@@ -52,16 +58,9 @@ class View extends Observer {
   }
 
   private bindThumbEvents(): void {
-    const { isRange } = this.state
     const { thumb, thumbSecond } = this.sliderComponents
-    const thumbNode = thumb.getThumb()
 
     thumb.subscribe(ThumbEvents.THUMB_VALUE_FROM_CHANGED, (value: number) => {
-      if (isRange) {
-        const thumbSecondNode = thumbSecond.getThumb()
-        thumbNode.style.zIndex = '1'
-        thumbSecondNode.style.zIndex = '0'
-      }
       this.emit(ViewEvents.VALUE_FROM_CHANGED, value)
     })
 
@@ -73,11 +72,10 @@ class View extends Observer {
       this.emit(ViewEvents.VALUE_FROM_DECREMENT, value)
     })
 
-    if (isRange) {
+    if (thumbSecond) {
+      this.setThumbZIndex(thumb, thumbSecond)
+
       thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_TO_CHANGED, (value: number) => {
-        const thumbSecondNode = thumbSecond.getThumb()
-        thumbSecondNode.style.zIndex = '1'
-        thumbNode.style.zIndex = '0'
         this.emit(ViewEvents.VALUE_TO_CHANGED, value)
       })
 
@@ -89,7 +87,21 @@ class View extends Observer {
         this.emit(ViewEvents.VALUE_FROM_DECREMENT, value)
       })
     }
+  }
 
+  private setThumbZIndex(thumb: Thumb, thumbSecond: Thumb): void {
+    const thumbNode = thumb.getThumb()
+    const thumbSecondNode = thumbSecond.getThumb()
+
+    thumb.subscribe(ThumbEvents.THUMB_VALUE_FROM_CHANGED, () => {
+      thumbNode.style.zIndex = '1'
+      thumbSecondNode.style.zIndex = '0'
+    })
+
+    thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_TO_CHANGED, () => {
+      thumbNode.style.zIndex = '0'
+      thumbSecondNode.style.zIndex = '1'
+    })
   }
 
   private bindLabelsEvents(): void {

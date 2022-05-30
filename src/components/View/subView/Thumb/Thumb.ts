@@ -1,4 +1,4 @@
-import { Color, ISettings, Orientation } from "../../../interfaces/interfaces";
+import { Color, ISettings, OptionFromThumbValues, Orientation } from "../../../interfaces/interfaces";
 import { convertStateValueToPercent, getPosition } from "../../../../utils/utils";
 import { ThumbEvents } from "../../../Observer/events";
 import Observer from "../../../Observer/Observer";
@@ -8,13 +8,15 @@ type thumbTarget = ThumbEvents.THUMB_VALUE_FROM_CHANGED | ThumbEvents.THUMB_VALU
 
 class Thumb extends Observer {
   protected readonly state: ISettings
+  protected readonly root: HTMLElement
   protected readonly dataId?: string
   private thumbTarget!: thumbTarget
   private thumb!: HTMLDivElement
 
-  constructor(state: ISettings, dataId?: string) {
+  constructor(state: ISettings, root: HTMLElement, dataId?: string) {
     super()
     this.state = state
+    this.root = root
     this.dataId = dataId
     this.init()
   }
@@ -30,6 +32,14 @@ class Thumb extends Observer {
     this.thumb.dataset.id === 'thumb-second'
       ? this.thumb.style[direction] = `${convertStateValueToPercent(this.state, to)}%`
       : this.thumb.style[direction] = `${convertStateValueToPercent(this.state, from)}%`
+  }
+
+  public dragThumbAfterScaleClick(option: OptionFromThumbValues) {
+    this.thumbTarget = option === 'to'
+      ? ThumbEvents.THUMB_VALUE_TO_CHANGED
+      : ThumbEvents.THUMB_VALUE_FROM_CHANGED
+
+    this.handleThumbPointerDown()
   }
 
   private init(): void {
@@ -61,11 +71,10 @@ class Thumb extends Observer {
     return thumb
   }
 
-  private handleThumbPointerDown(event: PointerEvent): void {
-    event.preventDefault()
-
+  private handleThumbPointerDown(): void {
     const handleThumbPointerMove = (event: PointerEvent): void => {
-      const thumbPosition = getPosition(event, this.state)
+      event.preventDefault()
+      const thumbPosition = getPosition(event, this.state, this.root)
       this.emit(this.thumbTarget, Number((thumbPosition).toFixed(3)))
     }
 
