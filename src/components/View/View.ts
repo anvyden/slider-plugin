@@ -50,6 +50,9 @@ class View extends Observer {
     this.bindScaleEvents()
   }
 
+  //TODO: реализовать передачу таргета через событие на scale, чтобы избавиться от движения thumb
+  // при клике по label
+
   private bindScaleEvents(): void {
     const { scale } = this.sliderComponents
     scale.subscribe(ScaleEvents.SCALE_VALUE_CHANGED, (percentValue: number) => {

@@ -22,7 +22,8 @@ class Model extends Observer {
 
   public setState(state: ISettings): void {
     const prevState = { ...JSON.parse(JSON.stringify(this.state))}
-    this.state = { ...JSON.parse(JSON.stringify(prevState)), ...this.validation.checkState(state) }
+    this.state = { ...prevState, ...this.validation.checkState(state) }
+    console.log(this.state)
     this.emit(ModelEvents.STATE_CHANGED, this.state)
   }
 
@@ -32,8 +33,8 @@ class Model extends Observer {
 
   public setValue(option: Option, value: OptionValue): void {
     const newState = this.checkStateValue(option, value)
-    this.state = { ...JSON.parse(JSON.stringify(this.state)), ...this.validation.checkState(newState) }
-    console.log(this.state)
+    this.state = { ...this.state, ...this.validation.checkState(newState) }
+
     if (option === 'from' || option === 'to') {
       this.emit(ModelEvents.VALUE_CHANGED, this.state)
     } else {
@@ -50,14 +51,14 @@ class Model extends Observer {
   public increment(option: OptionFromThumbValues): void {
     const newOptionValue = this.state[option] + this.state.step
     const newState = this.checkStateValue(option, newOptionValue)
-    this.state = { ...JSON.parse(JSON.stringify(this.state)), ...this.validation.checkState(newState) }
+    this.state = { ...this.state, ...this.validation.checkState(newState) }
     this.emit(ModelEvents.VALUE_CHANGED, this.state)
   }
 
   public decrement(option: OptionFromThumbValues): void {
     const newOptionValue = this.state[option] - this.state.step
     const newState = this.checkStateValue(option, newOptionValue)
-    this.state = { ...JSON.parse(JSON.stringify(this.state)), ...this.validation.checkState(newState) }
+    this.state = { ...this.state, ...this.validation.checkState(newState) }
     this.emit(ModelEvents.VALUE_CHANGED, this.state)
   }
 
@@ -80,8 +81,7 @@ class Model extends Observer {
   }
 
   private checkStateValue(option: Option, value: OptionValue): ISettings{
-    const prevState = { ...JSON.parse(JSON.stringify(this.state)) }
-    const newState = { ...JSON.parse(JSON.stringify(prevState)) }
+    const newState = { ...JSON.parse(JSON.stringify(this.state)) }
 
     const optionTypeIsNumber = typeof value === 'number'
     const optionTypeIsBoolean = typeof value === 'boolean'

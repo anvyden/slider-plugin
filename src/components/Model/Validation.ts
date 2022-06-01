@@ -12,8 +12,16 @@ class Validation {
   private addLabels!: boolean
 
   public checkState(state: ISettings): ISettings {
-    //TODO нужно бы сделать валидацию стейта, чтоб не было свойств кроме ISettings
-    // при прокидывании через jquery
+
+    const correctStateKeys = Object.keys(defaultState)
+    const receivedState = JSON.parse(JSON.stringify(state))
+    const receivedStateKeys = Object.keys(receivedState)
+
+    receivedStateKeys.forEach(key => {
+      if (!correctStateKeys.includes(key)) {
+        delete receivedState[key]
+      }
+    })
 
     const {
       max,
@@ -23,7 +31,7 @@ class Validation {
       to,
       isRange,
       labels
-    } = state
+    } = receivedState
 
     const { addLabels, countOfLabels } = labels
 
@@ -48,7 +56,7 @@ class Validation {
     }
 
     const validState: ISettings = {
-      ...state,
+      ...receivedState,
       max: this.max,
       min: this.min,
       step: this.step,
@@ -59,6 +67,7 @@ class Validation {
         countOfLabels: this.countOfLabels
       }
     }
+
     return validState
   }
 
