@@ -56,7 +56,7 @@ class Slider {
   }
 
   private addElementsInScale() {
-    const {hasProgressBar, hasLabels } = this.state
+    const {hasProgressBar, labels: { addLabels } } = this.state
 
     const thumb = this.components['thumb'].getThumb()
     const progressBar = this.components['progressBar'].getProgressBar()
@@ -70,7 +70,7 @@ class Slider {
     }
 
     if (hasProgressBar) this.scale.insertAdjacentElement("afterbegin", progressBar)
-    if (hasLabels) this.scale.insertAdjacentElement('beforeend', labels)
+    if (addLabels) this.scale.insertAdjacentElement('beforeend', labels)
   }
 
   private createSlider(orientation: Orientation): HTMLDivElement {

@@ -1,5 +1,5 @@
 import { defaultState } from './defaultState';
-import { ISettings, Option, OptionValue } from './components/interfaces/interfaces';
+import {ISettings, Option, OptionValue} from './components/interfaces/interfaces';
 import Presenter from './components/Presenter/Presenter';
 import './app.scss';
 

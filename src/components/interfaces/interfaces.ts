@@ -3,11 +3,12 @@ import Scale from "../View/subView/Scale/Scale";
 import ProgressBar from "../View/subView/ProgressBar/ProgressBar";
 import Labels from "../View/subView/Labels/Labels";
 import tooltip from "../View/subView/Tooltip/Tooltip";
+import labels from "../View/subView/Labels/Labels";
 
 type Orientation = 'vertical' | 'horizontal'
 type Color = 'green' | 'purple'
-type Option = keyof ISettings
-type OptionValue = number | boolean | Orientation | Color
+type Option = Exclude<keyof ISettings, labels> | keyof LabelsOptions
+type OptionValue = number | boolean | Orientation | Color | LabelsOptions
 type OptionFromThumbValues = 'from' | 'to'
 
 interface ISettings {
@@ -19,9 +20,14 @@ interface ISettings {
   orientation: Orientation,
   isRange: boolean,
   hasProgressBar: boolean,
-  hasLabels: boolean,
   hasTooltips: boolean,
+  labels: LabelsOptions
   color: Color,
+}
+
+type LabelsOptions = {
+  addLabels: boolean,
+  countOfLabels: number
 }
 
 type StateValuesForConvert = {
@@ -58,6 +64,7 @@ export {
   Orientation,
   Color,
   ISettings,
+  LabelsOptions,
   ElementCoords,
   PageCoords,
   SliderComponents,

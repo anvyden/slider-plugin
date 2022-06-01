@@ -21,8 +21,8 @@ class Model extends Observer {
   }
 
   public setState(state: ISettings): void {
-    const prevState = { ...this.state }
-    this.state = { ...prevState, ...this.validation.checkState(state) }
+    const prevState = { ...JSON.parse(JSON.stringify(this.state))}
+    this.state = { ...JSON.parse(JSON.stringify(prevState)), ...this.validation.checkState(state) }
     this.emit(ModelEvents.STATE_CHANGED, this.state)
   }
 
@@ -32,8 +32,8 @@ class Model extends Observer {
 
   public setValue(option: Option, value: OptionValue): void {
     const newState = this.checkStateValue(option, value)
-    this.state = { ...this.state, ...this.validation.checkState(newState) }
-
+    this.state = { ...JSON.parse(JSON.stringify(this.state)), ...this.validation.checkState(newState) }
+    console.log(this.state)
     if (option === 'from' || option === 'to') {
       this.emit(ModelEvents.VALUE_CHANGED, this.state)
     } else {
@@ -42,20 +42,22 @@ class Model extends Observer {
   }
 
   public getValue(option: Option): OptionValue {
+    if (option === 'addLabels') return this.state.labels.addLabels
+    if (option === 'countOfLabels') return this.state.labels.countOfLabels
     return this.state[option]
   }
 
   public increment(option: OptionFromThumbValues): void {
     const newOptionValue = this.state[option] + this.state.step
     const newState = this.checkStateValue(option, newOptionValue)
-    this.state = { ...this.state, ...this.validation.checkState(newState) }
+    this.state = { ...JSON.parse(JSON.stringify(this.state)), ...this.validation.checkState(newState) }
     this.emit(ModelEvents.VALUE_CHANGED, this.state)
   }
 
   public decrement(option: OptionFromThumbValues): void {
     const newOptionValue = this.state[option] - this.state.step
     const newState = this.checkStateValue(option, newOptionValue)
-    this.state = { ...this.state, ...this.validation.checkState(newState) }
+    this.state = { ...JSON.parse(JSON.stringify(this.state)), ...this.validation.checkState(newState) }
     this.emit(ModelEvents.VALUE_CHANGED, this.state)
   }
 
@@ -77,9 +79,9 @@ class Model extends Observer {
     return 'from'
   }
 
-  private checkStateValue <Option extends keyof ISettings>(option: Option, value: ISettings[Option]): ISettings{
-    const prevState = { ...this.state }
-    const newState = { ...prevState }
+  private checkStateValue(option: Option, value: OptionValue): ISettings{
+    const prevState = { ...JSON.parse(JSON.stringify(this.state)) }
+    const newState = { ...JSON.parse(JSON.stringify(prevState)) }
 
     const optionTypeIsNumber = typeof value === 'number'
     const optionTypeIsBoolean = typeof value === 'boolean'
@@ -98,13 +100,14 @@ class Model extends Observer {
 
     const optionNameHasTypeBoolean = (
       option === 'hasProgressBar' ||
-      option === 'hasLabels' ||
       option === 'hasTooltips' ||
       option === 'isRange'
       ) && optionTypeIsBoolean
 
     const optionNameHasTypeColor = option === 'color' && optionTypeIsColor
     const optionNameHasTypeOrientation = option === 'orientation' && optionTypeIsOrientation
+    const optionNameHasTypeAddLabels = option === 'addLabels' && optionTypeIsBoolean
+    const optionNameHasTypeCountOfLabels = option === 'countOfLabels' && optionTypeIsNumber
 
     if (optionNameIsFromWithRange) newState.from = this.validation.checkFromRangeValue(value)
     if (optionNameIsTo) newState.to = this.validation.checkToRangeValue(value)
@@ -113,6 +116,8 @@ class Model extends Observer {
     if (optionNameHasTypeBoolean) newState[option] = value
     if (optionNameHasTypeColor) newState[option] = value
     if (optionNameHasTypeOrientation) newState[option] = value
+    if (optionNameHasTypeAddLabels) newState.labels.addLabels = value
+    if (optionNameHasTypeCountOfLabels) newState.labels.countOfLabels = value
 
     return newState
   }

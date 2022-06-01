@@ -21,7 +21,10 @@ describe('Scale:', () => {
       isRange: false,
       hasProgressBar: false,
       hasTooltips: false,
-      hasLabels: false,
+      labels: {
+        addLabels: false,
+        countOfLabels: 6,
+      }
     }
     event = <PointerEvent>new Event('pointerdown')
     root = document.createElement('div')

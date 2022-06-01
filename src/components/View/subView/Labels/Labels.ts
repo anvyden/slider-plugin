@@ -19,8 +19,8 @@ class Labels extends Observer {
   }
 
   private init(): void {
-    const { orientation, max, min, step } = this.state
-    this.labels = this.createLabels(orientation, max, min, step)
+    const { orientation, max, min, step, labels: { countOfLabels } } = this.state
+    this.labels = this.createLabels(orientation, max, min, step, countOfLabels)
     this.labels.addEventListener('pointerdown', this.handleLabelsPointerDown.bind(this))
   }
 
@@ -28,14 +28,10 @@ class Labels extends Observer {
     orientation: Orientation,
     max: number,
     min: number,
-    step: number
+    step: number,
+    countOfLabels: number
   ): HTMLDivElement {
 
-    /*TODO: Реализовать из state количество labels (countOfLabels).
-    *   Конечно же добавить проверку сначала на наличие labels вообще в state
-    *   То есть (state = { labels: { addLabels: true, countOfLabels: 5 } }) */
-
-    const countOfLabels: number = 6
     const items = this.getItems(orientation, countOfLabels, max, min, step)
 
     const labels = document.createElement('div')
@@ -56,9 +52,6 @@ class Labels extends Observer {
   ): HTMLDivElement[] {
 
     const items = []
-
-    /* TODO Проблема с количеством лейблов в том, что если я задаю количество лейблов
-        больше нужного количества шагов, то они не появляются */
 
     for (let i = 0; i < countOfLabels; i++) {
       const countOfSteps = (max - min) / step

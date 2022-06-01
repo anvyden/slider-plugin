@@ -17,7 +17,10 @@ describe('Slider:', () => {
       isRange: false,
       hasProgressBar: false,
       hasTooltips: false,
-      hasLabels: false,
+      labels: {
+        addLabels: false,
+        countOfLabels: 6,
+      }
     }
     root = document.createElement('div')
   })
@@ -50,9 +53,12 @@ describe('Slider:', () => {
   test('should embed components into DOM', () => {
     const newState = {
       ...state,
-      hasLabels: true,
       hasProgressBar: true,
       hasTooltips: true,
+      labels: {
+        addLabels: true,
+        countOfLabels: 6,
+      }
     }
     slider = new Slider(newState, root)
     expect(root.querySelectorAll('.slider__progress-bar').length).toBe(1)

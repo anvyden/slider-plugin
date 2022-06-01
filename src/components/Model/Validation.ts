@@ -8,6 +8,8 @@ class Validation {
   private step!: number
   private from!: number
   private to!: number
+  private countOfLabels!: number
+  private addLabels!: boolean
 
   public checkState(state: ISettings): ISettings {
     //TODO нужно бы сделать валидацию стейта, чтоб не было свойств кроме ISettings
@@ -19,17 +21,23 @@ class Validation {
       step,
       from,
       to,
-      isRange
+      isRange,
+      labels
     } = state
+
+    const { addLabels, countOfLabels } = labels
 
     this.max = max
     this.min = min
     this.step = step
     this.from = from
     this.to = to
+    this.countOfLabels = countOfLabels
+    this.addLabels = addLabels
 
     this.checkMaxMin(this.max, this.min)
     this.step = this.checkStep(this.max, this.min, this.step)
+    this.countOfLabels = this.checkCountOfLabels(countOfLabels)
 
     if (isRange) {
       this.checkMaxMinRange(this.from, this.to)
@@ -46,15 +54,20 @@ class Validation {
       step: this.step,
       from: this.from,
       to: this.to,
+      labels: {
+        addLabels: this.addLabels,
+        countOfLabels: this.countOfLabels
+      }
     }
     return validState
   }
 
   public checkStep(max: number, min: number, step: number): number {
     const difference = max - min
-    const roundStep = Math.round(step)
+    let roundStep = Math.round(step)
 
-    if (roundStep <= 0) return defaultState.step
+    if (roundStep < 0) return defaultState.step
+    if (roundStep === 0) roundStep += 1
     if (roundStep > difference) return difference
 
     return roundStep
@@ -126,6 +139,15 @@ class Validation {
     if (validFrom < this.min) return this.min
     if (validFrom > this.max) return this.max
     return validFrom
+  }
+
+  public checkCountOfLabels(count: number): number {
+    const roundCount = Math.round(count)
+
+    if (roundCount > 6) return defaultState.labels.countOfLabels
+    if (roundCount < 2) return defaultState.labels.countOfLabels
+
+    return roundCount
   }
 
 }
