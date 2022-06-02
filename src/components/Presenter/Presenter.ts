@@ -32,20 +32,25 @@ class Presenter {
       this.view.setTargetThumb(option)
     })
 
-    this.view.subscribe(ViewEvents.VALUE_FROM_CHANGED, (value: number) => {
-      this.model.setValueFromPercent('from', value)
+    this.view.subscribe(ViewEvents.VALUE_CHANGED_FROM_LABELS, (percentValue: number) => {
+      const option = this.model.getOptionByNearValue(percentValue)
+      this.model.setValueFromPercent(option, percentValue)
     })
 
-    this.view.subscribe(ViewEvents.VALUE_TO_CHANGED, (value: number) => {
-      this.model.setValueFromPercent('to', value)
+    this.view.subscribe(ViewEvents.VALUE_FROM_CHANGED, (percentValue: number) => {
+      this.model.setValueFromPercent('from', percentValue)
     })
 
-    this.view.subscribe(ViewEvents.VALUE_FROM_INCREMENT, (value: OptionFromThumbValues) => {
-      this.model.increment(value)
+    this.view.subscribe(ViewEvents.VALUE_TO_CHANGED, (percentValue: number) => {
+      this.model.setValueFromPercent('to', percentValue)
     })
 
-    this.view.subscribe(ViewEvents.VALUE_FROM_DECREMENT, (value: OptionFromThumbValues) => {
-      this.model.decrement(value)
+    this.view.subscribe(ViewEvents.VALUE_FROM_INCREMENT, (option: OptionFromThumbValues) => {
+      this.model.increment(option)
+    })
+
+    this.view.subscribe(ViewEvents.VALUE_FROM_DECREMENT, (option: OptionFromThumbValues) => {
+      this.model.decrement(option)
     })
   }
 

@@ -2,8 +2,8 @@ import { ISettings } from './components/interfaces/interfaces';
 
 const defaultState: ISettings = {
   min: -50,
-  max: 100,
-  step: 1,
+  max: 90,
+  step: 30,
   from: -44,
   to: -22,
   orientation: 'horizontal',

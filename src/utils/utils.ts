@@ -26,6 +26,8 @@ const convertPercentValueToNumber = (state: ISettings | StateValuesForConvert, v
   const valueWithSteps = Math.round(valueInPercent / stepInPercent) * step
   const valueInNumber = valueWithSteps + min
 
+  if (valueInPercent >= 100) return max;
+
   return valueInNumber
 }
 

@@ -1,5 +1,5 @@
 import { ISettings, Orientation } from "../../../interfaces/interfaces";
-import { convertStateValueToPercent } from "../../../../utils/utils";
+import { convertPercentValueToNumber, convertStateValueToPercent } from "../../../../utils/utils";
 import { LabelsEvents } from "../../../Observer/events";
 import Observer from "../../../Observer/Observer";
 import './labels.scss'
@@ -51,17 +51,29 @@ class Labels extends Observer {
     step: number
   ): HTMLDivElement[] {
 
-    const items = []
+    let items: HTMLDivElement[] = []
+    const labelsValues: number[] = []
 
-    for (let i = 0; i < countOfLabels; i++) {
+    const minLabel = this.createLabel(orientation, min, 0)
+    const maxLabel = this.createLabel(orientation, max, 100)
+
+    for (let i = 0; i < countOfLabels - 2; i++) {
       const countOfSteps = (max - min) / step
-      const stepsForLabel = Math.round((countOfSteps / (countOfLabels - 1)) * i)
+      const stepsForLabel = Math.round((countOfSteps / (countOfLabels - 1)) * (i + 1))
       const positionInNumber = (stepsForLabel * step) + min
       const correctPositionInNumber = positionInNumber > max ? max : positionInNumber
       const positionInPercent = Number(convertStateValueToPercent(this.state, correctPositionInNumber).toFixed(3))
-      const item = this.createLabel(orientation, correctPositionInNumber, positionInPercent)
-      items.push(item)
+
+      if (!labelsValues.includes(positionInPercent)) labelsValues.push(positionInPercent)
     }
+
+    labelsValues.forEach(value => {
+      const positionInNumber = convertPercentValueToNumber(this.state, value)
+      const item = this.createLabel(orientation, positionInNumber, value)
+      items.push(item)
+    })
+
+    items = [minLabel, ...items, maxLabel]
 
     return items
   }

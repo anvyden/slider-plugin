@@ -50,9 +50,6 @@ class View extends Observer {
     this.bindScaleEvents()
   }
 
-  //TODO: реализовать передачу таргета через событие на scale, чтобы избавиться от движения thumb
-  // при клике по label
-
   private bindScaleEvents(): void {
     const { scale } = this.sliderComponents
     scale.subscribe(ScaleEvents.SCALE_VALUE_CHANGED, (percentValue: number) => {
@@ -63,31 +60,31 @@ class View extends Observer {
   private bindThumbEvents(): void {
     const { thumb, thumbSecond } = this.sliderComponents
 
-    thumb.subscribe(ThumbEvents.THUMB_VALUE_FROM_CHANGED, (value: number) => {
-      this.emit(ViewEvents.VALUE_FROM_CHANGED, value)
+    thumb.subscribe(ThumbEvents.THUMB_VALUE_FROM_CHANGED, (percentValue: number) => {
+      this.emit(ViewEvents.VALUE_FROM_CHANGED, percentValue)
     })
 
-    thumb.subscribe(ThumbEvents.THUMB_VALUE_INCREMENT, (value: OptionFromThumbValues) => {
-      this.emit(ViewEvents.VALUE_FROM_INCREMENT, value)
+    thumb.subscribe(ThumbEvents.THUMB_VALUE_INCREMENT, (option: OptionFromThumbValues) => {
+      this.emit(ViewEvents.VALUE_FROM_INCREMENT, option)
     })
 
-    thumb.subscribe(ThumbEvents.THUMB_VALUE_DECREMENT, (value: OptionFromThumbValues) => {
-      this.emit(ViewEvents.VALUE_FROM_DECREMENT, value)
+    thumb.subscribe(ThumbEvents.THUMB_VALUE_DECREMENT, (option: OptionFromThumbValues) => {
+      this.emit(ViewEvents.VALUE_FROM_DECREMENT, option)
     })
 
     if (thumbSecond) {
       this.setThumbZIndex(thumb, thumbSecond)
 
-      thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_TO_CHANGED, (value: number) => {
-        this.emit(ViewEvents.VALUE_TO_CHANGED, value)
+      thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_TO_CHANGED, (percentValue: number) => {
+        this.emit(ViewEvents.VALUE_TO_CHANGED, percentValue)
       })
 
-      thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_INCREMENT, (value: OptionFromThumbValues) => {
-        this.emit(ViewEvents.VALUE_FROM_INCREMENT, value)
+      thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_INCREMENT, (option: OptionFromThumbValues) => {
+        this.emit(ViewEvents.VALUE_FROM_INCREMENT, option)
       })
 
-      thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_DECREMENT, (value: OptionFromThumbValues) => {
-        this.emit(ViewEvents.VALUE_FROM_DECREMENT, value)
+      thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_DECREMENT, (option: OptionFromThumbValues) => {
+        this.emit(ViewEvents.VALUE_FROM_DECREMENT, option)
       })
     }
   }
@@ -110,7 +107,7 @@ class View extends Observer {
   private bindLabelsEvents(): void {
     const { labels } = this.sliderComponents
     labels.subscribe(LabelsEvents.LABEL_VALUE_CHANGED, (percentValue: number) => {
-      this.emit(ViewEvents.VALUE_CHANGED, percentValue)
+      this.emit(ViewEvents.VALUE_CHANGED_FROM_LABELS, percentValue)
     })
   }
 }
