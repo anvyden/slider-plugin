@@ -51,6 +51,11 @@ describe('Utils: convertPercentValueToNumber', () => {
     expect(convertPercentValueToNumber(state, value)).toBe(50)
   })
 
+  test('if the percentage value greater than 100%, should return the value equal to max of range', () => {
+    const value = 110
+    expect(convertPercentValueToNumber(state, value)).toBe(state.max)
+  })
+
 })
 
 describe('Utils: positionFunctions', () => {
