@@ -9,8 +9,8 @@ import {
   getPageCoords,
   getStepInPercent
 } from "./utils";
-import {ISettings} from "../components/interfaces/interfaces";
-import {defaultState} from "../defaultState";
+import { ISettings } from "../components/interfaces/interfaces";
+import { defaultState } from "../defaultState";
 import Scale from "../components/View/subView/Scale/Scale";
 
 const state = {

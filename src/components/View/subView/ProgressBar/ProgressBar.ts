@@ -58,10 +58,7 @@ class ProgressBar {
     const { max, min, step } = this.state
     const stepInPercent = getStepInPercent(max, min, step)
 
-    let percentValue = (value / step) * stepInPercent
-
-    if (percentValue > 100) percentValue = 100
-    if (percentValue < 0) percentValue = 0
+    const percentValue = (value / step) * stepInPercent
 
     return percentValue
   }
