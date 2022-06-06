@@ -36,10 +36,23 @@ describe('Labels:', () => {
 
   test('should created labels', () => {
     labels = new Labels(state)
-    const newLabelsNode = labels.getLabels()
-    root.appendChild(newLabelsNode)
+    const labelsNode = labels.getLabels()
+    root.appendChild(labelsNode)
 
     expect(root.querySelectorAll('.slider__labels').length).toBe(1)
+  })
+
+  test('should created labels with vertical orientation', () => {
+    const newState: ISettings = {
+      ...state,
+      orientation: 'vertical'
+    }
+
+    labels = new Labels(newState)
+    const labelsNode = labels.getLabels()
+    root.appendChild(labelsNode)
+
+    expect(root.querySelectorAll('.slider__labels--vertical').length).toBe(1)
   })
 
   test('should emit the event once', () => {

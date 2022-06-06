@@ -51,29 +51,26 @@ class Labels extends Observer {
     step: number
   ): HTMLDivElement[] {
 
-    let items: HTMLDivElement[] = []
-    const labelsValues: number[] = []
-
-    const minLabel = this.createLabel(orientation, min, 0)
-    const maxLabel = this.createLabel(orientation, max, 100)
+    const items: HTMLDivElement[] = []
+    const labelsValues: number[] = [0, 100]
 
     for (let i = 0; i < countOfLabels - 2; i++) {
       const countOfSteps = (max - min) / step
       const stepsForLabel = Math.round((countOfSteps / (countOfLabels - 1)) * (i + 1))
       const positionInNumber = (stepsForLabel * step) + min
-      const correctPositionInNumber = positionInNumber > max ? max : positionInNumber
-      const positionInPercent = Number(convertStateValueToPercent(this.state, correctPositionInNumber).toFixed(3))
+      const positionInPercent = Number(convertStateValueToPercent(this.state, positionInNumber).toFixed(3))
 
-      if (!labelsValues.includes(positionInPercent)) labelsValues.push(positionInPercent)
+      labelsValues.push(positionInPercent)
     }
 
-    labelsValues.forEach(value => {
+    labelsValues
+      .filter((value, index) => labelsValues.indexOf(value) === index)
+      .sort((a, b) => a - b)
+      .forEach(value => {
       const positionInNumber = convertPercentValueToNumber(this.state, value)
       const item = this.createLabel(orientation, positionInNumber, value)
       items.push(item)
     })
-
-    items = [minLabel, ...items, maxLabel]
 
     return items
   }
