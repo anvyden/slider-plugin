@@ -92,11 +92,9 @@ class Labels extends Observer {
   }
 
   private handleLabelsPointerDown(event: PointerEvent): void {
-    const { target } = event
-    if (target instanceof HTMLElement) {
-      const targetValuePercent = Number(target.dataset.value)
-      this.emit(LabelsEvents.LABEL_VALUE_CHANGED, targetValuePercent)
-    }
+    const target = <HTMLElement>event.target
+    const targetValuePercent = Number(target.dataset.value)
+    this.emit(LabelsEvents.LABEL_VALUE_CHANGED, targetValuePercent)
   }
 }
 

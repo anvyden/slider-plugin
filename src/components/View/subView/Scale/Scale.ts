@@ -46,12 +46,10 @@ class Scale extends Observer {
     }
   }
 
-  private isScale(event: PointerEvent): boolean | unknown {
-    const { target } = event
-    if (target instanceof HTMLElement) {
-      const isScale = target.dataset.id === 'scale' || target.dataset.id === 'progressBar'
-      return isScale
-    }
+  private isScale(event: PointerEvent): boolean {
+    const target = <HTMLElement>event.target
+    const isScale = target.dataset.id === 'scale' || target.dataset.id === 'progressBar'
+    return isScale
   }
 }
 

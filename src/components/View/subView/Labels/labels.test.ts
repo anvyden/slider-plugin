@@ -20,6 +20,7 @@ describe('Labels:', () => {
         countOfLabels: 6
       }
     }
+
     root = document.createElement('div')
     event = <PointerEvent>new Event('pointerdown')
   })

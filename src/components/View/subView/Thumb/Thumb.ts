@@ -103,17 +103,15 @@ class Thumb extends Observer {
   }
 
   private checkThumbTarget(event: PointerEvent | KeyboardEvent): void {
-    if (event.target instanceof HTMLElement) {
-      const { target } = event
+    const target = <HTMLElement>event.target
 
-      const isFirstThumb =
-        target.dataset.id === 'thumb-first' ||
-        target.dataset.id === 'thumb'
+    const isFirstThumb =
+      target.dataset.id === 'thumb-first' ||
+      target.dataset.id === 'thumb'
 
-      this.thumbTarget = isFirstThumb
-        ? ThumbEvents.THUMB_VALUE_FROM_CHANGED
-        : ThumbEvents.THUMB_VALUE_TO_CHANGED
-    }
+    this.thumbTarget = isFirstThumb
+      ? ThumbEvents.THUMB_VALUE_FROM_CHANGED
+      : ThumbEvents.THUMB_VALUE_TO_CHANGED
   }
 }
 

@@ -28,19 +28,22 @@ class View extends Observer {
     const sliderComponents = [
       this.sliderComponents.thumb,
       this.sliderComponents.progressBar,
-      this.sliderComponents.thumbSecond
+      <Thumb>this.sliderComponents.thumbSecond
     ]
 
     sliderComponents.forEach(component => {
-      if (component) component.update(state)
+      component.update(state)
     })
   }
 
   public setTargetThumb(option: OptionFromThumbValues): void {
-    if (option === 'from') {
-      this.sliderComponents.thumb.dragThumbAfterScaleClick(option)
-    } else if (this.sliderComponents.thumbSecond) {
-      this.sliderComponents.thumbSecond.dragThumbAfterScaleClick(option)
+    const thumb = this.sliderComponents.thumb
+    const thumbSecond = <Thumb>this.sliderComponents.thumbSecond
+
+    if (option === 'to') {
+      thumbSecond.dragThumbAfterScaleClick(option)
+    } else {
+      thumb.dragThumbAfterScaleClick(option)
     }
   }
 
@@ -50,6 +53,7 @@ class View extends Observer {
     this.bindScaleEvents()
   }
 
+  /* istanbul ignore next */
   private bindScaleEvents(): void {
     const { scale } = this.sliderComponents
     scale.subscribe(ScaleEvents.SCALE_VALUE_CHANGED, (percentValue: number) => {
@@ -57,6 +61,7 @@ class View extends Observer {
     })
   }
 
+  /* istanbul ignore next */
   private bindThumbEvents(): void {
     const { thumb, thumbSecond } = this.sliderComponents
 
@@ -93,17 +98,20 @@ class View extends Observer {
     const thumbNode = thumb.getThumb()
     const thumbSecondNode = thumbSecond.getThumb()
 
+    /* istanbul ignore next */
     thumb.subscribe(ThumbEvents.THUMB_VALUE_FROM_CHANGED, () => {
       thumbNode.style.zIndex = '1'
       thumbSecondNode.style.zIndex = '0'
     })
 
+    /* istanbul ignore next */
     thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_TO_CHANGED, () => {
       thumbNode.style.zIndex = '0'
       thumbSecondNode.style.zIndex = '1'
     })
   }
 
+  /* istanbul ignore next */
   private bindLabelsEvents(): void {
     const { labels } = this.sliderComponents
     labels.subscribe(LabelsEvents.LABEL_VALUE_CHANGED, (percentValue: number) => {
