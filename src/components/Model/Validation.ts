@@ -135,9 +135,6 @@ class Validation {
       validTo = swap
     }
 
-    if (validFrom <= this.min) validFrom = this.min
-    if (validTo >= this.max) validTo = this.max
-
     this.from = validFrom
     this.to = validTo
   }
@@ -145,8 +142,7 @@ class Validation {
   public checkFrom(from: number): number {
     const roundFrom = Math.round(from)
     const validFrom = this.convertValueToStep(roundFrom)
-    if (validFrom < this.min) return this.min
-    if (validFrom > this.max) return this.max
+
     return validFrom
   }
 

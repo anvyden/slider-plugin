@@ -17,10 +17,22 @@ describe('Validation:', () => {
       from: -20,
       to: 40,
       isRange: true,
+      hasProgressBar: true,
+      orientation: 'horizontal',
     }
   })
 
   describe('checkStep method', () => {
+
+    test('if step < 0, should return step = defaultState.step', () => {
+      const newState = {
+        ...state,
+        step: -10,
+      }
+
+      const validStep = validation.checkStep(newState.max, newState.min, newState.step)
+      expect(validStep).toBe(defaultState.step)
+    })
 
     test('should return rounded value of step', () => {
       const newState = {
@@ -171,4 +183,82 @@ describe('Validation:', () => {
 
   })
 
+  describe('checkState method', () => {
+
+    test('should return valid state', () => {
+      const validState = validation.checkState(state)
+
+      expect(validState).toBeTruthy()
+      expect(validState).toEqual(state)
+    })
+
+    test('should deleted unnecessary options from state when passed via jquery', () => {
+      const newState = {
+        ...state,
+        margin: 40,
+      }
+
+      const validState = validation.checkState(newState)
+      expect(validState).not.toHaveProperty('margin')
+    })
+  })
+
+    test('should return valid state when isRange = false', () => {
+      const newState = {
+        ...state,
+        isRange: false,
+      }
+
+      const validState = validation.checkState(newState)
+
+      expect(validState).toBeTruthy()
+      expect(validState).toEqual(newState)
+    })
+
+    test('should swapped values of from and to and return valid state', () => {
+      const newState = {
+        ...state,
+        from: 60,
+        to: -40,
+      }
+
+      const validState = validation.checkState(newState)
+
+      expect(validState).toBeTruthy()
+      expect(validState.from).toBe(-40)
+      expect(validState.to).toBe(60)
+    })
+
+    test('if from <= min and to >= max, should return state with valid values of from and to', () => {
+      const newState = {
+        ...state,
+        from: -110,
+        to: 120,
+      }
+
+      const validState = validation.checkState(newState)
+
+      expect(validState.from).toBe(-100)
+      expect(validState.to).toBe(100)
+    })
+
+    test('if from > max or from < min when isRange = false, should return state with valid value of from', () => {
+      let newState = {
+        ...state,
+        isRange: false,
+        from: -110,
+      }
+
+      let validState = validation.checkState(newState)
+      expect(validState.from).toBe(-100)
+
+      newState = {
+        ...state,
+        isRange: false,
+        from: 110,
+      }
+
+      validState = validation.checkState(newState)
+      expect(validState.from).toBe(100)
+    })
 })
