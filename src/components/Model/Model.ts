@@ -23,7 +23,6 @@ class Model extends Observer {
   public setState(state: ISettings): void {
     const prevState = { ...JSON.parse(JSON.stringify(this.state))}
     this.state = { ...prevState, ...this.validation.checkState(state) }
-    console.log(this.state)
     this.emit(ModelEvents.STATE_CHANGED, this.state)
   }
 
@@ -62,7 +61,7 @@ class Model extends Observer {
     this.emit(ModelEvents.VALUE_CHANGED, this.state)
   }
 
-  public setValueFromPercent(option: Option, percentValue: number): void {
+  public setValueFromPercent(option: OptionFromThumbValues, percentValue: number): void {
     const valueInNumber = convertPercentValueToNumber(this.state, percentValue)
     this.setValue(option, valueInNumber)
   }
@@ -74,6 +73,7 @@ class Model extends Observer {
       const valueInNumber = convertPercentValueToNumber(this.state, percentValue)
       const half = (to - from) / 2
       const nearValue = valueInNumber - from
+
       return nearValue >= half ? 'to' : 'from'
     }
 
