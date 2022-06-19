@@ -5,11 +5,9 @@
 import Scale from "./Scale";
 import {defaultState} from "../../../../defaultState";
 import {ISettings} from "../../../interfaces/interfaces";
-// import Slider from "../../Slider/Slider";
-
+import Slider from "../../Slider/Slider";
 
 describe('Scale:', () => {
-  // let slider: Slider
   let scale: Scale
   let event: PointerEvent
   let state: ISettings
@@ -26,7 +24,9 @@ describe('Scale:', () => {
         countOfLabels: 6,
       }
     }
-    event = <PointerEvent>new Event('pointerdown')
+    event = <PointerEvent>new Event('pointerdown', {
+      bubbles: true
+    })
     root = document.createElement('div')
   })
 
@@ -58,9 +58,10 @@ describe('Scale:', () => {
   })
 
   test('should emit the event once with vertical orientation', () => {
-    const newState = Object.assign({}, state, {
+    const newState: ISettings = {
+      ...state,
       orientation: 'vertical'
-    })
+    }
 
     scale = new Scale(newState, root)
     const spyEmit = jest.spyOn(scale, 'emit')
@@ -71,25 +72,28 @@ describe('Scale:', () => {
 
       body.appendChild(root)
       root.appendChild(scaleNode)
+
       scaleNode.dispatchEvent(event)
       expect(spyEmit).toHaveBeenCalledTimes(1)
     }
   })
 
-  // test('1', () => {
-  //   const body = document.querySelector('body')
-  //   if (body instanceof HTMLBodyElement) {
-  //     body.appendChild(root)
-  //     slider = new Slider(state, root)
-  //     const scale = slider.getComponents().scale
-  //     const thumb = slider.getComponents().thumb
-  //     const spyEmit = jest.spyOn(scale, 'emit')
-  //
-  //     if (event.target instanceof HTMLElement) {
-  //       const thumbNode = thumb.getThumb()
-  //       thumbNode.dispatchEvent(event)
-  //       expect(spyEmit).toHaveBeenCalledTimes(0)
-  //     }
-  //   }
-  // })
+  test('should emit the event once when click happen on progressBar', () => {
+    const slider = new Slider(state, root)
+
+    const scale = slider.getComponents().scale
+    const progressBar = slider.getComponents().progressBar
+    const body = <HTMLBodyElement>document.querySelector('body')
+
+    const spyEmit = jest.spyOn(scale, 'emit')
+    const scaleNode = scale.getScale()
+    const progressBarNode = progressBar.getProgressBar()
+
+    body.appendChild(root)
+    root.appendChild(scaleNode)
+    scaleNode.appendChild(progressBarNode)
+
+    progressBarNode.dispatchEvent(event)
+    expect(spyEmit).toHaveBeenCalledTimes(1)
+  })
 })

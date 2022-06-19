@@ -40,6 +40,7 @@ class Scale extends Observer {
   *   labels. Это из-за расчет через функцию convertPercentValueToNumber.  */
 
   private handleScalePointerDown(event: PointerEvent): void {
+    /* istanbul ignore else */
     if (this.isScale(event)) {
       const positionClick = getPosition(event, this.state, this.root)
       this.emit(ScaleEvents.SCALE_VALUE_CHANGED, Number((positionClick).toFixed(3)))

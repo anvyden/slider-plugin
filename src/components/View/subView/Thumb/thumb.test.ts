@@ -168,7 +168,7 @@ describe('Thumb:', () => {
       thumbNode.dispatchEvent(eventPointerDown);
       thumbNode.dispatchEvent(eventPointerMove);
       thumbNode.dispatchEvent(eventPointerUp);
-      expect(spyEmit).not.toBeFalsy();
+
       expect(spyEmit).toHaveBeenCalled();
       expect(spyAddEventListener).toHaveBeenCalled();
       expect(spyRemoveEventListener).toHaveBeenCalled();

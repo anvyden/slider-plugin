@@ -71,6 +71,10 @@ describe('Utils: positionFunctions', () => {
     event = <PointerEvent>new Event('pointerdown')
   })
 
+  afterEach(() => {
+    root.innerHTML = ''
+  })
+
   test('getElementCoords should return element coordinates', () => {
     const scaleNode = scale.getScale()
     expect(getElementCoords(scaleNode)).toHaveProperty('left')
