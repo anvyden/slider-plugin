@@ -3,6 +3,8 @@ import { ThumbEvents, LabelsEvents, ScaleEvents, ViewEvents } from "../Observer/
 import Observer from "../Observer/Observer";
 import Slider from "./Slider/Slider";
 import Thumb from "./subView/Thumb/Thumb";
+import Tooltip from "./subView/Tooltip/Tooltip";
+import {getElementCoords} from "../../utils/utils";
 
 class View extends Observer {
   protected readonly state: ISettings
@@ -28,7 +30,9 @@ class View extends Observer {
     const sliderComponents = [
       this.sliderComponents.thumb,
       this.sliderComponents.progressBar,
-      <Thumb>this.sliderComponents.thumbSecond
+      this.sliderComponents.tooltip,
+      <Thumb>this.sliderComponents.thumbSecond,
+      <Tooltip>this.sliderComponents.tooltipSecond
     ]
 
     sliderComponents.forEach(component => {
@@ -45,6 +49,34 @@ class View extends Observer {
     } else {
       thumb.dragThumbAfterScaleClick(option)
     }
+  }
+
+  public checkTooltipOverlap(state: ISettings): boolean {
+    const { orientation } = state
+
+    const tooltip = this.sliderComponents.tooltip
+    const tooltipSecond = <Tooltip>this.sliderComponents.tooltipSecond
+    const tooltipNode = tooltip.getTooltip()
+    const tooltipSecondNode = tooltipSecond.getTooltip()
+
+    const tooltipCoords = getElementCoords(tooltipNode)
+    const tooltipSecondCoords = getElementCoords(tooltipSecondNode)
+
+    if (orientation === 'horizontal') {
+      const { left: tooltipLeftCoord, width: tooltipWidth } = tooltipCoords
+      const { left: tooltipSecondLeftCoord } = tooltipSecondCoords
+
+      const tooltipRightCoord = tooltipLeftCoord + tooltipWidth
+      const isOverlap = (
+        tooltipLeftCoord < tooltipSecondLeftCoord &&
+        tooltipSecondLeftCoord < tooltipRightCoord
+      )
+
+      if (isOverlap) return true
+    }
+
+    return false
+
   }
 
   private bindEvents(): void {

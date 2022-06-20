@@ -48,7 +48,8 @@ class Slider {
     if (isRange) {
       components = {
         ...components,
-        thumbSecond: new Thumb(this.state, this.root, 'thumb-second')
+        thumbSecond: new Thumb(this.state, this.root, 'thumb-second'),
+        tooltipSecond: new Tooltip(this.state, 'tooltip-second')
       }
     }
 
@@ -56,21 +57,31 @@ class Slider {
   }
 
   private addElementsInScale() {
-    const {hasProgressBar, labels: { addLabels } } = this.state
+    const {isRange, hasProgressBar, hasTooltips, labels: { addLabels } } = this.state
 
-    const thumb = this.components['thumb'].getThumb()
-    const progressBar = this.components['progressBar'].getProgressBar()
-    const labels = this.components['labels'].getLabels()
+    const thumbNode = this.components['thumb'].getThumb()
+    const progressBarNode = this.components['progressBar'].getProgressBar()
+    const labelsNode = this.components['labels'].getLabels()
+    const tooltipNode = this.components.tooltip.getTooltip()
 
-    this.scale.insertAdjacentElement("afterbegin", thumb)
+    this.scale.insertAdjacentElement("afterbegin", thumbNode)
 
-    if (this.components.thumbSecond) {
-      const thumbSecond = this.components['thumbSecond'].getThumb()
-      this.scale.insertAdjacentElement('beforeend', thumbSecond)
+    if (isRange) {
+      const thumbSecond = <Thumb>this.components.thumbSecond
+      const thumbSecondNode = thumbSecond.getThumb()
+
+      if (hasTooltips) {
+        const tooltipSecond = <Tooltip>this.components.tooltipSecond
+        const tooltipSecondNode = tooltipSecond.getTooltip()
+        thumbSecondNode.insertAdjacentElement('beforeend', tooltipSecondNode)
+      }
+
+      this.scale.insertAdjacentElement('beforeend', thumbSecondNode)
     }
 
-    if (hasProgressBar) this.scale.insertAdjacentElement("afterbegin", progressBar)
-    if (addLabels) this.scale.insertAdjacentElement('beforeend', labels)
+    if (hasProgressBar) this.scale.insertAdjacentElement("afterbegin", progressBarNode)
+    if (hasTooltips) thumbNode.insertAdjacentElement('beforeend', tooltipNode)
+    if (addLabels) this.scale.insertAdjacentElement('beforeend', labelsNode)
   }
 
   private createSlider(orientation: Orientation): HTMLDivElement {

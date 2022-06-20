@@ -2,7 +2,7 @@ import Thumb from "../View/subView/Thumb/Thumb";
 import Scale from "../View/subView/Scale/Scale";
 import ProgressBar from "../View/subView/ProgressBar/ProgressBar";
 import Labels from "../View/subView/Labels/Labels";
-import tooltip from "../View/subView/Tooltip/Tooltip";
+import Tooltip from "../View/subView/Tooltip/Tooltip";
 import labels from "../View/subView/Labels/Labels";
 
 type Orientation = 'vertical' | 'horizontal'
@@ -53,8 +53,9 @@ type SliderComponents = {
   thumb: Thumb,
   progressBar: ProgressBar,
   labels: Labels,
-  tooltip: tooltip
+  tooltip: Tooltip
   thumbSecond?: Thumb,
+  tooltipSecond?: Tooltip
 }
 
 export {

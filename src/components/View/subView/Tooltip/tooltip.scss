@@ -1,0 +1,54 @@
+.slider {
+  &__tooltip {
+    position: absolute;
+    min-width: 30px;
+    height: 20px;
+    padding: 0 4px;
+    border-radius: 4px;
+    text-align: center;
+    cursor: default;
+
+    &::after {
+      content: '';
+      position: absolute;
+      border: 4px solid transparent;
+    }
+
+    &--green {
+      background: inherit;
+    }
+
+    &--horizontal {
+      top: -30px;
+      left: 8px;
+      transform: translate(-50%, 0);
+
+      &::after {
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 100%);
+        border-top-color: #06a27b;
+      }
+    }
+
+    &--vertical {
+      left: -32px;
+      bottom: 8px;
+      transform: translate(-50%, 50%);
+
+      &::after {
+        right: 0;
+        top: 50%;
+        transform: translate(100%, -50%);
+        border-left-color: #06a27b;
+      }
+    }
+  }
+}
+
+.tooltip {
+  &__value {
+    color: #fff;
+    font-size: 14px;
+  }
+}
