@@ -72,13 +72,91 @@ describe('Model:', () => {
       expect(spyEmit).toHaveBeenCalledWith(ModelEvents.VALUE_CHANGED, currentState)
     })
 
-    test('should set to any value other than "from" or "to", and emit should have been called with the new state', () => {
+    test('should set to boolean value and emit should have been called with the new state', () => {
       const spyEmit = jest.spyOn(model, 'emit')
       model.setValue('isRange', false)
       const currentState = model.getState()
 
       expect(currentState.isRange).toBe(false)
       expect(spyEmit).toHaveBeenCalledWith(ModelEvents.STATE_CHANGED, currentState)
+    })
+
+    test('should set to number value and emit should have been called with the new state', () => {
+      const spyEmit = jest.spyOn(model, 'emit')
+      model.setValue('max', 110)
+      const currentState = model.getState()
+
+      expect(currentState.max).toBe(110)
+      expect(spyEmit).toHaveBeenCalledWith(ModelEvents.STATE_CHANGED, currentState)
+    })
+
+    test('should set to color value and emit should have been called with the new state', () => {
+      const spyEmit = jest.spyOn(model, 'emit')
+      model.setValue('color', 'purple')
+      const currentState = model.getState()
+
+      expect(currentState.color).toBe('purple')
+      expect(spyEmit).toHaveBeenCalledWith(ModelEvents.STATE_CHANGED, currentState)
+    })
+
+    test('should set to color value and emit should have been called with the new state', () => {
+      const spyEmit = jest.spyOn(model, 'emit')
+      model.setValue('color', 'purple')
+      const currentState = model.getState()
+
+      expect(currentState.color).toBe('purple')
+      expect(spyEmit).toHaveBeenCalledWith(ModelEvents.STATE_CHANGED, currentState)
+    })
+
+    test('should set to color value and emit should have been called with the new state', () => {
+      const spyEmit = jest.spyOn(model, 'emit')
+      model.setValue('color', 'purple')
+      const currentState = model.getState()
+
+      expect(currentState.color).toBe('purple')
+      expect(spyEmit).toHaveBeenCalledWith(ModelEvents.STATE_CHANGED, currentState)
+    })
+
+    test('should set to orientation value and emit should have been called with the new state', () => {
+      const spyEmit = jest.spyOn(model, 'emit')
+      model.setValue('orientation', 'vertical')
+      const currentState = model.getState()
+
+      expect(currentState.orientation).toBe('vertical')
+      expect(spyEmit).toHaveBeenCalledWith(ModelEvents.STATE_CHANGED, currentState)
+    })
+
+    test('should set to addLabels value and emit should have been called with the new state', () => {
+      const spyEmit = jest.spyOn(model, 'emit')
+      model.setValue('addLabels', false)
+      const currentState = model.getState()
+
+      expect(currentState.labels.addLabels).toBe(false)
+      expect(spyEmit).toHaveBeenCalledWith(ModelEvents.STATE_CHANGED, currentState)
+    })
+
+    test('should set to countOfLabels value and emit should have been called with the new state', () => {
+      const spyEmit = jest.spyOn(model, 'emit')
+      model.setValue('countOfLabels', 4)
+      const currentState = model.getState()
+
+      expect(currentState.labels.countOfLabels).toBe(4)
+      expect(spyEmit).toHaveBeenCalledWith(ModelEvents.STATE_CHANGED, currentState)
+    })
+
+    test('should set to from value when isRange = false and emit should have been called with the new state', () => {
+      const newState = {
+        ...state,
+        isRange: false,
+      }
+
+      const newModel = new Model(newState)
+      const spyEmit = jest.spyOn(newModel, 'emit')
+      newModel.setValue('from', -40)
+      const currentState = newModel.getState()
+
+      expect(currentState.from).toBe(-40)
+      expect(spyEmit).toHaveBeenCalledWith(ModelEvents.VALUE_CHANGED, currentState)
     })
 
   })
