@@ -1,10 +1,9 @@
-import { ISettings, OptionFromThumbValues, SliderComponents } from "../interfaces/interfaces";
+import {ISettings, OptionFromThumbValues, Orientation, SliderComponents} from "../interfaces/interfaces";
 import { ThumbEvents, LabelsEvents, ScaleEvents, ViewEvents } from "../Observer/events";
 import Observer from "../Observer/Observer";
 import Slider from "./Slider/Slider";
 import Thumb from "./subView/Thumb/Thumb";
 import Tooltip from "./subView/Tooltip/Tooltip";
-import {getElementCoords} from "../../utils/utils";
 
 class View extends Observer {
   protected readonly state: ISettings
@@ -36,8 +35,10 @@ class View extends Observer {
     ]
 
     sliderComponents.forEach(component => {
-      component.update(state)
+      if (component) component.update(state)
     })
+
+    if (state.isRange) this.createUnitedTooltip(state)
   }
 
   public setTargetThumb(option: OptionFromThumbValues): void {
@@ -51,34 +52,6 @@ class View extends Observer {
     }
   }
 
-  public checkTooltipOverlap(state: ISettings): boolean {
-    const { orientation } = state
-
-    const tooltip = this.sliderComponents.tooltip
-    const tooltipSecond = <Tooltip>this.sliderComponents.tooltipSecond
-    const tooltipNode = tooltip.getTooltip()
-    const tooltipSecondNode = tooltipSecond.getTooltip()
-
-    const tooltipCoords = getElementCoords(tooltipNode)
-    const tooltipSecondCoords = getElementCoords(tooltipSecondNode)
-
-    if (orientation === 'horizontal') {
-      const { left: tooltipLeftCoord, width: tooltipWidth } = tooltipCoords
-      const { left: tooltipSecondLeftCoord } = tooltipSecondCoords
-
-      const tooltipRightCoord = tooltipLeftCoord + tooltipWidth
-      const isOverlap = (
-        tooltipLeftCoord < tooltipSecondLeftCoord &&
-        tooltipSecondLeftCoord < tooltipRightCoord
-      )
-
-      if (isOverlap) return true
-    }
-
-    return false
-
-  }
-
   private bindEvents(): void {
     this.bindThumbEvents()
     this.bindLabelsEvents()
@@ -90,6 +63,14 @@ class View extends Observer {
     const { scale } = this.sliderComponents
     scale.subscribe(ScaleEvents.SCALE_VALUE_CHANGED, (percentValue: number) => {
       this.emit(ViewEvents.VALUE_CHANGED, percentValue)
+    })
+  }
+
+  /* istanbul ignore next */
+  private bindLabelsEvents(): void {
+    const { labels } = this.sliderComponents
+    labels.subscribe(LabelsEvents.LABEL_VALUE_CHANGED, (percentValue: number) => {
+      this.emit(ViewEvents.VALUE_CHANGED_FROM_LABELS, percentValue)
     })
   }
 
@@ -143,12 +124,43 @@ class View extends Observer {
     })
   }
 
-  /* istanbul ignore next */
-  private bindLabelsEvents(): void {
-    const { labels } = this.sliderComponents
-    labels.subscribe(LabelsEvents.LABEL_VALUE_CHANGED, (percentValue: number) => {
-      this.emit(ViewEvents.VALUE_CHANGED_FROM_LABELS, percentValue)
-    })
+  private checkTooltipsOverlap(orientation: Orientation, tooltipFirst: HTMLDivElement, tooltipSecond: HTMLDivElement): boolean {
+    const {
+      right: tooltipFirstRight,
+      top: tooltipFirstTop
+    } = tooltipFirst.getBoundingClientRect()
+
+    const {
+      left: tooltipSecondLeft,
+      bottom: tooltipSecondBottom
+    } = tooltipSecond.getBoundingClientRect()
+
+    const isOverlapHorizontal = orientation === 'horizontal'
+      && tooltipFirstRight >= tooltipSecondLeft
+    const isOverlapVertical = orientation === 'vertical'
+      && tooltipSecondBottom >= tooltipFirstTop
+
+    if (isOverlapHorizontal) return true
+    if (isOverlapVertical) return true
+
+    return false
+  }
+
+  private createUnitedTooltip(state: ISettings): void {
+    const { from, to, orientation } = state
+
+    const tooltip = this.sliderComponents.tooltip
+    const tooltipSecond = <Tooltip>this.sliderComponents.tooltipSecond
+    const tooltipNode = tooltip.getTooltip()
+    const tooltipSecondNode = tooltipSecond.getTooltip()
+    const tooltipValue = tooltipNode.children[0]
+
+    if (this.checkTooltipsOverlap(orientation, tooltipNode, tooltipSecondNode)) {
+      tooltipValue.textContent = `${from} \u2013 ${to}`
+      tooltipSecondNode.style.visibility = 'hidden'
+    } else {
+      tooltipSecondNode.style.visibility = 'visible'
+    }
   }
 }
 
