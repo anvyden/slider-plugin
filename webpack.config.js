@@ -12,6 +12,7 @@ const isProd = !isDev
 const PATHS = {
   src: path.join(__dirname, './src'),
   dist: path.join(__dirname, './dist'),
+  demoPage: path.join(__dirname, './demo-page'),
   assets: 'assets/',
 }
 
@@ -90,7 +91,7 @@ const plugins = () => {
   return [
     new HTMLWebpackPlugin({
       filename: `index.html`,
-      template: `${PATHS.src}/index.pug`,
+      template: `${PATHS.demoPage}/demo-page.pug`,
       inject: 'body',
       minify: {
         collapseWhitespace: isProd
@@ -111,7 +112,10 @@ const plugins = () => {
 }
 
 module.exports = {
-  entry: [`${PATHS.src}/index.ts`],
+  entry: {
+    plugin: [`${PATHS.src}/app.ts`],
+    demo: [`${PATHS.demoPage}/demo-page.ts`]
+  },
   output: {
     filename: `${PATHS.assets}js/[name].js`,
     path: PATHS.dist,
@@ -131,7 +135,7 @@ module.exports = {
   devServer: {
     compress: true,
     port: 8081,
-    watchFiles: `${PATHS.src}/**/*.pug`,
+    watchFiles: `${PATHS.demoPage}/**/*.pug`,
     open: {
       app: {
         name: 'firefox'
