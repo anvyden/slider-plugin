@@ -23,6 +23,8 @@ class View extends Observer {
 
     this.sliderComponents = slider.getComponents()
     this.bindEvents()
+
+    if (state.isRange) this.createUnitedTooltip(state)
   }
 
   public update(state: ISettings) {
@@ -140,10 +142,9 @@ class View extends Observer {
     const isOverlapVertical = orientation === 'vertical'
       && tooltipSecondBottom >= tooltipFirstTop
 
-    if (isOverlapHorizontal) return true
-    if (isOverlapVertical) return true
-
-    return false
+    /* istanbul ignore next */
+    if (isOverlapHorizontal || isOverlapVertical) return true
+    else return false
   }
 
   private createUnitedTooltip(state: ISettings): void {
@@ -155,10 +156,13 @@ class View extends Observer {
     const tooltipSecondNode = tooltipSecond.getTooltip()
     const tooltipValue = tooltipNode.children[0]
 
+    /* istanbul ignore else */
     if (this.checkTooltipsOverlap(orientation, tooltipNode, tooltipSecondNode)) {
+      tooltipNode.classList.add('tooltip--united')
       tooltipValue.textContent = `${from} \u2013 ${to}`
       tooltipSecondNode.style.visibility = 'hidden'
     } else {
+      tooltipNode.classList.remove('tooltip--united')
       tooltipSecondNode.style.visibility = 'visible'
     }
   }
