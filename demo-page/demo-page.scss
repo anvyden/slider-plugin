@@ -1,6 +1,23 @@
-.container {
-  padding: 50px;
-  margin: 20px;
-  display: flex;
-  align-items: center;
+@import './components/panel/panel';
+@import './components/slider-block/slider-block';
+
+.demo-page {
+  font-family: Arial, sans-serif;
+
+  &__container {
+    display: grid;
+    grid-template: 1fr 1fr/1fr 1fr;
+    grid-gap: 20px;
+    padding: 20px;
+  }
+}
+
+.demo-block {
+  &__container {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 4px;
+    background: #c4c2c2;
+  }
 }

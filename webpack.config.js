@@ -100,14 +100,14 @@ const plugins = () => {
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}css/${filename('css')}`
     }),
-    // new CopyWebpackPlugin({
-    //   patterns: [
-    //     {
-    //       from: `${PATHS.src}/static`,
-    //       to: `${PATHS.dist}/static`
-    //     },
-    //   ]
-    // })
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: `${PATHS.demoPage}/static`,
+          to: `${PATHS.dist}/static`
+        },
+      ]
+    })
   ]
 }
 

@@ -1,7 +1,27 @@
-mixin panel(options)
+mixin panel(panelOptions)
+  -
+    const { items = [] } = panelOptions
+
   .panel
     .panel__container
-      label.panel__label
-        input.panel__input(type = number value = 100)
-        span.panel__span max
+      each item in items
+        if (item.type === 'select')
+          .panel__item
+            label.panel__label
+              select.panel__select(name = item.name)
+                each option in item.options
+                  option(value = option.value)=option.text
+              span.panel__span=item.text
+        else if (item.type === 'checkbox')
+          .panel__item
+            label.panel__label
+              input.panel__checkbox(type = item.type value = item.value checked = item.checked)
+              span.panel__span=item.text
+        else
+          .panel__item
+            label.panel__label
+              input.panel__input(type = item.type value = item.value)
+              span.panel__span=item.text
+
+
 
