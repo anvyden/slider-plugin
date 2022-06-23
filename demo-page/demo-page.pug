@@ -1,65 +1,76 @@
 extends ./components/layout/layout
 include ./components/panel/panel.pug
 include ./components/slider-block/slider-block.pug
+include ./components/demo-block/demo-block
 
 block content
   .demo-page
     .demo-page__container
-      .demo-block
-        .demo-block__container
-          +panel({
-            items: [
-              {type: 'number', value: 100, text: 'max'},
-              {type: 'number', value: 0, text: 'min'},
-              {type: 'number', value: 10, text: 'step'},
-              {type: 'number', value: 20, text: 'from'},
-              {type: 'number', value: 50, text: 'to'},
-              {
-                type: 'select', name: 'orientation', text: 'orientation', options: [
-                  {value: 'horizontal', text: 'horizontal'},
-                  {value: 'vertical', text: 'vertical'},
-                ]
-              },
-              {
-                type: 'select', name: 'color', text: 'color', options: [
-                  {value: 'green', text: 'green'},
-                  {value: 'purple', text: 'purple'},
-                ]
-              },
-              {type: 'checkbox', text: 'isRange', checked: true},
-              {type: 'checkbox', text: 'progressBar', checked: true},
-              {type: 'checkbox', text: 'tooltips', checked: true},
-              {type: 'checkbox', text: 'labels', checked: true},
-              {type: number, value: 6, text: 'countOfLabels'}
-            ]
-          })
-          +sliderBlock({id: 'slider1'})
-      .demo-block
-        .demo-block__container
-          +panel({
-            items: [
-              {type: 'number', value: 100, text: 'max'},
-              {type: 'number', value: 0, text: 'min'},
-              {type: 'number', value: 10, text: 'step'},
-              {type: 'number', value: 20, text: 'from'},
-              {type: 'number', value: 50, text: 'to'},
-              {
-                type: 'select', name: 'orientation', text: 'orientation', options: [
-                  {value: 'horizontal', text: 'horizontal'},
-                  {value: 'vertical', text: 'vertical'},
-                ]
-              },
-              {
-                type: 'select', name: 'color', text: 'color', options: [
-                  {value: 'green', text: 'green'},
-                  {value: 'purple', text: 'purple'},
-                ]
-              },
-              {type: 'checkbox', text: 'isRange', checked: true},
-              {type: 'checkbox', text: 'progressBar', checked: true},
-              {type: 'checkbox', text: 'tooltips', checked: true},
-              {type: 'checkbox', text: 'labels', checked: true},
-              {type: number, value: 6, text: 'countOfLabels'}
-            ]
-          })
-          +sliderBlock({id: 'slider2'})
+      +demoBlock({
+        id: 'demoBlock1',
+        panel: {
+          items: [
+            {type: 'number', value: 100, text: 'max', data: 'max'},
+            {type: 'number', value: 0, text: 'min', data: 'min'},
+            {type: 'number', value: 10, text: 'step', data: 'step'},
+            {type: 'number', value: 20, text: 'from', data: 'from'},
+            {type: 'number', value: 50, text: 'to', data: 'to'},
+            {
+              type: 'select', name: 'orientation', text: 'orientation', data: 'orientation',
+              options: [
+                {value: 'horizontal', text: 'horizontal'},
+                {value: 'vertical', text: 'vertical'},
+              ]
+            },
+            {
+              type: 'select', name: 'color', text: 'color', data: 'color',
+              options: [
+                {value: 'green', text: 'green'},
+                {value: 'purple', text: 'purple'},
+              ]
+            },
+            {type: 'checkbox', text: 'isRange', checked: true, data: 'isRange'},
+            {type: 'checkbox', text: 'progressBar', checked: true, data: 'progressBar'},
+            {type: 'checkbox', text: 'tooltips', checked: true, data: 'tooltips'},
+            {type: 'checkbox', text: 'labels', checked: true, data: 'labels'},
+            {type: number, value: 6, text: 'countOfLabels', data: 'countOfLabels'}
+          ]
+        },
+        sliderBlock: {
+          id: 'slider1',
+        },
+      })
+      +demoBlock({
+        id: 'demoBlock2',
+        panel: {
+          items: [
+            {type: 'number', value: 100, text: 'max', data: 'max'},
+            {type: 'number', value: 0, text: 'min', data: 'min'},
+            {type: 'number', value: 10, text: 'step', data: 'step'},
+            {type: 'number', value: 20, text: 'from', data: 'from'},
+            {type: 'number', value: 50, text: 'to', data: 'to'},
+            {
+              type: 'select', name: 'orientation', text: 'orientation', data: 'orientation',
+              options: [
+                {value: 'horizontal', text: 'horizontal'},
+                {value: 'vertical', text: 'vertical'},
+              ]
+            },
+            {
+              type: 'select', name: 'color', text: 'color', data: 'color',
+              options: [
+                {value: 'green', text: 'green'},
+                {value: 'purple', text: 'purple'},
+              ]
+            },
+            {type: 'checkbox', text: 'isRange', checked: true, data: 'isRange'},
+            {type: 'checkbox', text: 'progressBar', checked: true, data: 'progressBar'},
+            {type: 'checkbox', text: 'tooltips', checked: true, data: 'tooltips'},
+            {type: 'checkbox', text: 'labels', checked: true, data: 'labels'},
+            {type: number, value: 6, text: 'countOfLabels', data: 'countOfLabels'}
+          ]
+        },
+        sliderBlock: {
+          id: 'slider2',
+        },
+      })
