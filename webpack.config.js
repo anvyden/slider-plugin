@@ -90,7 +90,7 @@ const jsLoaders = () => {
 const plugins = () => {
   return [
     new HTMLWebpackPlugin({
-      filename: `demo-page.html`,
+      filename: `index.html`,
       template: `${PATHS.demoPage}/demo-page.pug`,
       inject: 'body',
       minify: {
