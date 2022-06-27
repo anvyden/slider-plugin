@@ -2,6 +2,7 @@ import '../src/app.ts'
 import './demo-page.scss'
 import DemoBlock from "./components/demo-block/Demo-block";
 
+// ------------------------------- singleSLider -------------------------------------------
 const demoBlock1 = <HTMLDivElement>document.querySelector('[data-id="demoBlock1"]')
 const slider1 = $('#slider1')
 slider1.sliderPlugin({
@@ -11,6 +12,7 @@ slider1.sliderPlugin({
 new DemoBlock(demoBlock1, slider1)
 
 
+// ------------------------------- rangeSLider -------------------------------------------
 const demoBlock2 = <HTMLDivElement>document.querySelector('[data-id="demoBlock2"]')
 const slider2 = $('#slider2')
 slider2.sliderPlugin({
