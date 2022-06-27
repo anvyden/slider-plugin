@@ -6,10 +6,12 @@ import View from "../View/View";
 class Presenter {
   private model: Model
   private view: View
+  private root: HTMLElement
 
   constructor(state: ISettings, root: HTMLElement) {
     this.model = new Model(state)
     this.view = new View(this.model.getState(), root)
+    this.root = root
 
     this.bindModelEvents()
     this.bindViewEvents()
@@ -18,10 +20,12 @@ class Presenter {
   private bindModelEvents(): void {
     this.model.subscribe(ModelEvents.STATE_CHANGED, (state: ISettings) => {
       this.view.init(state)
+      this.dispatchUpdateEvent()
     })
 
     this.model.subscribe(ModelEvents.VALUE_CHANGED, (state: ISettings) => {
       this.view.update(state)
+      this.dispatchUpdateEvent()
     })
   }
 
@@ -52,6 +56,16 @@ class Presenter {
     this.view.subscribe(ViewEvents.VALUE_FROM_DECREMENT, (option: OptionFromThumbValues) => {
       this.model.decrement(option)
     })
+  }
+
+  private updateEvent(): CustomEvent {
+    return new CustomEvent('update', {
+      detail: this.model.getState(),
+    })
+  }
+
+  private dispatchUpdateEvent(): void {
+    this.root.dispatchEvent(this.updateEvent())
   }
 
 }

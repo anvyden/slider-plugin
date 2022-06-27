@@ -47,8 +47,8 @@ class DemoBlock {
     this.setPanelParams()
   }
 
-  private setPanelParams(): void {
-    this.state = this.sliderRoot.sliderPlugin('getState')
+  private setPanelParams(event?: CustomEvent): void {
+    this.state = event ? event.detail : this.sliderRoot.sliderPlugin('getState')
 
     const {
       max,
@@ -81,8 +81,7 @@ class DemoBlock {
   }
 
   private bindEventListeners(): void {
-    this.sliderRoot.get(0)?.addEventListener('pointermove', this.setPanelParams.bind(this))
-    this.sliderRoot.get(0)?.addEventListener('pointerdown', this.setPanelParams.bind(this))
+    this.sliderRoot.sliderPlugin('bindListener', 'update', this.setPanelParams.bind(this))
     this.max.addEventListener('change', this.handleMaxChange.bind(this))
     this.min.addEventListener('change', this.handleMinChange.bind(this))
     this.step.addEventListener('change', this.handleStepChange.bind(this))

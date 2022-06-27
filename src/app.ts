@@ -1,5 +1,5 @@
 import { defaultState } from './defaultState';
-import {ISettings, Option, OptionValue} from './components/interfaces/interfaces';
+import {EventsNames, ISettings, Option, OptionValue} from './components/interfaces/interfaces';
 import Presenter from './components/Presenter/Presenter';
 
 declare global {
@@ -9,6 +9,7 @@ declare global {
     sliderPlugin(method: 'setValue', option: Option, value: OptionValue): void,
     sliderPlugin(method: 'getState'): ISettings,
     sliderPlugin(method: 'getValue', option: Option): OptionValue,
+    sliderPlugin(method: 'bindListener', eventName: string, func: (event: CustomEvent) => void): void
   }
 }
 
@@ -34,7 +35,11 @@ const methods = {
   setValue(this: JQuery, name: Option, value: OptionValue): void {
     const sliderPlugin = $(this).data('sliderPlugin')
     sliderPlugin.model.setValue(name, value)
-  }
+  },
+
+  bindListener(this: JQuery, eventName: EventsNames, func: (event: CustomEventInit) => void) {
+    $(this).on(eventName, (event) => func(event))
+  },
 
 }
 

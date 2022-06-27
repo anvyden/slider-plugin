@@ -10,6 +10,8 @@ type Color = 'green' | 'purple'
 type Option = Exclude<keyof ISettings, labels> | keyof LabelsOptions
 type OptionValue = number | boolean | Orientation | Color | LabelsOptions
 type OptionFromThumbValues = 'from' | 'to'
+type EventsNames = 'update'
+
 
 interface ISettings {
   min: number,
@@ -69,5 +71,6 @@ export {
   ElementCoords,
   PageCoords,
   SliderComponents,
-  StateValuesForConvert
+  StateValuesForConvert,
+  EventsNames,
 }
