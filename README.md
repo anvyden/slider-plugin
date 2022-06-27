@@ -1,1 +1,1 @@
-[Демо страница](https://anvyden.github.io/slider-plugin/index.html)
+[Демо страница](https://anvyden.github.io/slider-plugin/demo-page.html)
