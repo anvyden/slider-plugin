@@ -51,6 +51,7 @@
     "eslint-plugin-fsd": "^1.0.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.1.5",
+    "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
     "mini-css-extract-plugin": "^2.6.0",
