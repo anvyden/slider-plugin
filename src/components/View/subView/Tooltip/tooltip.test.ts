@@ -2,14 +2,14 @@
  * @jest-environment jsdom
  */
 
-import {defaultState} from "../../../../defaultState";
-import Tooltip from "./Tooltip";
-import {ISettings} from "../../../interfaces/interfaces";
+import { defaultState } from '../../../../defaultState';
+import { ISettings } from '../../../interfaces/interfaces';
+import Tooltip from './Tooltip';
 
 describe('Tooltip', () => {
-  let state: ISettings
-  let tooltip: Tooltip
-  let root: HTMLDivElement
+  let state: ISettings;
+  let tooltip: Tooltip;
+  let root: HTMLDivElement;
 
   beforeEach(() => {
     state = {
@@ -21,36 +21,35 @@ describe('Tooltip', () => {
       to: 40,
       isRange: true,
       hasTooltips: true,
-    }
+    };
 
-    tooltip = new Tooltip(state)
-    root = document.createElement('div')
-  })
+    tooltip = new Tooltip(state);
+    root = document.createElement('div');
+  });
 
   test('should be a instance of Tooltip', () => {
-    expect(tooltip).toBeInstanceOf(Tooltip)
-  })
+    expect(tooltip).toBeInstanceOf(Tooltip);
+  });
 
   test('should return HTMLDivElement of tooltip', () => {
-    expect(tooltip.getTooltip()).toBeTruthy()
-  })
+    expect(tooltip.getTooltip()).toBeTruthy();
+  });
 
   test('should created tooltip', () => {
-    const tooltipNode = tooltip.getTooltip()
-    root.appendChild(tooltipNode)
-    expect(root.querySelectorAll('.slider__tooltip').length).toBe(1)
-  })
+    const tooltipNode = tooltip.getTooltip();
+    root.appendChild(tooltipNode);
+    expect(root.querySelectorAll('.slider__tooltip').length).toBe(1);
+  });
 
   test('should be completed update method', () => {
     const newState = {
       ...state,
       from: -30,
-    }
+    };
 
-    tooltip.update(newState)
-    const tooltipNode = tooltip.getTooltip()
+    tooltip.update(newState);
+    const tooltipNode = tooltip.getTooltip();
 
-    expect(tooltipNode.textContent).toBe('-30')
-  })
-
-})
+    expect(tooltipNode.textContent).toBe('-30');
+  });
+});

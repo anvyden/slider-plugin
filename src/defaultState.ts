@@ -14,7 +14,7 @@ const defaultState: ISettings = {
   labels: {
     addLabels: true,
     countOfLabels: 6,
-  }
+  },
 };
 
 export { defaultState };

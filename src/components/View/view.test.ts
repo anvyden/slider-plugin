@@ -55,11 +55,11 @@ describe('View:', () => {
     const newState = {
       ...state,
       isRange: false,
-    }
+    };
 
-    view = new View(newState, root)
+    view = new View(newState, root);
     expect(root.children.length).toBe(1);
-  })
+  });
 
   test('should have been called method update', () => {
     view = new View(state, root);
@@ -72,8 +72,8 @@ describe('View:', () => {
   test('should have been called method update when isRange = false', () => {
     const newState = {
       ...state,
-      isRange: false
-    }
+      isRange: false,
+    };
 
     view = new View(newState, root);
     const spyUpdate = jest.spyOn(view, 'update');
@@ -107,10 +107,9 @@ describe('View:', () => {
       ...state,
       orientation: 'vertical',
       from: -40,
-    }
+    };
 
     view = new View(newState, root);
-    expect(root.querySelectorAll('.tooltip--united').length).toBe(1)
+    expect(root.querySelectorAll('.tooltip--united').length).toBe(1);
   });
-
 });

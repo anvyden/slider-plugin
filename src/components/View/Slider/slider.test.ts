@@ -2,14 +2,14 @@
  * @jest-environment jsdom
  */
 
-import Slider from "./Slider";
-import {defaultState} from "../../../defaultState";
-import {ISettings} from "../../interfaces/interfaces";
+import Slider from './Slider';
+import { defaultState } from '../../../defaultState';
+import { ISettings } from '../../interfaces/interfaces';
 
 describe('Slider:', () => {
-  let slider: Slider
-  let root: HTMLElement
-  let state: ISettings
+  let slider: Slider;
+  let root: HTMLElement;
+  let state: ISettings;
 
   beforeEach(() => {
     state = {
@@ -20,35 +20,35 @@ describe('Slider:', () => {
       labels: {
         addLabels: false,
         countOfLabels: 6,
-      }
-    }
-    root = document.createElement('div')
-  })
+      },
+    };
+    root = document.createElement('div');
+  });
 
   test('should be instance of Slider', () => {
-    slider = new Slider(state, root)
-    expect(slider).toBeInstanceOf(Slider)
-  })
+    slider = new Slider(state, root);
+    expect(slider).toBeInstanceOf(Slider);
+  });
 
   test('should have components for creating simple slider', () => {
-    slider = new Slider(state, root)
-    const components = slider.getComponents()
-    expect(components).toHaveProperty('scale')
-    expect(components).toHaveProperty('progressBar')
-    expect(components).toHaveProperty('labels')
-    expect(components).toHaveProperty('thumb')
-    expect(components).toHaveProperty('tooltip')
-  })
+    slider = new Slider(state, root);
+    const components = slider.getComponents();
+    expect(components).toHaveProperty('scale');
+    expect(components).toHaveProperty('progressBar');
+    expect(components).toHaveProperty('labels');
+    expect(components).toHaveProperty('thumb');
+    expect(components).toHaveProperty('tooltip');
+  });
 
   test('should have additional components for creating range slider', () => {
     const newState = {
       ...state,
-      isRange: true
-    }
-    const rangeSlider = new Slider(newState, root)
-    const components = rangeSlider.getComponents()
-    expect(components).toHaveProperty('thumbSecond')
-  })
+      isRange: true,
+    };
+    const rangeSlider = new Slider(newState, root);
+    const components = rangeSlider.getComponents();
+    expect(components).toHaveProperty('thumbSecond');
+  });
 
   test('should embed components into DOM', () => {
     const newState = {
@@ -58,11 +58,10 @@ describe('Slider:', () => {
       labels: {
         addLabels: true,
         countOfLabels: 6,
-      }
-    }
-    slider = new Slider(newState, root)
-    expect(root.querySelectorAll('.slider__progress-bar').length).toBe(1)
-    expect(root.querySelectorAll('.slider__labels').length).toBe(1)
-  })
-
-})
+      },
+    };
+    slider = new Slider(newState, root);
+    expect(root.querySelectorAll('.slider__progress-bar').length).toBe(1);
+    expect(root.querySelectorAll('.slider__labels').length).toBe(1);
+  });
+});

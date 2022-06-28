@@ -110,7 +110,7 @@ describe('Thumb:', () => {
 
   test('when the up arrow is pressed, should to call the keyboard event handler', () => {
     // @ts-ignore
-    eventKeyboard.code = 'ArrowUp';
+    eventKeyboard.code! = 'ArrowUp';
     thumb = new Thumb(state, root);
     const spyEmit = jest.spyOn(thumb, 'emit');
     const body = document.querySelector('body');
@@ -131,7 +131,7 @@ describe('Thumb:', () => {
 
   test('when the down arrow is pressed, should to call the keyboard event handler', () => {
     // @ts-ignore
-    eventKeyboard.code = 'ArrowDown';
+    eventKeyboard.code! = 'ArrowDown';
     thumb = new Thumb(state, root);
     const spyEmit = jest.spyOn(thumb, 'emit');
     const body = document.querySelector('body');
