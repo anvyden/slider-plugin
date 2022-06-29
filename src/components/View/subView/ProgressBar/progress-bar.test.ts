@@ -2,9 +2,9 @@
  * @jest-environment jsdom
  */
 
-import ProgressBar from './ProgressBar';
-import { ISettings } from '../../../interfaces/interfaces';
 import { defaultState } from '../../../../defaultState';
+import { ISettings } from '../../../interfaces/interfaces';
+import ProgressBar from './Progress-bar';
 
 describe('Progress-bar:', () => {
   let progressBar: ProgressBar;

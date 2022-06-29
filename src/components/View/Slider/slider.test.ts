@@ -2,9 +2,9 @@
  * @jest-environment jsdom
  */
 
-import Slider from './Slider';
 import { defaultState } from '../../../defaultState';
 import { ISettings } from '../../interfaces/interfaces';
+import Slider from './Slider';
 
 describe('Slider:', () => {
   let slider: Slider;

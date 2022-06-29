@@ -2,11 +2,11 @@
  * @jest-environment jsdom
  */
 
-import Thumb from './Thumb';
-import Slider from '../../Slider/Slider';
-import { ISettings } from '../../../interfaces/interfaces';
 import { defaultState } from '../../../../defaultState';
+import { ISettings } from '../../../interfaces/interfaces';
 import { ThumbEvents } from '../../../Observer/events';
+import Slider from '../../Slider/Slider';
+import Thumb from './Thumb';
 
 describe('Thumb:', () => {
   let thumb: Thumb;

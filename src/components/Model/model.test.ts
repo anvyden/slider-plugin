@@ -1,7 +1,7 @@
-import Model from './Model';
-import { ISettings } from '../interfaces/interfaces';
 import { defaultState } from '../../defaultState';
+import { ISettings } from '../interfaces/interfaces';
 import { ModelEvents } from '../Observer/events';
+import Model from './Model';
 
 describe('Model:', () => {
   let state: ISettings;

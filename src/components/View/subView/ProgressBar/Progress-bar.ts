@@ -1,9 +1,9 @@
-import { Color, ISettings, Orientation } from '../../../interfaces/interfaces';
 import {
   convertStateValueToPercent,
   getStepInPercent,
 } from '../../../../utils/utils';
-import './progressBar.scss';
+import { Color, ISettings, Orientation } from '../../../interfaces/interfaces';
+import './progress-bar.scss';
 
 class ProgressBar {
   protected readonly state: ISettings;

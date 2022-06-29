@@ -2,9 +2,9 @@
  * @jest-environment jsdom
  */
 
-import Labels from './Labels';
-import { ISettings } from '../../../interfaces/interfaces';
 import { defaultState } from '../../../../defaultState';
+import { ISettings } from '../../../interfaces/interfaces';
+import Labels from './Labels';
 
 describe('Labels:', () => {
   let labels: Labels;

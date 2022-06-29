@@ -1,14 +1,14 @@
+import { defaultState } from '../../defaultState';
+import { convertPercentValueToNumber } from '../../utils/utils';
 import {
   ISettings,
   Option,
   OptionValue,
   OptionFromThumbValues,
 } from '../interfaces/interfaces';
-import { convertPercentValueToNumber } from '../../utils/utils';
 import { ModelEvents } from '../Observer/events';
-import { defaultState } from '../../defaultState';
-import Validation from './Validation';
 import Observer from '../Observer/Observer';
+import Validation from './Validation';
 
 class Model extends Observer {
   private state: ISettings = defaultState;

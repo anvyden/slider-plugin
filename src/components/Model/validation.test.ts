@@ -1,6 +1,6 @@
 import { defaultState } from '../../defaultState';
-import Validation from './Validation';
 import { ISettings } from '../interfaces/interfaces';
+import Validation from './Validation';
 
 describe('Validation:', () => {
   let validation: Validation;

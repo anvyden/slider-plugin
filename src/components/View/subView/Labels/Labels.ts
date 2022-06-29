@@ -1,8 +1,8 @@
-import { ISettings, Orientation } from '../../../interfaces/interfaces';
 import {
   convertPercentValueToNumber,
   convertStateValueToPercent,
 } from '../../../../utils/utils';
+import { ISettings, Orientation } from '../../../interfaces/interfaces';
 import { LabelsEvents } from '../../../Observer/events';
 import Observer from '../../../Observer/Observer';
 import './labels.scss';

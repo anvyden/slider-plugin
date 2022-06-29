@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 
-import Scale from './Scale';
 import { defaultState } from '../../../../defaultState';
 import { ISettings } from '../../../interfaces/interfaces';
 import Slider from '../../Slider/Slider';
+import Scale from './Scale';
 
 describe('Scale:', () => {
   let scale: Scale;

@@ -1,13 +1,13 @@
 import {
+  convertStateValueToPercent,
+  getPosition,
+} from '../../../../utils/utils';
+import {
   Color,
   ISettings,
   OptionFromThumbValues,
   Orientation,
 } from '../../../interfaces/interfaces';
-import {
-  convertStateValueToPercent,
-  getPosition,
-} from '../../../../utils/utils';
 import { ThumbEvents } from '../../../Observer/events';
 import Observer from '../../../Observer/Observer';
 import './thumb.scss';

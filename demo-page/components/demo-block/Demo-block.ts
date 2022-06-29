@@ -104,11 +104,15 @@ class DemoBlock {
     this.countOfLabels.value = `${countOfLabels}`;
   }
 
+  private handleUpdateSlider(event: CustomEvent): void {
+    this.setPanelParams(event)
+  }
+
   private bindEventListeners(): void {
     this.sliderRoot.sliderPlugin(
       'bindListener',
       'update',
-      this.setPanelParams.bind(this)
+      this.handleUpdateSlider.bind(this)
     );
     this.max.addEventListener('change', this.handleMaxChange.bind(this));
     this.min.addEventListener('change', this.handleMinChange.bind(this));
