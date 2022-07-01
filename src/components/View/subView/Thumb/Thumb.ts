@@ -100,6 +100,7 @@ class Thumb extends Observer {
     );
     thumb.setAttribute('data-id', thumbId);
     thumb.setAttribute('tabindex', '0');
+    thumb.setAttribute('role', 'slider');
 
     return thumb;
   }

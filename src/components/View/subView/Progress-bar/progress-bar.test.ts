@@ -17,7 +17,7 @@ describe('Progress-bar:', () => {
     progressBar = new ProgressBar(state);
   });
 
-  test('should be instance of ProgressBar', () => {
+  test('should be instance of Progress-bar', () => {
     expect(progressBar).toBeInstanceOf(ProgressBar);
   });
 
