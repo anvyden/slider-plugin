@@ -1,8 +1,8 @@
 .slider {
   &__scale {
     position: relative;
-    border-radius: 3px;
     background: #e6e6e6;
+    border-radius: 3px;
     cursor: pointer;
 
     &--horizontal {
@@ -13,10 +13,10 @@
     }
 
     &--vertical {
+      width: 6px;
       height: 100%;
       min-height: 300px;
       max-height: 80%;
-      width: 6px;
     }
   }
 }
