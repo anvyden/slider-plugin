@@ -52,7 +52,7 @@ const methods = {
     this: JQuery,
     eventName: EventsNames,
     func: (event: CustomEventInit) => void
-  ) {
+  ): void {
     $(this).on(eventName, (event) => func(event));
   },
 };

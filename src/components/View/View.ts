@@ -37,7 +37,7 @@ class View extends Observer {
     if (state.isRange) this.createUnitedTooltip(state);
   }
 
-  public update(state: ISettings) {
+  public update(state: ISettings): void {
     const sliderComponents = [
       this.sliderComponents.thumb,
       this.sliderComponents.progressBar,

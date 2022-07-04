@@ -50,7 +50,7 @@ class Thumb extends Observer {
         )}%`);
   }
 
-  public dragThumbAfterScaleClick(option: OptionFromThumbValues) {
+  public dragThumbAfterScaleClick(option: OptionFromThumbValues): void {
     this.thumbTarget =
       option === 'to'
         ? ThumbEvents.THUMB_VALUE_TO_CHANGED

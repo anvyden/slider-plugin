@@ -32,7 +32,7 @@ class Slider {
 
     this.components = this.createComponents();
 
-    this.scale = this.components['scale'].getScale();
+    this.scale = this.components.scale.getScale();
     slider.insertAdjacentElement('beforeend', this.scale);
     this.addElementsInScale();
     this.root.insertAdjacentElement('beforeend', slider);
@@ -60,7 +60,7 @@ class Slider {
     return components;
   }
 
-  private addElementsInScale() {
+  private addElementsInScale(): void {
     const {
       isRange,
       hasProgressBar,
@@ -68,9 +68,9 @@ class Slider {
       labels: { addLabels },
     } = this.state;
 
-    const thumbNode = this.components['thumb'].getThumb();
-    const progressBarNode = this.components['progressBar'].getProgressBar();
-    const labelsNode = this.components['labels'].getLabels();
+    const thumbNode = this.components.thumb.getThumb();
+    const progressBarNode = this.components.progressBar.getProgressBar();
+    const labelsNode = this.components.labels.getLabels();
     const tooltipNode = this.components.tooltip.getTooltip();
 
     this.scale.insertAdjacentElement('afterbegin', thumbNode);
