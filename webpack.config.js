@@ -41,7 +41,6 @@ const optimization = () => {
   return config
 }
 
-const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`
 const assetFileName = isDev ? `[name][ext]` : `[hash][ext][query]`
 
 const cssLoaders = extra => {
@@ -98,7 +97,7 @@ const plugins = () => {
       }
     }),
     new MiniCssExtractPlugin({
-      filename: `${PATHS.assets}css/${filename('css')}`
+      filename: `${PATHS.assets}css/[name].css`
     }),
     new CopyWebpackPlugin({
       patterns: [

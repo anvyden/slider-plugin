@@ -102,6 +102,9 @@ class DemoBlock {
     this.tooltips.checked = hasTooltips;
     this.labels.checked = addLabels;
     this.countOfLabels.value = `${countOfLabels}`;
+
+    const toIsDisabled = isRange ? false : true
+    this.to.disabled = toIsDisabled
   }
 
   private handleUpdateSlider(event: CustomEvent): void {
