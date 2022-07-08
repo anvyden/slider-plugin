@@ -86,6 +86,10 @@ class Validation {
       validMin = swap;
     }
 
+    if (validMax === validMin) {
+      validMax += 1;
+    }
+
     this.max = validMax;
     this.min = validMin;
   }

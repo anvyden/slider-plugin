@@ -1,3 +1,4 @@
+import { convertStateValueToPercent } from '../../../utils/utils';
 import {
   ISettings,
   Orientation,
@@ -85,13 +86,24 @@ class Slider {
         thumbSecondNode.insertAdjacentElement('beforeend', tooltipSecondNode);
       }
 
-      this.scale.insertAdjacentElement('beforeend', thumbSecondNode);
+      const insertPosition = this.checkThumbsPosition() ? 'afterbegin' : 'beforeend';
+      this.scale.insertAdjacentElement(insertPosition, thumbSecondNode);
     }
 
-    if (hasProgressBar)
-      this.scale.insertAdjacentElement('afterbegin', progressBarNode);
+    if (hasProgressBar) this.scale.insertAdjacentElement('afterbegin', progressBarNode);
     if (hasTooltips) thumbNode.insertAdjacentElement('beforeend', tooltipNode);
     if (addLabels) this.scale.insertAdjacentElement('beforeend', labelsNode);
+  }
+
+  private checkThumbsPosition(): boolean {
+    const { from, to } = this.state;
+
+    const fromInPercent = convertStateValueToPercent(this.state, from);
+    const toInPercent = convertStateValueToPercent(this.state, to);
+
+    const isFinite = fromInPercent === 100 && toInPercent === 100;
+
+    return isFinite;
   }
 
   private createSlider(orientation: Orientation): HTMLDivElement {

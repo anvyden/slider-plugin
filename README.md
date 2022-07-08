@@ -146,7 +146,7 @@
 |  `orientation`   | string  | `'horizontal'` |                                                Ориентация слайдера (horizontal/vertical)                                                 |
 |     `color`      | string  |   `'orange'`   |                                                       Цвет слайдера (purple/green)                                                       |
 |    `isRange`     | boolean |     `true`     |                                                    Тип слайдера (одиночный/диапазон)                                                     |
-| `hasProgressBar` | boolean |     `true`     |                                               Заливка (от min до from либо от from до to)                                                |
+| `hasProgressBar` | boolean |     `true`     |                                           Заливка (от `min` до `from` либо от `from` до `to`)                                            |
 |  `hasTooltips`   | boolean |     `true`     |                                               Отображение текущего значения над ползунком                                                |
 |     `labels`     | object  |     -----      |                                       Содержит в себе два свойства: `addLabels` и `countOfLabels`                                        |
 |   `addLabels`    | boolean |     `true`     |                                                          Подписи шкалы значений                                                          |

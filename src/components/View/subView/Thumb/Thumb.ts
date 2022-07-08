@@ -125,6 +125,9 @@ class Thumb extends Observer {
 
   private handleThumbKeyDown = (event: KeyboardEvent): void => {
     const { code } = event;
+
+    if (code !== 'Tab') event.preventDefault();
+
     const option =
       this.thumbTarget === ThumbEvents.THUMB_VALUE_TO_CHANGED ? 'to' : 'from';
 
