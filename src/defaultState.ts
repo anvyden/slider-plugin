@@ -7,10 +7,10 @@ const defaultState: ISettings = {
   from: 20,
   to: 50,
   orientation: 'horizontal',
+  color: 'green',
   isRange: true,
   hasProgressBar: true,
   hasTooltips: true,
-  color: 'green',
   labels: {
     addLabels: true,
     countOfLabels: 6,
