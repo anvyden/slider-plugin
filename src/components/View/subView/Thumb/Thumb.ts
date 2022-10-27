@@ -144,7 +144,12 @@ class Thumb extends Observer {
     const target = <HTMLElement>event.target;
 
     const isFirstThumb =
-      target.dataset.id === 'thumb-first' || target.dataset.id === 'thumb';
+      target.dataset.id === 'thumb-first' ||
+      target.dataset.id === 'thumb' ||
+      target.dataset.id === 'tooltip-first' ||
+      target.dataset.id === 'tooltip' ||
+      target.dataset.id === 'tooltip-value' ||
+      target.dataset.id === 'tooltip-first-value';
 
     this.thumbTarget = isFirstThumb
       ? ThumbEvents.THUMB_VALUE_FROM_CHANGED

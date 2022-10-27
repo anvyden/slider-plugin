@@ -40,6 +40,12 @@ class Tooltip {
 
     const tooltipFirstId = isRange ? 'tooltip-first' : 'tooltip';
     const tooltipId = this.dataId ? this.dataId : tooltipFirstId;
+    const tooltipFirstValueId = isRange
+      ? 'tooltip-first-value'
+      : 'tooltip-value';
+    const tooltipValueId = this.dataId ?
+      `${this.dataId}-value`
+      : tooltipFirstValueId;
 
     const tooltip = document.createElement('div');
     tooltip.classList.add(
@@ -52,6 +58,7 @@ class Tooltip {
 
     const tooltipValue = document.createElement('span');
     tooltipValue.classList.add('tooltip__value');
+    tooltipValue.dataset.id = tooltipValueId;
     tooltipValue.textContent =
       tooltipId === 'tooltip-second' ? `${to}` : `${from}`;
     this.tooltipValue = tooltipValue;
