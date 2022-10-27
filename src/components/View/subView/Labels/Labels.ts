@@ -5,7 +5,6 @@ import {
 import { ISettings, Orientation } from '../../../interfaces/interfaces';
 import { LabelsEvents } from '../../../Observer/events';
 import Observer from '../../../Observer/Observer';
-import './labels.scss';
 
 class Labels extends Observer {
   protected readonly state: ISettings;

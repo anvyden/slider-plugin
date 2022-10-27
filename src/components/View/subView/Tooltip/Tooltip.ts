@@ -1,5 +1,4 @@
 import { Color, ISettings, Orientation } from '../../../interfaces/interfaces';
-import './tooltip.scss';
 
 class Tooltip {
   protected readonly state: ISettings;
@@ -49,7 +48,6 @@ class Tooltip {
 
     const tooltip = document.createElement('div');
     tooltip.classList.add(
-      'tooltip',
       'slider__tooltip',
       `slider__tooltip--${orientation}`,
       `slider__tooltip--${color}`
@@ -57,7 +55,7 @@ class Tooltip {
     tooltip.dataset.id = tooltipId;
 
     const tooltipValue = document.createElement('span');
-    tooltipValue.classList.add('tooltip__value');
+    tooltipValue.classList.add('slider__tooltip-value');
     tooltipValue.dataset.id = tooltipValueId;
     tooltipValue.textContent =
       tooltipId === 'tooltip-second' ? `${to}` : `${from}`;

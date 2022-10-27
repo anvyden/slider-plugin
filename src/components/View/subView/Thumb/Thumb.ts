@@ -10,7 +10,6 @@ import {
 } from '../../../interfaces/interfaces';
 import { ThumbEvents } from '../../../Observer/events';
 import Observer from '../../../Observer/Observer';
-import './thumb.scss';
 
 type thumbTarget =
   | ThumbEvents.THUMB_VALUE_FROM_CHANGED

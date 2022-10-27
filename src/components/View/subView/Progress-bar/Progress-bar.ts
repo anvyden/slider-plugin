@@ -3,7 +3,6 @@ import {
   getStepInPercent,
 } from '../../../../utils/utils';
 import { Color, ISettings, Orientation } from '../../../interfaces/interfaces';
-import './progress-bar.scss';
 
 class ProgressBar {
   protected readonly state: ISettings;
