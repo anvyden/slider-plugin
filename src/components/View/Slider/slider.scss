@@ -144,6 +144,17 @@
     color: rgba(54, 51, 51, 50%);
     font-size: 12px;
 
+    &-item {
+      position: absolute;
+      font-family: Arial, sans-serif;
+      transform: translateX(-50%);
+      cursor: pointer;
+
+      &:hover {
+        color: rgba(54, 51, 51, 100%);
+      }
+    }
+
     &--horizontal {
       bottom: -15px;
       width: 100%;
@@ -157,17 +168,6 @@
         &__labels-item {
           transform: translate(0%, 50%);
         }
-      }
-    }
-
-    &-item {
-      position: absolute;
-      font-family: Arial, sans-serif;
-      transform: translateX(-50%);
-      cursor: pointer;
-
-      &:hover {
-        color: rgba(54, 51, 51, 100%);
       }
     }
   }

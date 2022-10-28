@@ -21,7 +21,7 @@
   },
   "plugins": ["@typescript-eslint", "fsd", "jest"],
   "extends": [
-    "eslint:recomended",
+    "eslint:recommended",
     "plugin:fsd/all",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
