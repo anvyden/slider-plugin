@@ -1,0 +1,9 @@
+.demo-block {
+  &__container {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: #c4c2c2;
+    border-radius: 4px;
+  }
+}

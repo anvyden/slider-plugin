@@ -1,3 +1,4 @@
+@import './components/demo-block/demo-block';
 @import './components/panel/panel';
 @import './components/slider-block/slider-block';
 
@@ -9,15 +10,5 @@
     grid-gap: 20px;
     grid-template: 1fr 1fr/1fr 1fr;
     padding: 20px;
-  }
-}
-
-.demo-block {
-  &__container {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    background: #c4c2c2;
-    border-radius: 4px;
   }
 }
