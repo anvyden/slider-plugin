@@ -74,3 +74,71 @@ block content
           id: 'slider2',
         },
       })
+      +demoBlock({
+        id: 'demoBlock3',
+        panel: {
+          items: [
+            {type: 'number', value: 1.5, text: 'max', data: 'max'},
+            {type: 'number', value: -1.5, text: 'min', data: 'min'},
+            {type: 'number', value: 0.1, text: 'step', data: 'step'},
+            {type: 'number', value: 0, text: 'from', data: 'from'},
+            {type: 'number', value: 1, text: 'to', data: 'to'},
+            {
+              type: 'select', name: 'orientation', text: 'orientation', data: 'orientation',
+              options: [
+                {value: 'horizontal', text: 'horizontal'},
+                {value: 'vertical', text: 'vertical'},
+              ]
+            },
+            {
+              type: 'select', name: 'color', text: 'color', data: 'color',
+              options: [
+                {value: 'green', text: 'green'},
+                {value: 'purple', text: 'purple'},
+              ]
+            },
+            {type: 'checkbox', text: 'isRange', checked: true, data: 'isRange'},
+            {type: 'checkbox', text: 'progressBar', checked: true, data: 'progressBar'},
+            {type: 'checkbox', text: 'tooltips', checked: true, data: 'tooltips'},
+            {type: 'checkbox', text: 'labels', checked: true, data: 'labels'},
+            {type: number, value: 6, text: 'countOfLabels', data: 'countOfLabels'}
+          ]
+        },
+        sliderBlock: {
+          id: 'slider3',
+        },
+      })
+      +demoBlock({
+        id: 'demoBlock4',
+        panel: {
+          items: [
+            {type: 'number', value: 3.93, text: 'max', data: 'max'},
+            {type: 'number', value: -3.33, text: 'min', data: 'min'},
+            {type: 'number', value: 0.33, text: 'step', data: 'step'},
+            {type: 'number', value: -1.35, text: 'from', data: 'from'},
+            {type: 'number', value: 1.29, text: 'to', data: 'to'},
+            {
+              type: 'select', name: 'orientation', text: 'orientation', data: 'orientation',
+              options: [
+                {value: 'horizontal', text: 'horizontal'},
+                {value: 'vertical', text: 'vertical'},
+              ]
+            },
+            {
+              type: 'select', name: 'color', text: 'color', data: 'color',
+              options: [
+                {value: 'green', text: 'green'},
+                {value: 'purple', text: 'purple'},
+              ]
+            },
+            {type: 'checkbox', text: 'isRange', checked: true, data: 'isRange'},
+            {type: 'checkbox', text: 'progressBar', checked: true, data: 'progressBar'},
+            {type: 'checkbox', text: 'tooltips', checked: true, data: 'tooltips'},
+            {type: 'checkbox', text: 'labels', checked: true, data: 'labels'},
+            {type: number, value: 6, text: 'countOfLabels', data: 'countOfLabels'}
+          ]
+        },
+        sliderBlock: {
+          id: 'slider4',
+        },
+      })

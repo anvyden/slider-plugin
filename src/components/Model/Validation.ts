@@ -67,7 +67,7 @@ class Validation {
 
   public checkStep(max: number, min: number, step: number): number {
     const difference = max - min;
-    let roundStep = Math.round(step);
+    let roundStep = Number(step.toFixed(2));
 
     if (roundStep < 0) return defaultState.step;
     if (roundStep === 0) roundStep += 1;
@@ -77,8 +77,8 @@ class Validation {
   }
 
   public checkMaxMin(max: number, min: number): void {
-    let validMax = Math.round(max);
-    let validMin = Math.round(min);
+    let validMax = Number(max.toFixed(2));
+    let validMin = Number(min.toFixed(2));
 
     if (validMax < validMin) {
       const swap = validMax;
@@ -127,8 +127,8 @@ class Validation {
   }
 
   public checkMaxMinRange(from: number, to: number): void {
-    const roundFrom = Math.round(from);
-    const roundTo = Math.round(to);
+    const roundFrom = Number(from.toFixed(2));
+    const roundTo = Number(to.toFixed(2));
 
     let validFrom = this.convertValueToStep(roundFrom);
     let validTo = this.convertValueToStep(roundTo);
@@ -144,7 +144,7 @@ class Validation {
   }
 
   public checkFrom(from: number): number {
-    const roundFrom = Math.round(from);
+    const roundFrom = Number(from.toFixed(2));
     const validFrom = this.convertValueToStep(roundFrom);
 
     return validFrom;

@@ -35,10 +35,10 @@ const convertPercentValueToNumber = (
   const stepInPercent = getStepInPercent(max, min, step);
 
   const valueWithSteps = Math.round(valueInPercent / stepInPercent) * step;
-  const valueInNumber = valueWithSteps + min;
+  const valueInNumber = Number((valueWithSteps + min).toFixed(2));
 
   if (valueInPercent >= 100) return max;
-
+  
   return valueInNumber;
 };
 
