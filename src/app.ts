@@ -53,7 +53,8 @@ const methods = {
     eventName: EventsNames,
     func: (event: CustomEventInit) => void
   ): void {
-    $(this).on(eventName, (event) => func(event));
+    const eventHandler = (event: CustomEventInit) => func(event);
+    $(this).on(eventName, eventHandler);
   },
 };
 
