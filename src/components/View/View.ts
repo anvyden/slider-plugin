@@ -58,9 +58,13 @@ class View extends Observer {
     const thumbSecond = <Thumb>this.sliderComponents.thumbSecond;
 
     if (option === 'to') {
-      thumbSecond.dragThumbAfterScaleClick(option);
+      this.checkReverseThumbs(thumb, thumbSecond)
+        ? thumb.dragThumbAfterScaleClick(option)
+        : thumbSecond.dragThumbAfterScaleClick(option);
     } else {
-      thumb.dragThumbAfterScaleClick(option);
+      this.checkReverseThumbs(thumb, thumbSecond)
+        ? thumbSecond.dragThumbAfterScaleClick(option)
+        : thumb.dragThumbAfterScaleClick(option);
     }
   }
 
@@ -91,18 +95,53 @@ class View extends Observer {
 
   /* istanbul ignore next */
   private bindThumbEvents(): void {
-    const { thumb, thumbSecond } = this.sliderComponents;
+    const { thumb, thumbSecond, tooltip, tooltipSecond } = this.sliderComponents;
 
     thumb.subscribe(
       ThumbEvents.THUMB_VALUE_FROM_CHANGED,
       (percentValue: number) => {
-        this.emit(ViewEvents.VALUE_FROM_CHANGED, percentValue);
+        if (thumbSecond && tooltipSecond) {
+          const reverseThumbs = this.checkReverseThumbs(thumb, thumbSecond)
+
+          thumb.setThumbEvent(reverseThumbs)
+          thumbSecond.setThumbEvent(reverseThumbs)
+          tooltip.setReverseThumbs(reverseThumbs)
+          tooltipSecond.setReverseThumbs(reverseThumbs)
+          this.emit(ViewEvents.VALUE_FROM_CHANGED, percentValue);
+        } else {
+          this.emit(ViewEvents.VALUE_FROM_CHANGED, percentValue);
+        }
+      }
+    );
+
+    thumb.subscribe(
+      ThumbEvents.THUMB_VALUE_TO_CHANGED,
+      (percentValue: number) => {
+        if (thumbSecond && tooltipSecond) {
+          const reverseThumbs = this.checkReverseThumbs(thumb, thumbSecond)
+
+          thumb.setThumbEvent(reverseThumbs)
+          thumbSecond.setThumbEvent(reverseThumbs)
+          tooltip.setReverseThumbs(reverseThumbs)
+          tooltipSecond.setReverseThumbs(reverseThumbs)
+          this.emit(ViewEvents.VALUE_TO_CHANGED, percentValue); 
+        } else {
+          this.emit(ViewEvents.VALUE_TO_CHANGED, percentValue);
+        }
       }
     );
 
     thumb.subscribe(
       ThumbEvents.THUMB_VALUE_INCREMENT,
       (option: OptionFromThumbValues) => {
+        if (thumbSecond && tooltipSecond) {
+          const reverseThumbs = this.checkReverseThumbs(thumb, thumbSecond)
+
+          thumb.setThumbEvent(reverseThumbs)
+          thumbSecond.setThumbEvent(reverseThumbs)
+          tooltip.setReverseThumbs(reverseThumbs)
+          tooltipSecond.setReverseThumbs(reverseThumbs)
+        } 
         this.emit(ViewEvents.VALUE_FROM_INCREMENT, option);
       }
     );
@@ -110,23 +149,56 @@ class View extends Observer {
     thumb.subscribe(
       ThumbEvents.THUMB_VALUE_DECREMENT,
       (option: OptionFromThumbValues) => {
+        if (thumbSecond && tooltipSecond) {
+          const reverseThumbs = this.checkReverseThumbs(thumb, thumbSecond)
+
+          thumb.setThumbEvent(reverseThumbs)
+          thumbSecond.setThumbEvent(reverseThumbs)
+          tooltip.setReverseThumbs(reverseThumbs)
+          tooltipSecond.setReverseThumbs(reverseThumbs)
+        } 
         this.emit(ViewEvents.VALUE_FROM_DECREMENT, option);
       }
     );
 
-    if (thumbSecond) {
+    if (thumbSecond && tooltipSecond) {
       this.setThumbZIndex(thumb, thumbSecond);
 
       thumbSecond.subscribe(
         ThumbEvents.THUMB_VALUE_TO_CHANGED,
         (percentValue: number) => {
+          const reverseThumbs = this.checkReverseThumbs(thumb, thumbSecond)
+
+          thumb.setThumbEvent(reverseThumbs)
+          thumbSecond.setThumbEvent(reverseThumbs)
+          tooltip.setReverseThumbs(reverseThumbs)
+          tooltipSecond.setReverseThumbs(reverseThumbs)
           this.emit(ViewEvents.VALUE_TO_CHANGED, percentValue);
+        }
+      );
+
+      thumbSecond.subscribe(
+        ThumbEvents.THUMB_VALUE_FROM_CHANGED,
+        (percentValue: number) => {
+          const reverseThumbs = this.checkReverseThumbs(thumb, thumbSecond)
+
+          thumb.setThumbEvent(reverseThumbs)
+          thumbSecond.setThumbEvent(reverseThumbs)
+          tooltip.setReverseThumbs(reverseThumbs)
+          tooltipSecond.setReverseThumbs(reverseThumbs)
+          this.emit(ViewEvents.VALUE_FROM_CHANGED, percentValue);
         }
       );
 
       thumbSecond.subscribe(
         ThumbEvents.THUMB_VALUE_INCREMENT,
         (option: OptionFromThumbValues) => {
+          const reverseThumbs = this.checkReverseThumbs(thumb, thumbSecond)
+
+          thumb.setThumbEvent(reverseThumbs)
+          thumbSecond.setThumbEvent(reverseThumbs)
+          tooltip.setReverseThumbs(reverseThumbs)
+          tooltipSecond.setReverseThumbs(reverseThumbs)
           this.emit(ViewEvents.VALUE_FROM_INCREMENT, option);
         }
       );
@@ -134,6 +206,12 @@ class View extends Observer {
       thumbSecond.subscribe(
         ThumbEvents.THUMB_VALUE_DECREMENT,
         (option: OptionFromThumbValues) => {
+          const reverseThumbs = this.checkReverseThumbs(thumb, thumbSecond)
+
+          thumb.setThumbEvent(reverseThumbs)
+          thumbSecond.setThumbEvent(reverseThumbs)
+          tooltip.setReverseThumbs(reverseThumbs)
+          tooltipSecond.setReverseThumbs(reverseThumbs)
           this.emit(ViewEvents.VALUE_FROM_DECREMENT, option);
         }
       );
@@ -157,21 +235,30 @@ class View extends Observer {
     });
   }
 
+  private checkReverseThumbs(thumb: Thumb, thumbSecond: Thumb): boolean {
+    const posFirstThumb = thumb.getPosition()
+    const posSecondThumb = thumbSecond.getPosition()
+
+    const reverseThumbs = posFirstThumb > posSecondThumb
+
+    return reverseThumbs;
+  }
+
   private checkTooltipsOverlap(
     orientation: Orientation,
     tooltipFirst: HTMLDivElement,
     tooltipSecond: HTMLDivElement
   ): boolean {
-    const { right: tooltipFirstRight, top: tooltipFirstTop } =
+    const { right: tooltipFirstRight, top: tooltipFirstTop, left: tooltipFirstLeft, bottom: tooltipFirstBottom } =
       tooltipFirst.getBoundingClientRect();
 
-    const { left: tooltipSecondLeft, bottom: tooltipSecondBottom } =
+    const { left: tooltipSecondLeft, bottom: tooltipSecondBottom, right: tooltipSecondRight, top: tooltipSecondTop } =
       tooltipSecond.getBoundingClientRect();
 
     const isOverlapHorizontal =
-      orientation === 'horizontal' && tooltipFirstRight >= tooltipSecondLeft;
+      orientation === 'horizontal' && tooltipFirstRight >= tooltipSecondLeft && tooltipFirstLeft <= tooltipSecondRight;
     const isOverlapVertical =
-      orientation === 'vertical' && tooltipSecondBottom >= tooltipFirstTop;
+      orientation === 'vertical' && tooltipSecondBottom >= tooltipFirstTop && tooltipFirstBottom <= tooltipSecondTop;
 
     /* istanbul ignore next */
     if (isOverlapHorizontal || isOverlapVertical) return true;

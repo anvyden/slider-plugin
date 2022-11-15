@@ -125,32 +125,6 @@ describe('Validation:', () => {
     });
   });
 
-  describe('checkFromRangeValue method', () => {
-    test('if from more than to, should return from = to', () => {
-      const newState = {
-        ...state,
-        from: 60,
-      };
-
-      const validFrom = validation.checkFromRangeValue.bind(newState)(
-        newState.from
-      );
-      expect(validFrom).toBe(40);
-    });
-  });
-
-  describe('checkToRangeValue method', () => {
-    test('if to less than from, should return to = from', () => {
-      const newState = {
-        ...state,
-        to: -40,
-      };
-
-      const validTo = validation.checkToRangeValue.bind(newState)(newState.to);
-      expect(validTo).toBe(-20);
-    });
-  });
-
   describe('checkCountOfLabels method', () => {
     test('should return rounded value of countOfLabels', () => {
       const newState = {

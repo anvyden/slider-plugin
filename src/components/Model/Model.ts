@@ -119,9 +119,10 @@ class Model extends Observer {
     const optionNameHasTypeCountOfLabels =
       option === 'countOfLabels' && optionTypeIsNumber;
 
-    if (optionNameIsFromWithRange)
-      newState.from = this.validation.checkFromRangeValue(value);
-    if (optionNameIsTo) newState.to = this.validation.checkToRangeValue(value);
+      
+      
+    if (optionNameIsFromWithRange) newState.from = value;
+    if (optionNameIsTo) newState.to = value;
     if (optionNameIsFrom) newState.from = this.validation.checkFrom(value);
     if (optionNameHasTypeNumber) newState[option] = value;
     if (optionNameHasTypeBoolean) newState[option] = value;

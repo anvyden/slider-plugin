@@ -43,8 +43,6 @@ class Validation {
 
     if (isRange) {
       this.checkMaxMinRange(this.from, this.to);
-      this.from = this.checkFromRangeValue(this.from);
-      this.to = this.checkToRangeValue(this.to);
     } else {
       this.from = this.checkFrom(this.from);
     }
@@ -114,16 +112,6 @@ class Validation {
     );
 
     return validValue;
-  }
-
-  public checkFromRangeValue(value: number): number {
-    if (value >= this.to) value = this.to;
-    return value;
-  }
-
-  public checkToRangeValue(value: number): number {
-    if (value <= this.from) value = this.from;
-    return value;
   }
 
   public checkMaxMinRange(from: number, to: number): void {

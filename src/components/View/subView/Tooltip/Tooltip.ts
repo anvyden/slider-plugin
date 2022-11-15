@@ -5,6 +5,7 @@ class Tooltip {
   protected readonly dataId?: string;
   private tooltip!: HTMLDivElement;
   private tooltipValue!: HTMLSpanElement;
+  private thumbsIsReversed!: boolean;
 
   constructor(state: ISettings, dataId?: string) {
     this.state = state;
@@ -16,16 +17,27 @@ class Tooltip {
     return this.tooltip;
   }
 
+  public setReverseThumbs(reverseThumbs: boolean): boolean {
+    return this.thumbsIsReversed = reverseThumbs;
+  }
+
   public update(state: ISettings): void {
     const { from, to } = state;
 
-    this.tooltip.dataset.id === 'tooltip-second'
+    if (this.thumbsIsReversed) {
+      this.tooltip.dataset.id === 'tooltip-second'
+      ? (this.tooltipValue.textContent = `${from}`)
+      : (this.tooltipValue.textContent = `${to}`);
+    } else {
+      this.tooltip.dataset.id === 'tooltip-second'
       ? (this.tooltipValue.textContent = `${to}`)
       : (this.tooltipValue.textContent = `${from}`);
+    }
   }
 
   private init(): void {
     const { orientation, color, from, to } = this.state;
+    this.thumbsIsReversed = false;
     this.tooltip = this.createTooltip(orientation, color, from, to);
   }
 
