@@ -1,6 +1,7 @@
 import {
   convertStateValueToPercent,
   getPosition,
+  getStepInPercent,
 } from '../../../../utils/utils';
 import {
   Color,
@@ -13,7 +14,7 @@ import Observer from '../../../Observer/Observer';
 
 type thumbTarget =
   | ThumbEvents.THUMB_VALUE_FROM_CHANGED
-  | ThumbEvents.THUMB_VALUE_TO_CHANGED;
+  | ThumbEvents.THUMB_VALUE_TO_CHANGED
 
 class Thumb extends Observer {
   protected readonly state: ISettings;
@@ -50,16 +51,29 @@ class Thumb extends Observer {
 
     if (this.isFirstThumb) {
       thumbValue = this.reverseThumbs ? to : from
-      console.log(1)
     } else {
       thumbValue = this.reverseThumbs ? from : to
-      console.log(2)
     }
 
-    this.thumb.style[direction] = `${convertStateValueToPercent(
+    this.thumbPosition = convertStateValueToPercent(
       this.state,
       thumbValue
-    )}%`
+    )
+    this.thumb.style[direction] = `${this.thumbPosition}%`
+  }
+
+  public setThumbEvent(reverseThumbs: boolean): void {
+    this.reverseThumbs = reverseThumbs;
+
+    if (this.isFirstThumb) {
+      this.thumbTarget = this.reverseThumbs
+        ? ThumbEvents.THUMB_VALUE_TO_CHANGED
+        : ThumbEvents.THUMB_VALUE_FROM_CHANGED
+    } else {
+      this.thumbTarget = this.reverseThumbs
+        ? ThumbEvents.THUMB_VALUE_FROM_CHANGED
+        : ThumbEvents.THUMB_VALUE_TO_CHANGED
+    }
   }
 
   public dragThumbAfterScaleClick(option: OptionFromThumbValues): void {
@@ -76,21 +90,19 @@ class Thumb extends Observer {
     const direction = orientation === 'vertical' ? 'bottom' : 'left';
     this.thumb = this.createThumb(orientation, color);
 
-    if (this.thumb.dataset.id === 'thumb-second') {
-      this.thumb.style[direction] = `${convertStateValueToPercent(
-        this.state,
-        to
-      )}%`
-      this.thumbPosition = to
-      this.isFirstThumb = false
+    let thumbValue: number
+    
+    if (this.isFirstThumb) {
+      thumbValue =  this.reverseThumbs ? to : from
     } else {
-      this.thumb.style[direction] = `${convertStateValueToPercent(
-        this.state,
-        from
-      )}%`;
-      this.thumbPosition = from
-      this.isFirstThumb = true
+      thumbValue = this.reverseThumbs ? from : to
     }
+
+    this.thumbPosition = convertStateValueToPercent(
+      this.state,
+      thumbValue
+    )
+    this.thumb.style[direction] = `${this.thumbPosition}%`;
 
     this.thumb.addEventListener(
       'pointerdown',
@@ -110,6 +122,12 @@ class Thumb extends Observer {
     const thumbFirstId = isRange ? 'thumb-first' : 'thumb';
     const thumbId = this.dataId ? this.dataId : thumbFirstId;
 
+    if (thumbId !== thumbFirstId) {
+      this.isFirstThumb = false
+    } else {
+      this.isFirstThumb = true
+    }
+
     const thumb = document.createElement('div');
     thumb.classList.add(
       'slider__thumb',
@@ -127,6 +145,7 @@ class Thumb extends Observer {
     const handleThumbPointerMove = (event: PointerEvent): void => {
       event.preventDefault();
       this.thumbPosition = getPosition(event, this.state, this.root);
+      this.validateThumbPosition(this.thumbPosition);
       this.emit(this.thumbTarget, Number(this.thumbPosition.toFixed(3)));
     };
 
@@ -142,7 +161,7 @@ class Thumb extends Observer {
   }
 
   private handleThumbKeyDown = (event: KeyboardEvent): void => {
-    const { step } = this.state
+    const { max, min, step } = this.state
     const { code } = event;
 
     if (code !== 'Tab') event.preventDefault();
@@ -151,31 +170,35 @@ class Thumb extends Observer {
       this.thumbTarget === ThumbEvents.THUMB_VALUE_TO_CHANGED ? 'to' : 'from';
 
     if (code === 'ArrowRight' || code === 'ArrowUp') {
-      this.thumbPosition = this.thumbPosition + step;
+      const stepInPercent = getStepInPercent(max, min, step);
+      this.thumbPosition = this.thumbPosition + stepInPercent;
+      this.validateThumbPosition(this.thumbPosition);
       this.emit(ThumbEvents.THUMB_VALUE_INCREMENT, option);
     }
 
     if (code === 'ArrowLeft' || code === 'ArrowDown') {
-      this.thumbPosition = this.thumbPosition - step;
+      const stepInPercent = getStepInPercent(max, min, step);
+      this.thumbPosition = this.thumbPosition - stepInPercent;
+      this.validateThumbPosition(this.thumbPosition);
       this.emit(ThumbEvents.THUMB_VALUE_DECREMENT, option);
     }
   };
 
-  public setThumbEvent(reverseThumbs: boolean): void {
-    this.reverseThumbs = reverseThumbs;
+  private validateThumbPosition(thumbPosition: number): number {
+    let correctThumbPosition: number;
 
-    if (this.isFirstThumb) {
-      this.thumbTarget = this.reverseThumbs
-        ? ThumbEvents.THUMB_VALUE_TO_CHANGED
-        : ThumbEvents.THUMB_VALUE_FROM_CHANGED
+    if (thumbPosition > 100) {
+      correctThumbPosition = 100;
+    } else if (thumbPosition < 0) {
+      correctThumbPosition = 0;
     } else {
-      this.thumbTarget = this.reverseThumbs
-        ? ThumbEvents.THUMB_VALUE_FROM_CHANGED
-        : ThumbEvents.THUMB_VALUE_TO_CHANGED
+      correctThumbPosition = thumbPosition
     }
+
+    return correctThumbPosition
   }
 
-   private setThumbTarget(event: PointerEvent | KeyboardEvent): void {
+  private setThumbTarget(event: PointerEvent | KeyboardEvent): void {
     const target = <HTMLElement>event.target;
 
     this.isFirstThumb =
