@@ -168,15 +168,17 @@ class Thumb extends Observer {
 
     const option =
       this.thumbTarget === ThumbEvents.THUMB_VALUE_TO_CHANGED ? 'to' : 'from';
+    const isIncrement = code === 'ArrowRight' || code === 'ArrowUp'
+    const isDecrement = code === 'ArrowLeft' || code === 'ArrowDown'
 
-    if (code === 'ArrowRight' || code === 'ArrowUp') {
+    if (isIncrement) {
       const stepInPercent = getStepInPercent(max, min, step);
       this.thumbPosition = this.thumbPosition + stepInPercent;
       this.validateThumbPosition(this.thumbPosition);
       this.emit(ThumbEvents.THUMB_VALUE_INCREMENT, option);
     }
 
-    if (code === 'ArrowLeft' || code === 'ArrowDown') {
+    if (isDecrement) {
       const stepInPercent = getStepInPercent(max, min, step);
       this.thumbPosition = this.thumbPosition - stepInPercent;
       this.validateThumbPosition(this.thumbPosition);

@@ -301,9 +301,10 @@ class View extends Observer {
       orientation === 'vertical' 
       && tooltipSecondBottom >= tooltipFirstTop 
       && tooltipSecondTop <= tooltipFirstBottom;
+    const tooltipsIsOverlap = isOverlapHorizontal || isOverlapVertical
 
     /* istanbul ignore next */
-    if (isOverlapHorizontal || isOverlapVertical) return true;
+    if (tooltipsIsOverlap) return true;
     else return false;
   }
 

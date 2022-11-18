@@ -34,7 +34,9 @@ class Model extends Observer {
     const newState = this.checkStateValue(option, value);
     this.state = { ...this.state, ...this.validation.checkState(newState) };
 
-    if (option === 'from' || option === 'to') {
+    const OptionFromThumb = option === 'from' || option === 'to'
+
+    if (OptionFromThumb) {
       this.emit(ModelEvents.VALUE_CHANGED, this.state);
     } else {
       this.emit(ModelEvents.STATE_CHANGED, this.state);
