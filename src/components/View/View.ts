@@ -63,14 +63,18 @@ class View extends Observer {
     const thumb = this.sliderComponents.thumb;
     const thumbSecond = <Thumb>this.sliderComponents.thumbSecond;
 
-    if (option === 'to') {
-      this.checkReverseThumbs(thumb, thumbSecond)
-        ? thumb.dragThumbAfterScaleClick(option)
-        : thumbSecond.dragThumbAfterScaleClick(option);
+    if (this.state.isRange) {
+      if (option === 'to') {
+        this.checkReverseThumbs(thumb, thumbSecond)
+          ? thumb.dragThumbAfterScaleClick(option)
+          : thumbSecond.dragThumbAfterScaleClick(option);
+      } else {
+        this.checkReverseThumbs(thumb, thumbSecond)
+          ? thumbSecond.dragThumbAfterScaleClick(option)
+          : thumb.dragThumbAfterScaleClick(option);
+      }
     } else {
-      this.checkReverseThumbs(thumb, thumbSecond)
-        ? thumbSecond.dragThumbAfterScaleClick(option)
-        : thumb.dragThumbAfterScaleClick(option);
+      thumb.dragThumbAfterScaleClick(option)
     }
   }
 
