@@ -16,10 +16,9 @@ import Thumb from './subView/Thumb/Thumb';
 import Tooltip from './subView/Tooltip/Tooltip';
 
 class View extends Observer {
+  protected readonly state: ISettings;
   protected readonly root: HTMLElement;
-  private state: ISettings;
   private sliderComponents!: SliderComponents;
-  private thumbsIsReversed!: boolean;
 
   constructor(state: ISettings, root: HTMLElement) {
     super();
@@ -30,9 +29,6 @@ class View extends Observer {
 
   public init(state: ISettings): void {
     this.root.innerHTML = '';
-    this.state = state;
-    this.thumbsIsReversed = false;
-
     const slider = new Slider(state, this.root);
 
     this.sliderComponents = slider.getComponents();
@@ -42,8 +38,6 @@ class View extends Observer {
   }
 
   public update(state: ISettings): void {
-    this.state = state
-
     const sliderComponents = [
       this.sliderComponents.thumb,
       this.sliderComponents.progressBar,
@@ -63,18 +57,10 @@ class View extends Observer {
     const thumb = this.sliderComponents.thumb;
     const thumbSecond = <Thumb>this.sliderComponents.thumbSecond;
 
-    if (this.state.isRange) {
-      if (option === 'to') {
-        this.checkReverseThumbs(thumb, thumbSecond)
-          ? thumb.dragThumbAfterScaleClick(option)
-          : thumbSecond.dragThumbAfterScaleClick(option);
-      } else {
-        this.checkReverseThumbs(thumb, thumbSecond)
-          ? thumbSecond.dragThumbAfterScaleClick(option)
-          : thumb.dragThumbAfterScaleClick(option);
-      }
+    if (option === 'to') {
+      thumbSecond.dragThumbAfterScaleClick(option);
     } else {
-      thumb.dragThumbAfterScaleClick(option)
+      thumb.dragThumbAfterScaleClick(option);
     }
   }
 
@@ -105,52 +91,18 @@ class View extends Observer {
 
   /* istanbul ignore next */
   private bindThumbEvents(): void {
-    const { isRange } = this.state
-    const thumb = this.sliderComponents.thumb
-    const thumbSecond = <Thumb>this.sliderComponents.thumbSecond
+    const { thumb, thumbSecond } = this.sliderComponents;
 
     thumb.subscribe(
       ThumbEvents.THUMB_VALUE_FROM_CHANGED,
       (percentValue: number) => {
-        if (isRange) {
-          const thumbsIsReversed = this.checkReverseThumbs(thumb, thumbSecond)
-
-          if (this.thumbsIsReversed !== thumbsIsReversed) {
-            this.thumbsIsReversed = thumbsIsReversed
-            this.setEventsThumbs(thumbsIsReversed)
-          }
-        }
         this.emit(ViewEvents.VALUE_FROM_CHANGED, percentValue);
-      }
-    );
-
-    thumb.subscribe(
-      ThumbEvents.THUMB_VALUE_TO_CHANGED,
-      (percentValue: number) => {
-        if (isRange) {
-          const thumbsIsReversed = this.checkReverseThumbs(thumb, thumbSecond)
-
-          if (this.thumbsIsReversed !== thumbsIsReversed) {
-            this.thumbsIsReversed = thumbsIsReversed
-            this.setEventsThumbs(thumbsIsReversed)
-          }
-
-          this.emit(ViewEvents.VALUE_TO_CHANGED, percentValue); 
-        }
       }
     );
 
     thumb.subscribe(
       ThumbEvents.THUMB_VALUE_INCREMENT,
       (option: OptionFromThumbValues) => {
-        if (isRange) {
-          const thumbsIsReversed = this.checkReverseThumbs(thumb, thumbSecond)
-
-          if (this.thumbsIsReversed !== thumbsIsReversed) {
-            this.thumbsIsReversed = thumbsIsReversed
-            this.setEventsThumbs(thumbsIsReversed)
-          }
-        } 
         this.emit(ViewEvents.VALUE_FROM_INCREMENT, option);
       }
     );
@@ -158,59 +110,43 @@ class View extends Observer {
     thumb.subscribe(
       ThumbEvents.THUMB_VALUE_DECREMENT,
       (option: OptionFromThumbValues) => {
-        if (isRange) {
-          const thumbsIsReversed = this.checkReverseThumbs(thumb, thumbSecond)
-
-          if (this.thumbsIsReversed !== thumbsIsReversed) {
-            this.thumbsIsReversed = thumbsIsReversed
-            this.setEventsThumbs(thumbsIsReversed)
-          }
-        } 
         this.emit(ViewEvents.VALUE_FROM_DECREMENT, option);
       }
     );
 
-    if (isRange) {
-      this.setThumbZIndex(thumb, thumbSecond);
+    if (thumbSecond) {
+      thumb.subscribe(
+        ThumbEvents.THUMB_VALUE_FROM_CHANGED,
+        (percentValue: number) => {
+          if (thumb.getThumbsIsReversed()) {
+            if (percentValue > thumbSecond.getPosition()) {
+              this.setTargetThumb('to');
+            }
+          }
+        }
+      );
 
       thumbSecond.subscribe(
         ThumbEvents.THUMB_VALUE_TO_CHANGED,
         (percentValue: number) => {
-          const thumbsIsReversed = this.checkReverseThumbs(thumb, thumbSecond)
-
-          if (this.thumbsIsReversed !== thumbsIsReversed) {
-            this.thumbsIsReversed = thumbsIsReversed
-            this.setEventsThumbs(thumbsIsReversed)
-          }
-
           this.emit(ViewEvents.VALUE_TO_CHANGED, percentValue);
         }
       );
 
       thumbSecond.subscribe(
-        ThumbEvents.THUMB_VALUE_FROM_CHANGED,
+        ThumbEvents.THUMB_VALUE_TO_CHANGED,
         (percentValue: number) => {
-          const thumbsIsReversed = this.checkReverseThumbs(thumb, thumbSecond)
-
-          if (this.thumbsIsReversed !== thumbsIsReversed) {
-            this.thumbsIsReversed = thumbsIsReversed
-            this.setEventsThumbs(thumbsIsReversed)
+          if (thumbSecond.getThumbsIsReversed()) {
+            if (percentValue < thumb.getPosition()) {
+              this.setTargetThumb('from');
+            }
           }
-          
-          this.emit(ViewEvents.VALUE_FROM_CHANGED, percentValue);
         }
       );
 
       thumbSecond.subscribe(
         ThumbEvents.THUMB_VALUE_INCREMENT,
         (option: OptionFromThumbValues) => {
-          const thumbsIsReversed = this.checkReverseThumbs(thumb, thumbSecond)
-
-          if (this.thumbsIsReversed !== thumbsIsReversed) {
-            this.thumbsIsReversed = thumbsIsReversed
-            this.setEventsThumbs(thumbsIsReversed)
-          }
-
           this.emit(ViewEvents.VALUE_FROM_INCREMENT, option);
         }
       );
@@ -218,59 +154,9 @@ class View extends Observer {
       thumbSecond.subscribe(
         ThumbEvents.THUMB_VALUE_DECREMENT,
         (option: OptionFromThumbValues) => {
-          const thumbsIsReversed = this.checkReverseThumbs(thumb, thumbSecond)
-
-          if (this.thumbsIsReversed !== thumbsIsReversed) {
-            this.thumbsIsReversed = thumbsIsReversed
-            this.setEventsThumbs(thumbsIsReversed)
-          }
-
           this.emit(ViewEvents.VALUE_FROM_DECREMENT, option);
         }
       );
-    }
-  }
-
-  private setThumbZIndex(thumb: Thumb, thumbSecond: Thumb): void {
-    const thumbNode = thumb.getThumb();
-    const thumbSecondNode = thumbSecond.getThumb();
-
-    /* istanbul ignore next */
-    thumb.subscribe(ThumbEvents.THUMB_VALUE_FROM_CHANGED, () => {
-      thumbNode.style.zIndex = '1';
-      thumbSecondNode.style.zIndex = '0';
-    });
-
-    /* istanbul ignore next */
-    thumbSecond.subscribe(ThumbEvents.THUMB_VALUE_TO_CHANGED, () => {
-      thumbNode.style.zIndex = '0';
-      thumbSecondNode.style.zIndex = '1';
-    });
-  }
-
-  private checkReverseThumbs(thumb: Thumb, thumbSecond: Thumb): boolean {
-    const posFirstThumb = Math.round(thumb.getPosition())
-    const posSecondThumb = Math.round(thumbSecond.getPosition())
-
-    const thumbsIsReversed = posFirstThumb > posSecondThumb
-
-    return thumbsIsReversed;
-  }
-
-  private setEventsThumbs(thumbsIsReversed: boolean): void {
-    const thumb = this.sliderComponents.thumb
-    const thumbSecond = <Thumb>this.sliderComponents.thumbSecond
-    const tooltip = this.sliderComponents.tooltip
-    const tooltipSecond = <Tooltip>this.sliderComponents.tooltipSecond
-
-    const { hasTooltips } = this.state
-
-    thumb.setThumbEvent(thumbsIsReversed)
-    thumbSecond.setThumbEvent(thumbsIsReversed)
-
-    if (hasTooltips) {
-      tooltip.setReverseThumbs(thumbsIsReversed)
-      tooltipSecond.setReverseThumbs(thumbsIsReversed)
     }
   }
 
@@ -279,29 +165,17 @@ class View extends Observer {
     tooltipFirst: HTMLDivElement,
     tooltipSecond: HTMLDivElement
   ): boolean {
-    const {
-      right: tooltipFirstRight,
-      top: tooltipFirstTop,
-      left: tooltipFirstLeft,
-      bottom: tooltipFirstBottom
-    } = tooltipFirst.getBoundingClientRect();
+    const { right: tooltipFirstRight, top: tooltipFirstTop } =
+      tooltipFirst.getBoundingClientRect();
 
-    const {
-      left: tooltipSecondLeft,
-      bottom: tooltipSecondBottom,
-      right: tooltipSecondRight,
-      top: tooltipSecondTop
-    } = tooltipSecond.getBoundingClientRect();
+    const { left: tooltipSecondLeft, bottom: tooltipSecondBottom } =
+      tooltipSecond.getBoundingClientRect();
 
     const isOverlapHorizontal =
-      orientation === 'horizontal' 
-      && tooltipFirstRight >= tooltipSecondLeft 
-      && tooltipFirstLeft <= tooltipSecondRight;
+      orientation === 'horizontal' && tooltipFirstRight >= tooltipSecondLeft;
     const isOverlapVertical =
-      orientation === 'vertical' 
-      && tooltipSecondBottom >= tooltipFirstTop 
-      && tooltipSecondTop <= tooltipFirstBottom;
-    const tooltipsIsOverlap = isOverlapHorizontal || isOverlapVertical
+      orientation === 'vertical' && tooltipSecondBottom >= tooltipFirstTop;
+    const tooltipsIsOverlap = isOverlapHorizontal || isOverlapVertical;
 
     /* istanbul ignore next */
     if (tooltipsIsOverlap) return true;

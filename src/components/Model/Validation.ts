@@ -26,7 +26,6 @@ class Validation {
     });
 
     const { max, min, step, from, to, isRange, labels } = receivedState;
-
     const { addLabels, countOfLabels } = labels;
 
     this.max = max;
@@ -112,6 +111,16 @@ class Validation {
     );
 
     return validValue;
+  }
+
+  public checkFromRangeValue(value: number): number {
+    if (value >= this.to) value = this.to;
+    return value;
+  }
+
+  public checkToRangeValue(value: number): number {
+    if (value <= this.from) value = this.from;
+    return value;
   }
 
   public checkMaxMinRange(from: number, to: number): void {

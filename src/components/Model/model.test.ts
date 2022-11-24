@@ -104,30 +104,6 @@ describe('Model:', () => {
       );
     });
 
-    test('should set to color value and emit should have been called with the new state', () => {
-      const spyEmit = jest.spyOn(model, 'emit');
-      model.setValue('color', 'purple');
-      const currentState = model.getState();
-
-      expect(currentState.color).toBe('purple');
-      expect(spyEmit).toHaveBeenCalledWith(
-        ModelEvents.STATE_CHANGED,
-        currentState
-      );
-    });
-
-    test('should set to color value and emit should have been called with the new state', () => {
-      const spyEmit = jest.spyOn(model, 'emit');
-      model.setValue('color', 'purple');
-      const currentState = model.getState();
-
-      expect(currentState.color).toBe('purple');
-      expect(spyEmit).toHaveBeenCalledWith(
-        ModelEvents.STATE_CHANGED,
-        currentState
-      );
-    });
-
     test('should set to orientation value and emit should have been called with the new state', () => {
       const spyEmit = jest.spyOn(model, 'emit');
       model.setValue('orientation', 'vertical');
