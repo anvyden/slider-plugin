@@ -34,26 +34,28 @@ const convertPercentValueToNumber = (
   const { max, min, step } = state;
   const stepInPercent = getStepInPercent(max, min, step);
 
-  const valueInNumber = 
-    Number(((valueInPercent / stepInPercent) * step + min).toFixed(2))
-  const minValueOfRange = 
-    Number((Math.floor(valueInPercent / stepInPercent) * step + min).toFixed(2));
-  let maxValueOfRange = 
-    Number((Math.ceil(valueInPercent / stepInPercent) * step + min).toFixed(2));
+  const valueInNumber = Number(
+    ((valueInPercent / stepInPercent) * step + min).toFixed(2)
+  );
+  const minValueOfRange = Number(
+    (Math.floor(valueInPercent / stepInPercent) * step + min).toFixed(2)
+  );
+  let maxValueOfRange = Number(
+    (Math.ceil(valueInPercent / stepInPercent) * step + min).toFixed(2)
+  );
 
   if (maxValueOfRange > max) {
-    maxValueOfRange = max
+    maxValueOfRange = max;
   }
 
-  const valueIsEqualToLimit = 
-    (valueInNumber === minValueOfRange) && (valueInNumber === maxValueOfRange)
-
-  if (valueIsEqualToLimit) {
-    return valueInNumber;
+  if (valueInPercent >= 100) {
+    return max;
+  } else if (valueInPercent <= 0) {
+    return min;
   } else {
-    const half = Number(((minValueOfRange + maxValueOfRange) / 2).toFixed(2))
-    const correctValue = 
-      valueInNumber >= half ? maxValueOfRange : minValueOfRange
+    const half = Number(((minValueOfRange + maxValueOfRange) / 2).toFixed(2));
+    const correctValue =
+      valueInNumber >= half ? maxValueOfRange : minValueOfRange;
     return correctValue;
   }
 };

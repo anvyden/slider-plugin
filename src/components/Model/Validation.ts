@@ -144,6 +144,9 @@ class Validation {
     const roundFrom = Number(from.toFixed(2));
     const validFrom = this.convertValueToStep(roundFrom);
 
+    console.log(roundFrom, validFrom)
+
+
     return validFrom;
   }
 

@@ -33,7 +33,6 @@ class Model extends Observer {
   public setValue(option: Option, value: OptionValue): void {
     const newState = this.checkStateValue(option, value);
     this.state = { ...this.state, ...this.validation.checkState(newState) };
-
     const OptionFromThumb = option === 'from' || option === 'to'
 
     if (OptionFromThumb) {

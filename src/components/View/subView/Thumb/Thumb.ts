@@ -132,16 +132,18 @@ class Thumb extends Observer {
   }
 
   private handleThumbPointerDown(): void {
-    const { from, to } = this.state
+    const { from, to, isRange } = this.state
 
-    if (this.isFirstThumb) {
-      this.thumbsIsReversed
-        = this.thumbPosition === convertStateValueToPercent(this.state, to)
-        ? true : false
-    } else {
-      this.thumbsIsReversed
-        = this.thumbPosition === convertStateValueToPercent(this.state, from)
-        ? true : false
+    if (isRange) {
+      if (this.isFirstThumb) {
+        this.thumbsIsReversed
+          = this.thumbPosition === convertStateValueToPercent(this.state, to)
+          ? true : false
+      } else {
+        this.thumbsIsReversed
+          = this.thumbPosition === convertStateValueToPercent(this.state, from)
+          ? true : false
+      }
     }
 
     const handleThumbPointerUp = (): void => {
@@ -153,7 +155,9 @@ class Thumb extends Observer {
       event.preventDefault();
       this.thumbPosition = getPosition(event, this.state, this.root);
 
-      if (this.thumbsIsReversed) {
+      const isReversed = isRange && this.thumbsIsReversed
+
+      if (isReversed) {
         if (this.isFirstThumb) {
           if (this.thumbPosition > convertStateValueToPercent(this.state, to)) {
             handleThumbPointerUp();
