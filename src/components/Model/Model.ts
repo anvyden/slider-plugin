@@ -27,7 +27,7 @@ class Model extends Observer {
   }
 
   public getState(): ISettings {
-    return this.state;
+    return JSON.parse(JSON.stringify(this.state));
   }
 
   public setValue(option: Option, value: OptionValue): void {
@@ -45,7 +45,7 @@ class Model extends Observer {
   public getValue(option: Option): OptionValue {
     if (option === 'addLabels') return this.state.labels.addLabels;
     if (option === 'countOfLabels') return this.state.labels.countOfLabels;
-    return this.state[option];
+    return JSON.parse(JSON.stringify(this.state))[option];
   }
 
   public increment(option: OptionFromThumbValues): void {

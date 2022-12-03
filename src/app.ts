@@ -19,6 +19,11 @@ declare global {
       eventName: string,
       func: (event: CustomEvent) => void
     ): void;
+    sliderPlugin(
+      method: 'removeListener',
+      eventName: string,
+      func: (event: CustomEvent) => void
+    ): void;
   }
 }
 
@@ -53,9 +58,16 @@ const methods = {
     eventName: EventsNames,
     func: (event: CustomEventInit) => void
   ): void {
-    const eventHandler = (event: CustomEventInit) => func(event);
-    $(this).on(eventName, eventHandler);
+    $(this).on(eventName, func);
   },
+
+  removeListener(
+    this: JQuery,
+    eventName: EventsNames,
+    func: (event: CustomEventInit) => void
+  ): void {
+    $(this).off(eventName, func);
+  }
 };
 
 $.fn.sliderPlugin = function <T>(...args: T[]) {
