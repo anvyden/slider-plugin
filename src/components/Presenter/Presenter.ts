@@ -72,7 +72,7 @@ class Presenter {
 
   private updateEvent(): CustomEvent {
     return new CustomEvent('update', {
-      detail: JSON.parse(JSON.stringify(this.model.getState())),
+      detail: this.model.getState(),
     });
   }
 

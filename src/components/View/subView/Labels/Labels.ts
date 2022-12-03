@@ -63,7 +63,8 @@ class Labels extends Observer {
     step: number
   ): HTMLDivElement[] {
     const items: HTMLDivElement[] = [];
-    const labelsValues: number[] = new Array(countOfLabels).fill(0)
+    const labelsValues: number[] = new Array(countOfLabels)
+      .fill(0)
       .map((_, index) => {
         const countOfSteps = (max - min) / step;
         const stepsForLabel = Math.round(
@@ -74,10 +75,14 @@ class Labels extends Observer {
           convertStateValueToPercent(this.state, positionInNumber).toFixed(3)
         );
 
+        if (index === countOfLabels - 1) {
+          return 100;
+        }
+
         return positionInPercent;
       })
       .filter((value, index, arr) => arr.indexOf(value) === index)
-      .sort((a, b) => a - b)
+      .sort((a, b) => a - b);
 
     labelsValues.forEach((value) => {
       const positionInNumber = convertPercentValueToNumber(this.state, value);
