@@ -195,11 +195,13 @@ class View extends Observer {
     if (
       this.checkTooltipsOverlap(orientation, tooltipNode, tooltipSecondNode)
     ) {
-      tooltipNode.classList.add('tooltip--united');
+      const tooltipUnitedModifier = 'tooltip--united'
+      tooltipNode.classList.add(tooltipUnitedModifier);
       tooltipValue.textContent = `${from} \u2013 ${to}`;
       tooltipSecondNode.style.visibility = 'hidden';
     } else {
-      tooltipNode.classList.remove('tooltip--united');
+      const tooltipUnitedModifier = 'tooltip--united'
+      tooltipNode.classList.remove(tooltipUnitedModifier);
       tooltipSecondNode.style.visibility = 'visible';
     }
   }

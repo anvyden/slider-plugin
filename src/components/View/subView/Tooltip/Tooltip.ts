@@ -46,16 +46,19 @@ class Tooltip {
       `${this.dataId}-value`
       : tooltipFirstValueId;
 
-    const tooltip = document.createElement('div');
-    tooltip.classList.add(
+    const tootlipClass = [
       'slider__tooltip',
       `slider__tooltip--${orientation}`,
       `slider__tooltip--${color}`
-    );
+    ]
+    const tooltipValueClass = 'slider__tooltip-value'
+    
+    const tooltip = document.createElement('div');
+    tooltip.classList.add(...tootlipClass);
     tooltip.dataset.id = tooltipId;
 
     const tooltipValue = document.createElement('span');
-    tooltipValue.classList.add('slider__tooltip-value');
+    tooltipValue.classList.add(tooltipValueClass);
     tooltipValue.dataset.id = tooltipValueId;
     tooltipValue.textContent =
       tooltipId === 'tooltip-second' ? `${to}` : `${from}`;

@@ -118,12 +118,14 @@ class Thumb extends Observer {
       this.isFirstThumb = true
     }
 
-    const thumb = document.createElement('div');
-    thumb.classList.add(
+    const thumbClass = [
       'slider__thumb',
       `slider__thumb--${orientation}`,
       `slider__thumb--${color}`
-    );
+    ]
+
+    const thumb = document.createElement('div');
+    thumb.classList.add(...thumbClass);
     thumb.setAttribute('data-id', thumbId);
     thumb.setAttribute('tabindex', '0');
     thumb.setAttribute('role', 'slider');

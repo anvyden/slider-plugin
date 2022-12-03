@@ -36,12 +36,14 @@ class ProgressBar {
     orientation: Orientation,
     color: Color
   ): HTMLDivElement {
-    const progressBar = document.createElement('div');
-    progressBar.classList.add(
+    const progressBarClass = [
       'slider__progress-bar',
       `slider__progress-bar--${orientation}`,
       `slider__progress-bar--${color}`
-    );
+    ]
+
+    const progressBar = document.createElement('div');
+    progressBar.classList.add(...progressBarClass);
     progressBar.setAttribute('data-id', 'progressBar');
 
     return progressBar;

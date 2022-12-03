@@ -44,8 +44,10 @@ class Labels extends Observer {
   ): HTMLDivElement {
     const items = this.getItems(orientation, countOfLabels, max, min, step);
 
+    const labelsClass = ['slider__labels', `slider__labels--${orientation}`];
+
     const labels = document.createElement('div');
-    labels.classList.add('slider__labels', `slider__labels--${orientation}`);
+    labels.classList.add(...labelsClass);
     labels.setAttribute('data-id', 'labels');
 
     items.forEach((item) => labels.insertAdjacentElement('beforeend', item));
@@ -61,29 +63,27 @@ class Labels extends Observer {
     step: number
   ): HTMLDivElement[] {
     const items: HTMLDivElement[] = [];
-    const labelsValues: number[] = [0, 100];
+    const labelsValues: number[] = new Array(countOfLabels).fill(0)
+      .map((_, index) => {
+        const countOfSteps = (max - min) / step;
+        const stepsForLabel = Math.round(
+          (countOfSteps / (countOfLabels - 1)) * index
+        );
+        const positionInNumber = stepsForLabel * step + min;
+        const positionInPercent = Number(
+          convertStateValueToPercent(this.state, positionInNumber).toFixed(3)
+        );
 
-    for (let i = 0; i < countOfLabels - 2; i++) {
-      const countOfSteps = (max - min) / step;
-      const stepsForLabel = Math.round(
-        (countOfSteps / (countOfLabels - 1)) * (i + 1)
-      );
-      const positionInNumber = stepsForLabel * step + min;
-      const positionInPercent = Number(
-        convertStateValueToPercent(this.state, positionInNumber).toFixed(3)
-      );
-
-      labelsValues.push(positionInPercent);
-    }
-
-    labelsValues
-      .filter((value, index) => labelsValues.indexOf(value) === index)
+        return positionInPercent;
+      })
+      .filter((value, index, arr) => arr.indexOf(value) === index)
       .sort((a, b) => a - b)
-      .forEach((value) => {
-        const positionInNumber = convertPercentValueToNumber(this.state, value);
-        const item = this.createLabel(orientation, positionInNumber, value);
-        items.push(item);
-      });
+
+    labelsValues.forEach((value) => {
+      const positionInNumber = convertPercentValueToNumber(this.state, value);
+      const item = this.createLabel(orientation, positionInNumber, value);
+      items.push(item);
+    });
 
     return items;
   }
@@ -94,8 +94,10 @@ class Labels extends Observer {
     positionInPercent: number
   ): HTMLDivElement {
     const direction = orientation === 'vertical' ? 'bottom' : 'left';
+    const labelClass = 'slider__labels-item';
+
     const label = document.createElement('div');
-    label.classList.add('slider__labels-item');
+    label.classList.add(labelClass);
     label.setAttribute('data-value', `${positionInPercent}`);
     label.style[direction] = `${positionInPercent}%`;
     label.innerHTML = `${positionInNumber}`;

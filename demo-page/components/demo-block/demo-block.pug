@@ -1,11 +1,11 @@
 include ../panel/panel
 include ../slider-block/slider-block
 
-mixin demoBlock(options)
+mixin demo-block(options)
   -
     const { id, panel, sliderBlock } = options
 
   .demo-block(data-id = id)
     .demo-block__container
       +panel(panel)
-      +sliderBlock(sliderBlock)
+      +slider-block(sliderBlock)

@@ -4,7 +4,7 @@
 
 import { defaultState } from '../../../../defaultState';
 import { ISettings } from '../../../interfaces/interfaces';
-import ProgressBar from './Progress-bar';
+import ProgressBar from './ProgressBar';
 
 describe('Progress-bar:', () => {
   let progressBar: ProgressBar;

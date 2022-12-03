@@ -1,5 +1,5 @@
 import '../src/app.ts';
-import DemoBlock from './components/demo-block/Demo-block';
+import DemoBlock from './components/demo-block/DemoBlock';
 import './demo-page.scss';
 
 // ------------------------------- singleSLider -------------------------------------------

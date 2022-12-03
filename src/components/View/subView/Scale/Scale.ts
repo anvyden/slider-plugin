@@ -32,12 +32,14 @@ class Scale extends Observer {
   }
 
   private createScale(orientation: Orientation): HTMLDivElement {
-    const scale = document.createElement('div');
-    scale.classList.add(
+    const scaleClass = [
       'js-slider__scale',
       'slider__scale',
       `slider__scale--${orientation}`
-    );
+    ]
+
+    const scale = document.createElement('div');
+    scale.classList.add(...scaleClass);
     scale.setAttribute('data-id', 'scale');
 
     return scale;

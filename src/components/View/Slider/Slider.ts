@@ -6,7 +6,7 @@ import {
 } from '../../interfaces/interfaces';
 import Scale from '../subView/Scale/Scale';
 import Thumb from '../subView/Thumb/Thumb';
-import ProgressBar from '../subView/Progress-bar/Progress-bar';
+import ProgressBar from '../subView/Progress-bar/ProgressBar';
 import Labels from '../subView/Labels/Labels';
 import Tooltip from '../subView/Tooltip/Tooltip';
 import './slider.scss';
@@ -86,11 +86,14 @@ class Slider {
         thumbSecondNode.insertAdjacentElement('beforeend', tooltipSecondNode);
       }
 
-      const insertPosition = this.checkThumbsPosition() ? 'afterbegin' : 'beforeend';
+      const insertPosition = this.checkThumbsPosition()
+        ? 'afterbegin'
+        : 'beforeend';
       this.scale.insertAdjacentElement(insertPosition, thumbSecondNode);
     }
 
-    if (hasProgressBar) this.scale.insertAdjacentElement('afterbegin', progressBarNode);
+    if (hasProgressBar)
+      this.scale.insertAdjacentElement('afterbegin', progressBarNode);
     if (hasTooltips) thumbNode.insertAdjacentElement('beforeend', tooltipNode);
     if (addLabels) this.scale.insertAdjacentElement('beforeend', labelsNode);
   }
@@ -107,8 +110,10 @@ class Slider {
   }
 
   private createSlider(orientation: Orientation): HTMLDivElement {
+    const sliderClass = ['js-slider', 'slider', `slider--${orientation}`];
+
     const slider = document.createElement('div');
-    slider.classList.add('js-slider', 'slider', `slider--${orientation}`);
+    slider.classList.add(...sliderClass);
 
     return slider;
   }
