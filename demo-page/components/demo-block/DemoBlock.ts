@@ -70,9 +70,14 @@ class DemoBlock {
   }
 
   private setPanelParams(event?: CustomEvent): void {
-    this.state = event
-      ? event.detail
-      : this.sliderRoot.sliderPlugin('getState');
+    if (event) {
+      this.state = {
+        ...this.state,
+        ...event.detail
+      }
+    } else {
+      this.state = this.sliderRoot.sliderPlugin('getState');
+    }
 
     const {
       max,
