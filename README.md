@@ -148,8 +148,8 @@
          from: -100,
          to: 120,
          isRange: true,
-         orientation: 'vertical',
-         color: 'purple',
+         orientation: vertical,
+         color: purple,
          hasTooltips: true,
          hasProgressBar: true,
          labels: {
