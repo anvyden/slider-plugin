@@ -70,21 +70,6 @@ const demoBlock4 = <HTMLDivElement>(
   document.querySelector('[data-id="demoBlock4"]')
 );
 const $slider4 = $('#slider4');
-$slider4.sliderPlugin({
-  max: 3.93,
-  min: -3.33,
-  step: 0.33,
-  from: -1.35,
-  to: 1.29,
-  isRange: true,
-  orientation: 'vertical',
-  color: 'purple',
-  hasTooltips: true,
-  hasProgressBar: true,
-  labels: {
-    addLabels: true,
-    countOfLabels: 6,
-  },
-});
+$slider4.sliderPlugin();
 
 new DemoBlock(demoBlock4, $slider4);

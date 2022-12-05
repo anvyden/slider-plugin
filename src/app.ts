@@ -30,10 +30,21 @@ declare global {
 const methods = {
   init(this: JQuery, options: Partial<ISettings>) {
     return this.each(function (this: HTMLElement): void {
-      const newOptions: ISettings = {
-        ...JSON.parse(JSON.stringify(defaultState)),
-        ...options,
-      };
+      const props: object = $(this).data('props')
+      let newOptions: ISettings
+
+      if (props) {
+        newOptions = {
+          ...JSON.parse(JSON.stringify(defaultState)),
+          ...props
+        }
+      } else {
+        newOptions = {
+          ...JSON.parse(JSON.stringify(defaultState)),
+          ...options,
+        };
+      }
+
       $(this).data('sliderPlugin', new Presenter(newOptions, this));
     });
   },

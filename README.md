@@ -134,6 +134,36 @@
    })
 ```
 
+*Инициализация с настройками через data-атрибуты:*
+```html
+   <!--HTML-->
+   <body>
+     ...
+     <div
+      id='root'
+      data-props={
+         max: 200,
+         min: -200,
+         step: 20,
+         from: -100,
+         to: 120,
+         isRange: true,
+         orientation: 'vertical',
+         color: 'purple',
+         hasTooltips: true,
+         hasProgressBar: true,
+         labels: {
+            addLabels: true,
+            countOfLabels: 6,
+         },
+      }
+     ></div>
+   </body>
+```
+```js
+   $('#root').sliderPlugin()
+```
+
 ### Параметры слайдера
 
 |      Опции       |   Тип   |  По-умолчанию  |                                                                 Описание                                                                 |
