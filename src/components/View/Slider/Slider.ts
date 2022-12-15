@@ -6,7 +6,7 @@ import {
 } from '../../interfaces/interfaces';
 import Scale from '../subView/Scale/Scale';
 import Thumb from '../subView/Thumb/Thumb';
-import ProgressBar from '../subView/Progress-bar/ProgressBar';
+import ProgressBar from '../subView/ProgressBar/ProgressBar';
 import Labels from '../subView/Labels/Labels';
 import Tooltip from '../subView/Tooltip/Tooltip';
 import './slider.scss';

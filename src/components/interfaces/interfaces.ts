@@ -1,6 +1,6 @@
 import Thumb from '../View/subView/Thumb/Thumb';
 import Scale from '../View/subView/Scale/Scale';
-import ProgressBar from '../View/subView/Progress-bar/ProgressBar';
+import ProgressBar from '../View/subView/ProgressBar/ProgressBar';
 import Labels from '../View/subView/Labels/Labels';
 import Tooltip from '../View/subView/Tooltip/Tooltip';
 import labels from '../View/subView/Labels/Labels';
