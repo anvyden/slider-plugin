@@ -6,7 +6,11 @@ import { ISettings, Orientation } from '../../../interfaces/interfaces';
 import { LabelsEvents } from '../../../Observer/events';
 import Observer from '../../../Observer/Observer';
 
-class Labels extends Observer {
+type labelsEvent = {
+  [LabelsEvents.LABEL_VALUE_CHANGED]: number,
+}
+
+class Labels extends Observer<labelsEvent> {
   protected readonly state: ISettings;
   private labels!: HTMLDivElement;
 

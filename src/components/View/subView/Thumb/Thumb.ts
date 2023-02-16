@@ -15,7 +15,14 @@ type thumbTarget =
   | ThumbEvents.THUMB_VALUE_FROM_CHANGED
   | ThumbEvents.THUMB_VALUE_TO_CHANGED
 
-class Thumb extends Observer {
+type thumbEvent = {
+  [ThumbEvents.THUMB_VALUE_FROM_CHANGED]: number,
+  [ThumbEvents.THUMB_VALUE_TO_CHANGED]: number,
+  [ThumbEvents.THUMB_VALUE_INCREMENT]: OptionFromThumbValues,
+  [ThumbEvents.THUMB_VALUE_DECREMENT]: OptionFromThumbValues,
+}
+
+class Thumb extends Observer<thumbEvent> {
   private state: ISettings;
   protected readonly root: HTMLElement;
   protected readonly dataId?: string;

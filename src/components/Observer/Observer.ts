@@ -1,17 +1,21 @@
-import { ISettings, OptionFromThumbValues } from '../interfaces/interfaces';
+type Callback<T> = (args: T) => void;
 
-abstract class Observer {
-  private observers: { [key: string]: Function[] } = {};
+type Observers<T> = {
+  [K in keyof T]: Callback<T[K]>[];
+};
 
-  public subscribe(event: string, callback: Function): void {
-    const eventObservers: Function[] = this.observers[event] || [];
+abstract class Observer<T extends Record<string, unknown>> {
+  private observers: Observers<T> = {} as Observers<T>;
+
+  public subscribe<K extends keyof T>(
+    event: K,
+    callback: Callback<T[K]>
+  ): void {
+    const eventObservers = this.observers[event] || [];
     this.observers[event] = [...eventObservers, callback];
   }
 
-  public emit(
-    event: string,
-    value: ISettings | number | OptionFromThumbValues
-  ): void {
+  public emit<K extends keyof T>(event: K, value: T[K]): void {
     this.observers[event]?.forEach((observer) => observer(value));
   }
 }

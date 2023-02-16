@@ -10,7 +10,14 @@ import { ModelEvents } from '../Observer/events';
 import Observer from '../Observer/Observer';
 import Validation from './Validation';
 
-class Model extends Observer {
+// type Option = keyof ISettings;
+
+type ModelEvent = {
+  [ModelEvents.VALUE_CHANGED]: ISettings,
+  [ModelEvents.STATE_CHANGED]: ISettings
+}
+
+class Model extends Observer<ModelEvent> {
   private state: ISettings = defaultState;
   private validation: Validation;
 

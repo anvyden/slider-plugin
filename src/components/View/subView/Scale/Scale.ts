@@ -3,7 +3,11 @@ import { ISettings, Orientation } from '../../../interfaces/interfaces';
 import { ScaleEvents } from '../../../Observer/events';
 import Observer from '../../../Observer/Observer';
 
-class Scale extends Observer {
+type scaleEvent = {
+  [ScaleEvents.SCALE_VALUE_CHANGED]: number
+}
+
+class Scale extends Observer<scaleEvent> {
   protected readonly state: ISettings;
   protected readonly root: HTMLElement;
   private scale!: HTMLDivElement;

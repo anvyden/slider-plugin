@@ -15,7 +15,16 @@ import Slider from './Slider/Slider';
 import Thumb from './subView/Thumb/Thumb';
 import Tooltip from './subView/Tooltip/Tooltip';
 
-class View extends Observer {
+type ViewEvent = {
+  [ViewEvents.VALUE_FROM_CHANGED]: number;
+  [ViewEvents.VALUE_TO_CHANGED]: number;
+  [ViewEvents.VALUE_CHANGED]: number;
+  [ViewEvents.VALUE_INCREMENT]: OptionFromThumbValues;
+  [ViewEvents.VALUE_DECREMENT]: OptionFromThumbValues;
+  [ViewEvents.VALUE_CHANGED_FROM_LABELS]: number;
+};
+
+class View extends Observer<ViewEvent> {
   protected readonly state: ISettings;
   protected readonly root: HTMLElement;
   private sliderComponents!: SliderComponents;
@@ -103,14 +112,14 @@ class View extends Observer {
     thumb.subscribe(
       ThumbEvents.THUMB_VALUE_INCREMENT,
       (option: OptionFromThumbValues) => {
-        this.emit(ViewEvents.VALUE_FROM_INCREMENT, option);
+        this.emit(ViewEvents.VALUE_INCREMENT, option);
       }
     );
 
     thumb.subscribe(
       ThumbEvents.THUMB_VALUE_DECREMENT,
       (option: OptionFromThumbValues) => {
-        this.emit(ViewEvents.VALUE_FROM_DECREMENT, option);
+        this.emit(ViewEvents.VALUE_DECREMENT, option);
       }
     );
 
@@ -147,14 +156,14 @@ class View extends Observer {
       thumbSecond.subscribe(
         ThumbEvents.THUMB_VALUE_INCREMENT,
         (option: OptionFromThumbValues) => {
-          this.emit(ViewEvents.VALUE_FROM_INCREMENT, option);
+          this.emit(ViewEvents.VALUE_INCREMENT, option);
         }
       );
 
       thumbSecond.subscribe(
         ThumbEvents.THUMB_VALUE_DECREMENT,
         (option: OptionFromThumbValues) => {
-          this.emit(ViewEvents.VALUE_FROM_DECREMENT, option);
+          this.emit(ViewEvents.VALUE_DECREMENT, option);
         }
       );
     }
@@ -195,12 +204,12 @@ class View extends Observer {
     if (
       this.checkTooltipsOverlap(orientation, tooltipNode, tooltipSecondNode)
     ) {
-      const tooltipUnitedModifier = 'tooltip--united'
+      const tooltipUnitedModifier = 'tooltip--united';
       tooltipNode.classList.add(tooltipUnitedModifier);
       tooltipValue.textContent = `${from} \u2013 ${to}`;
       tooltipSecondNode.style.visibility = 'hidden';
     } else {
-      const tooltipUnitedModifier = 'tooltip--united'
+      const tooltipUnitedModifier = 'tooltip--united';
       tooltipNode.classList.remove(tooltipUnitedModifier);
       tooltipSecondNode.style.visibility = 'visible';
     }

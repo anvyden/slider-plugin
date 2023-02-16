@@ -58,14 +58,14 @@ class Presenter {
     });
 
     this.view.subscribe(
-      ViewEvents.VALUE_FROM_INCREMENT,
+      ViewEvents.VALUE_INCREMENT,
       (option: OptionFromThumbValues) => {
         this.model.increment(option);
       }
     );
 
     this.view.subscribe(
-      ViewEvents.VALUE_FROM_DECREMENT,
+      ViewEvents.VALUE_DECREMENT,
       (option: OptionFromThumbValues) => {
         this.model.decrement(option);
       }
@@ -74,19 +74,21 @@ class Presenter {
 
   private updateEvent(state: ISettings): CustomEvent {
     const currentState = state;
-    const changedParams = {}
+    const changedParams = {};
 
-    Object.keys(this.state).forEach(key => {
+    Object.keys(this.state).forEach((key) => {
       if (typeof this.state[key] !== 'object') {
         if (this.state[key] !== currentState[key]) {
-          changedParams[key] = currentState[key]
+          changedParams[key] = currentState[key];
         }
       } else {
-        if (JSON.stringify(this.state[key]) !== JSON.stringify(currentState[key])) {
-          changedParams[key] = { ...currentState[key] }
+        if (
+          JSON.stringify(this.state[key]) !== JSON.stringify(currentState[key])
+        ) {
+          changedParams[key] = { ...currentState[key] };
         }
       }
-    })
+    });
 
     this.state = currentState;
 
