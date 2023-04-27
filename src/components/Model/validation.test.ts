@@ -36,20 +36,6 @@ describe('Validation:', () => {
       expect(validStep).toBe(defaultState.step);
     });
 
-    test('should return rounded value of step', () => {
-      const newState = {
-        ...state,
-        step: 9.5,
-      };
-
-      const validStep = validation.checkStep(
-        newState.max,
-        newState.min,
-        newState.step
-      );
-      expect(validStep).toBe(10);
-    });
-
     test('if step = 0, should return step = 1', () => {
       const newState = {
         ...state,
@@ -80,17 +66,16 @@ describe('Validation:', () => {
   });
 
   describe('checkMaxMin method', () => {
-    test('should return rounded values of max and min', () => {
+    test('if min = max should increase by 1 max value', () => {
       const newState = {
         ...state,
-        max: 99.5,
-        min: -99.4,
+        max: 100,
+        min: 100,
       };
 
       validation.checkMaxMin.bind(newState)(newState.max, newState.min);
 
-      expect(newState.max).toBe(100);
-      expect(newState.min).toBe(-99);
+      expect(newState.max).toBe(101);
     });
 
     test('should return swapped values min and max', () => {

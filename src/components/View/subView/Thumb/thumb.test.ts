@@ -51,6 +51,24 @@ describe('Thumb:', () => {
     expect(thumb.getThumb()).toBeTruthy();
   });
 
+  test('should return position of thumb', () => {
+    const changeState = {
+      ...state,
+      from: -100,
+      isRange: false,
+    };
+
+    thumb = new Thumb(changeState, root);
+
+    expect(thumb.getPosition()).toBe(0);
+  });
+
+  test('should return false when thumbs is not reversed', () => {
+    thumb = new Thumb(state, root);
+
+    expect(thumb.getThumbsIsReversed()).toBe(false);
+  });
+
   test('should be completed method update of thumbs', () => {
     thumb = new Thumb(state, root);
     thumbSecond = new Thumb(state, root, 'thumb-second');

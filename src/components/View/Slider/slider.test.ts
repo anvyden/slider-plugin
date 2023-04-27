@@ -64,4 +64,18 @@ describe('Slider:', () => {
     expect(root.querySelectorAll('.slider__progress-bar').length).toBe(1);
     expect(root.querySelectorAll('.slider__labels').length).toBe(1);
   });
+
+  test('should be fulfilled with true result of checkThumbsPosition method and render second thumb correctly', () => {
+    const newState = {
+      ...state,
+      isRange: true,
+      from: 100,
+      to: 100,
+    };
+
+    slider = new Slider(newState, root);
+    const components = slider.getComponents();
+
+    expect(components).toHaveProperty('thumbSecond');
+  });
 });
